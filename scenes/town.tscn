@@ -36,7 +36,7 @@ region_rect = Rect2( 1280, 0, 0, 0 )
 [node name="Infos" type="Label" parent="."]
 margin_left = 952.0
 margin_top = 107.0
-margin_right = 1235.0
+margin_right = 1241.0
 margin_bottom = 163.0
 custom_styles/normal = SubResource( 4 )
 align = 1
@@ -277,6 +277,16 @@ text = "Proximo Turno"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Button" type="Button" parent="."]
+margin_left = 623.0
+margin_top = 613.0
+margin_right = 725.0
+margin_bottom = 663.0
+text = "Isolar Pessoa Selecionada"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="button_down" from="Places/Mall/Button" to="Places/Mall" method="_on_Button_button_down"]
 [connection signal="button_down" from="Places/School/Button" to="Places/School" method="_on_Button_button_down"]
 [connection signal="button_down" from="Places/Market/Button" to="Places/Market" method="_on_Button_button_down"]
@@ -291,3 +301,4 @@ __meta__ = {
 [connection signal="button_down" from="Population/Neil/Button" to="Population/Neil" method="_on_Button_button_down"]
 [connection signal="button_down" from="Population/Margaret/Button" to="Population/Margaret" method="_on_Button_button_down"]
 [connection signal="button_down" from="NextTurn" to="." method="_on_NextTurn_button_down"]
+[connection signal="button_down" from="Button" to="Population" method="_on_Button_button_down"]

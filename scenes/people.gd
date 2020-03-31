@@ -8,7 +8,7 @@ var morta:bool = false
 var doente:bool = false
 var pacienteZero:bool = false
 var maximo_contatos:int = 2
-var interacoes = []
+var turnoAdoecimento
 var texto: String
 
 
@@ -21,13 +21,13 @@ func _ready():
 #func _process(delta):
 
 func formatarInteracoes():
-	for dado in interacoes:
-		texto += "Turno "+ str(dado.turno)+ "\nLugares Visitados: " + str(dado.lugar)+ "\nPessoas que interagiu: " +str(dado.pessoas)+ "\n"
+	texto += "Adoeceu Turno "+ str(turnoAdoecimento)+ "\n"
 
 func _on_Button_button_down():
+	texto = "Nome: "+str(name)+"\n"
+	get_parent().get_parent().get_node("Population").selecionado = name
 	if(doente):
-		texto = "Nome: "+str(name)+"\n"
 		formatarInteracoes()
-		get_parent().get_parent().get_node("painel").set_text(texto)
 	else : 
-		get_parent().get_parent().get_node("painel").set_text("Essa pessoa ainda não foi ao hospital!")
+		texto += "Essa pessoa ainda não foi ao hospital!"
+	get_parent().get_parent().get_node("painel").set_text(texto)
