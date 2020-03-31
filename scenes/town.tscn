@@ -1,6 +1,6 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://scenes/Lugares/Work.gd" type="Script" id=1]
+[ext_resource path="res://scenes/people.gd" type="Script" id=1]
 [ext_resource path="res://assets/town/school.jpg" type="Texture" id=2]
 [ext_resource path="res://assets/town/work.jpg" type="Texture" id=3]
 [ext_resource path="res://assets/town/restaurant.jpg" type="Texture" id=4]
@@ -8,15 +8,9 @@
 [ext_resource path="res://assets/town/Mall.jpg" type="Texture" id=6]
 [ext_resource path="res://assets/town/market.jpg" type="Texture" id=7]
 [ext_resource path="res://assets/town/town.jpg" type="Texture" id=8]
-[ext_resource path="res://population/Sara.gd" type="Script" id=9]
-[ext_resource path="res://population/Cal.gd" type="Script" id=10]
-[ext_resource path="res://population/Jim.gd" type="Script" id=11]
-[ext_resource path="res://population/Mark.gd" type="Script" id=12]
-[ext_resource path="res://population/Tat.gd" type="Script" id=13]
-[ext_resource path="res://scenes/Lugares/Mall.gd" type="Script" id=14]
-[ext_resource path="res://scenes/Lugares/School.gd" type="Script" id=15]
-[ext_resource path="res://scenes/Lugares/Airport.gd" type="Script" id=16]
-[ext_resource path="res://scenes/Lugares/Market.gd" type="Script" id=17]
+[ext_resource path="res://scenes/town.gd" type="Script" id=9]
+[ext_resource path="res://scenes/Population.gd" type="Script" id=10]
+[ext_resource path="res://scripts/place.gd" type="Script" id=18]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0.754286 )
@@ -26,9 +20,12 @@ colors = PoolColorArray( 1, 1, 1, 1 )
 gradient = SubResource( 1 )
 width = 1
 
+[sub_resource type="StyleBoxFlat" id=4]
+
 [sub_resource type="StyleBoxFlat" id=3]
 
 [node name="Town" type="Node2D"]
+script = ExtResource( 9 )
 
 [node name="background_color" type="Sprite" parent="."]
 position = Vector2( 640, 360 )
@@ -36,11 +33,24 @@ scale = Vector2( 1280, 720 )
 texture = SubResource( 2 )
 region_rect = Rect2( 1280, 0, 0, 0 )
 
-[node name="painel" type="Label" parent="."]
-margin_left = 957.0
+[node name="Infos" type="Label" parent="."]
+margin_left = 952.0
 margin_top = 107.0
-margin_right = 1248.0
-margin_bottom = 470.0
+margin_right = 1235.0
+margin_bottom = 163.0
+custom_styles/normal = SubResource( 4 )
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="painel" type="Label" parent="."]
+margin_left = 950.861
+margin_top = 179.437
+margin_right = 1241.86
+margin_bottom = 542.437
 custom_styles/normal = SubResource( 3 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Informações"
@@ -51,108 +61,29 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Population" type="Node2D" parent="."]
+[node name="Places" type="Node2D" parent="."]
 
-[node name="Pessoas" type="Node2D" parent="Population"]
+[node name="Mall" type="Node2D" parent="Places"]
+script = ExtResource( 18 )
 
-[node name="Cal" type="Node" parent="Population/Pessoas"]
-script = ExtResource( 10 )
-
-[node name="Button" type="Button" parent="Population/Pessoas/Cal"]
-margin_left = 47.8818
-margin_top = 142.418
-margin_right = 120.882
-margin_bottom = 178.418
-text = "Cal"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Sara" type="Node" parent="Population/Pessoas"]
-script = ExtResource( 9 )
-
-[node name="Button" type="Button" parent="Population/Pessoas/Sara"]
-margin_left = 47.8818
-margin_top = 208.716
-margin_right = 120.882
-margin_bottom = 244.716
-text = "Sara"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Jim" type="Node" parent="Population/Pessoas"]
-script = ExtResource( 11 )
-
-[node name="Button" type="Button" parent="Population/Pessoas/Jim"]
-margin_left = 49.1096
-margin_top = 276.241
-margin_right = 122.11
-margin_bottom = 312.241
-text = "Jim"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Mark" type="Node" parent="Population/Pessoas"]
-script = ExtResource( 12 )
-
-[node name="Button" type="Button" parent="Population/Pessoas/Mark"]
-margin_left = 50.307
-margin_top = 337.911
-margin_right = 123.307
-margin_bottom = 373.911
-text = "Mark"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Tat" type="Node" parent="Population/Pessoas"]
-script = ExtResource( 13 )
-
-[node name="Button" type="Button" parent="Population/Pessoas/Tat"]
-margin_left = 49.7083
-margin_top = 399.581
-margin_right = 122.708
-margin_bottom = 435.581
-text = "Tat"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Cidade" type="Node2D" parent="."]
-position = Vector2( 640, 360 )
-scale = Vector2( 1280, 720 )
-
-[node name="spr_town" type="Sprite" parent="Cidade"]
-position = Vector2( -0.0731445, -0.0896125 )
-scale = Vector2( 0.000279145, 0.000496258 )
-texture = ExtResource( 8 )
-
-[node name="Lugares" type="Node2D" parent="Cidade"]
-position = Vector2( -0.5, -0.5 )
-scale = Vector2( 0.00078125, 0.00138889 )
-
-[node name="Mall" type="Node2D" parent="Cidade/Lugares"]
-script = ExtResource( 14 )
-
-[node name="Button" type="Button" parent="Cidade/Lugares/Mall"]
+[node name="Button" type="Button" parent="Places/Mall"]
 modulate = Color( 0.776471, 0.713726, 0.713726, 1 )
 margin_left = 649.0
 margin_top = 306.0
 margin_right = 661.0
 margin_bottom = 326.0
 rect_scale = Vector2( 0.347381, 0.36 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
 icon = ExtResource( 6 )
 flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="School" type="Node2D" parent="Cidade/Lugares"]
-script = ExtResource( 15 )
+[node name="School" type="Node2D" parent="Places"]
+script = ExtResource( 18 )
 
-[node name="Button" type="Button" parent="Cidade/Lugares/School"]
+[node name="Button" type="Button" parent="Places/School"]
 modulate = Color( 0.776471, 0.713726, 0.713726, 1 )
 margin_left = 484.0
 margin_top = 403.0
@@ -165,10 +96,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Market" type="Node2D" parent="Cidade/Lugares"]
-script = ExtResource( 17 )
+[node name="Market" type="Node2D" parent="Places"]
+script = ExtResource( 18 )
 
-[node name="Button" type="Button" parent="Cidade/Lugares/Market"]
+[node name="Button" type="Button" parent="Places/Market"]
 modulate = Color( 0.776471, 0.713726, 0.713726, 1 )
 margin_left = 483.0
 margin_top = 62.0
@@ -181,10 +112,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Restaurant" type="Node2D" parent="Cidade/Lugares"]
-script = ExtResource( 14 )
+[node name="Restaurant" type="Node2D" parent="Places"]
+script = ExtResource( 18 )
 
-[node name="Button" type="Button" parent="Cidade/Lugares/Restaurant"]
+[node name="Button" type="Button" parent="Places/Restaurant"]
 modulate = Color( 0.776471, 0.713726, 0.713726, 1 )
 margin_left = 217.0
 margin_top = 339.0
@@ -197,10 +128,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Work" type="Node2D" parent="Cidade/Lugares"]
-script = ExtResource( 1 )
+[node name="Work" type="Node2D" parent="Places"]
+script = ExtResource( 18 )
 
-[node name="Button" type="Button" parent="Cidade/Lugares/Work"]
+[node name="Button" type="Button" parent="Places/Work"]
 modulate = Color( 0.776471, 0.713726, 0.713726, 1 )
 margin_left = 300.0
 margin_top = 199.0
@@ -213,10 +144,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Airport" type="Node2D" parent="Cidade/Lugares"]
-script = ExtResource( 16 )
+[node name="Airport" type="Node2D" parent="Places"]
+script = ExtResource( 18 )
 
-[node name="Button" type="Button" parent="Cidade/Lugares/Airport"]
+[node name="Button" type="Button" parent="Places/Airport"]
 modulate = Color( 0.776471, 0.713726, 0.713726, 1 )
 margin_left = 757.0
 margin_top = 211.0
@@ -228,14 +159,135 @@ flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="button_down" from="Population/Pessoas/Cal/Button" to="Population/Pessoas/Cal" method="_on_Button_button_down"]
-[connection signal="button_down" from="Population/Pessoas/Sara/Button" to="Population/Pessoas/Sara" method="_on_Button_button_down"]
-[connection signal="button_down" from="Population/Pessoas/Jim/Button" to="Population/Pessoas/Jim" method="_on_Button_button_down"]
-[connection signal="button_down" from="Population/Pessoas/Mark/Button" to="Population/Pessoas/Mark" method="_on_Button_button_down"]
-[connection signal="button_down" from="Population/Pessoas/Tat/Button" to="Population/Pessoas/Tat" method="_on_Button_button_down"]
-[connection signal="button_down" from="Cidade/Lugares/Mall/Button" to="Cidade/Lugares/Mall" method="_on_Button_button_down"]
-[connection signal="button_down" from="Cidade/Lugares/School/Button" to="Cidade/Lugares/School" method="_on_Button_button_down"]
-[connection signal="button_down" from="Cidade/Lugares/Market/Button" to="Cidade/Lugares/Market" method="_on_Button_button_down"]
-[connection signal="button_down" from="Cidade/Lugares/Restaurant/Button" to="Cidade/Lugares/Restaurant" method="_on_Button_button_down"]
-[connection signal="button_down" from="Cidade/Lugares/Work/Button" to="Cidade/Lugares/Work" method="_on_Button_button_down"]
-[connection signal="button_down" from="Cidade/Lugares/Airport/Button" to="Cidade/Lugares/Airport" method="_on_Button_button_down"]
+
+[node name="Population" type="Node2D" parent="."]
+script = ExtResource( 10 )
+
+[node name="Cal" type="Node" parent="Population"]
+script = ExtResource( 1 )
+
+[node name="Button" type="Button" parent="Population/Cal"]
+margin_left = 47.8818
+margin_top = 142.418
+margin_right = 120.882
+margin_bottom = 178.418
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Cal"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Mark" type="Node" parent="Population"]
+script = ExtResource( 1 )
+
+[node name="Button" type="Button" parent="Population/Mark"]
+margin_left = 46.6541
+margin_top = 342.539
+margin_right = 119.654
+margin_bottom = 378.539
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Mark"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sinty" type="Node" parent="Population"]
+script = ExtResource( 1 )
+
+[node name="Button" type="Button" parent="Population/Sinty"]
+margin_left = 46.6541
+margin_top = 292.202
+margin_right = 119.654
+margin_bottom = 328.202
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Sinty"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Eron" type="Node" parent="Population"]
+script = ExtResource( 1 )
+
+[node name="Button" type="Button" parent="Population/Eron"]
+margin_left = 47.8818
+margin_top = 241.865
+margin_right = 120.882
+margin_bottom = 277.865
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Eron"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Judite" type="Node" parent="Population"]
+script = ExtResource( 1 )
+
+[node name="Button" type="Button" parent="Population/Judite"]
+margin_left = 47.8818
+margin_top = 190.3
+margin_right = 120.882
+margin_bottom = 226.3
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Judite"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Neil" type="Node" parent="Population"]
+script = ExtResource( 1 )
+
+[node name="Button" type="Button" parent="Population/Neil"]
+margin_left = 45.5491
+margin_top = 394.411
+margin_right = 118.549
+margin_bottom = 430.411
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Neil"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Margaret" type="Node" parent="Population"]
+script = ExtResource( 1 )
+
+[node name="Button" type="Button" parent="Population/Margaret"]
+margin_left = 45.5491
+margin_top = 442.232
+margin_right = 118.549
+margin_bottom = 478.232
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+text = "Margaret"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprites" type="Node" parent="."]
+
+[node name="spr_town" type="Sprite" parent="Sprites"]
+position = Vector2( 546.375, 295.479 )
+scale = Vector2( 0.357306, 0.357306 )
+texture = ExtResource( 8 )
+
+[node name="NextTurn" type="Button" parent="."]
+margin_left = 476.917
+margin_top = 614.559
+margin_right = 593.917
+margin_bottom = 663.559
+text = "Proximo Turno"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="button_down" from="Places/Mall/Button" to="Places/Mall" method="_on_Button_button_down"]
+[connection signal="button_down" from="Places/School/Button" to="Places/School" method="_on_Button_button_down"]
+[connection signal="button_down" from="Places/Market/Button" to="Places/Market" method="_on_Button_button_down"]
+[connection signal="button_down" from="Places/Restaurant/Button" to="Places/Restaurant" method="_on_Button_button_down"]
+[connection signal="button_down" from="Places/Work/Button" to="Places/Work" method="_on_Button_button_down"]
+[connection signal="button_down" from="Places/Airport/Button" to="Places/Airport" method="_on_Button_button_down"]
+[connection signal="button_down" from="Population/Cal/Button" to="Population/Cal" method="_on_Button_button_down"]
+[connection signal="button_down" from="Population/Mark/Button" to="Population/Mark" method="_on_Button_button_down"]
+[connection signal="button_down" from="Population/Sinty/Button" to="Population/Sinty" method="_on_Button_button_down"]
+[connection signal="button_down" from="Population/Eron/Button" to="Population/Eron" method="_on_Button_button_down"]
+[connection signal="button_down" from="Population/Judite/Button" to="Population/Judite" method="_on_Button_button_down"]
+[connection signal="button_down" from="Population/Neil/Button" to="Population/Neil" method="_on_Button_button_down"]
+[connection signal="button_down" from="Population/Margaret/Button" to="Population/Margaret" method="_on_Button_button_down"]
+[connection signal="button_down" from="NextTurn" to="." method="_on_NextTurn_button_down"]
