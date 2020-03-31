@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Fonts/blackground_60.tres" type="DynamicFont" id=1]
+
+[sub_resource type="StyleBoxLine" id=1]
+color = Color( 0.552941, 0.505882, 0.505882, 0.203922 )
+thickness = 10
+vertical = true
+
+[sub_resource type="GDScript" id=2]
+
+[node name="MenuButton" type="Button"]
+margin_top = 260.0
+margin_right = 449.0
+margin_bottom = 320.0
+rect_min_size = Vector2( 360, 60 )
+custom_styles/focus = SubResource( 1 )
+flat = true
+script = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0.996078, 0.956863, 0.870588, 1 )
+custom_colors/font_color_shadow = Color( 0.352941, 0.329412, 0.329412, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 3
+text = "label"
+__meta__ = {
+"_edit_use_anchors_": false
+}
