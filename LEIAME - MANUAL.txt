@@ -1,0 +1,17 @@
+Ao iniciar o jogo é feito a fase de visitação das pessoas aos lugares do mapa
+Uma das pessoas que frequentaram o mesmo lugar que o paciente zero ou outra pessoa doente tem chance de ser contaminada baseado em 
+quantas outras pessoas estavam naquele lugar.
+
+Objetivo encontrar o paciente zero antes que todos morram.
+
+Esse é o primeiro teste da mecanica e nosso maior desafio é o balanceamento desse jogo
+onde o foco é não deixar nem muito facil nem muito dificil e poder ter niveis de jogo regulaveis
+
+
+Cada predio tem o histórico das pessoas que frequentaram ele em cada turno.
+Cada pessoa doente tem o indicativo de em que turno ficou doente
+Pessoas doentes ficam em negrito
+Você só pode isolar uma pessoa por turno
+Caso isole o paciente zero você vence nessa versão
+Caso isole outra pessoa ela não fica disponivel para acessar os lugares da cidade quando o turno é passado
+e o jogo segue.
