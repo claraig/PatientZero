@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://assets/town/town2.jpg" type="Texture" id=1]
 [ext_resource path="res://assets/town/school.jpg" type="Texture" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://assets/town/airport.jpg" type="Texture" id=5]
 [ext_resource path="res://assets/town/Mall.jpg" type="Texture" id=6]
 [ext_resource path="res://assets/town/market.jpg" type="Texture" id=7]
-[ext_resource path="res://assets/town/town.jpg" type="Texture" id=8]
 [ext_resource path="res://scripts/place.gd" type="Script" id=18]
 
 [sub_resource type="GDScript" id=1]
@@ -34,10 +33,10 @@ func _ready():
 	lugares = get_node(\"Places\").get_children()
 	_passarTurno()
 	_atualizarInfos()
-	
+
 func _atualizarInfos():
 	var texto = \"Turno Atual: \" + str(turnoAtual) + \"  Doentes: \" + str(quantidadeDoentes) + \"  Mortos: \" + str(quantidadeMortos)
-	get_node(\"Infos\").set_text(texto)
+	get_node(\"InfoTurno\").set_text(texto)
 
 func _encontraPacienteZero():
 	for n in pessoas:
@@ -48,9 +47,9 @@ func _movimentoPacienteZero():
 	var lugaresFrequentados = []
 	var pessoasEncontradas = []
 	for i in range(0, 1):
-		
+
 		pacienteZero.inte
-	
+
 func _movimentoVisitacao():
 	for p in pessoas:
 		if (p.imunidade > 0 && p.name != get_node(\"Population\").isolado):
@@ -65,11 +64,11 @@ func _movimentoVisitacao():
 			else:
 				lugares[place1].visitantes[turnoAtual-1].pessoas.push_back(p.name)
 				lugares[place2].visitantes[turnoAtual-1].pessoas.push_back(p.name)
-			
+
 func _inserirTurnoLugares():
 	for l in lugares:
 		l.visitantes.push_back({\"turno\":turnoAtual,\"pessoas\":[]})
-	
+
 func _passandoDoenca():
 	var contaminadas = []
 	for p in pessoas:
@@ -83,8 +82,8 @@ func _passandoDoenca():
 			p.doente = true
 			quantidadeDoentes+=1
 			p.turnoAdoecimento = turnoAtual
-			p.get_node(\"Button\").add_color_override(\"font_color\", Color(9,248,43))			
-	
+			p.get_node(\"Button\").add_color_override(\"font_color\", Color(9,248,43))
+
 func _retornaContaminada(doente, visitantes):
 	var sorteado = doente
 	var randon
@@ -92,7 +91,7 @@ func _retornaContaminada(doente, visitantes):
 		randon = randi() % visitantes.size()-1
 		sorteado = visitantes[randon]
 	return sorteado
-	
+
 func _diminuindoImunidade():
 	for p in pessoas:
 		if(p.doente && p.imunidade > 0):
@@ -103,14 +102,14 @@ func _diminuindoImunidade():
 			p.get_node(\"Button\").visible = false
 			if(quantidadeDoentes > 0):
 				quantidadeDoentes-=1
-	
-	
+
+
 func _venceu():
 	for p in pessoas:
 		if(p.name == get_node(\"Population\").isolado && p.pacienteZero):
 			venceu = true
-	
-	
+
+
 func _passarTurno():
 	turnoAtual+=1
 	_venceu()
@@ -122,19 +121,19 @@ func _passarTurno():
 		_tirarIsolamento()
 		_atualizarInfos()
 	else:
-		get_node(\"Infos\").set_text(\"Você encontrou o paciente zero, parabéns!\")
-	
+		get_node(\"InfoTurno\").set_text(\"Você encontrou o paciente zero, parabéns!\")
+
 func _tirarIsolamento():
 	get_node(\"Population\").isolado = \"\"
 	get_node(\"Population\").selecionado = \"\"
 	for p in pessoas:
 		p.get_node(\"Button\").disabled = false
-	
+
 func _on_NextTurn_button_down():
 	if(quantidadeMortos < pessoas.size()-1):
 		_passarTurno()
 	else:
-		get_node(\"Infos\").set_text(\"Todos Morreram! FIm de Jogo =(\")
+		get_node(\"InfoTurno\").set_text(\"Todos Morreram! FIm de Jogo =(\")
 "
 
 [sub_resource type="Gradient" id=2]
@@ -251,7 +250,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Infos" type="Label" parent="."]
+[node name="InfoTurno" type="Label" parent="."]
 margin_left = 168.833
 margin_top = 12.658
 margin_right = 457.833
@@ -265,13 +264,28 @@ __meta__ = {
 }
 
 [node name="painel" type="Label" parent="."]
-margin_left = 962.492
-margin_top = 112.235
-margin_right = 1253.49
-margin_bottom = 475.234
+margin_left = 949.569
+margin_top = 52.7862
+margin_right = 1240.57
+margin_bottom = 415.786
 custom_styles/normal = SubResource( 5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Informações"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="painel2" type="Label" parent="."]
+margin_left = 949.569
+margin_top = 474.094
+margin_right = 1240.57
+margin_bottom = 674.094
+custom_styles/normal = SubResource( 5 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Anotações"
 align = 1
 valign = 1
 autowrap = true
@@ -486,14 +500,8 @@ __meta__ = {
 
 [node name="Sprites" type="Node" parent="."]
 
-[node name="spr_town" type="Sprite" parent="Sprites"]
-position = Vector2( 528.282, 366.559 )
-scale = Vector2( 0.357306, 0.357306 )
-texture = ExtResource( 8 )
-
 [node name="spr_town2" type="Sprite" parent="Sprites"]
-visible = false
-position = Vector2( 546.375, 295.479 )
+position = Vector2( 575.234, 365.501 )
 scale = Vector2( 0.357, 0.357 )
 texture = ExtResource( 1 )
 
@@ -508,10 +516,10 @@ __meta__ = {
 }
 
 [node name="Isolar" type="Button" parent="."]
-margin_left = 171.968
-margin_top = 659.525
-margin_right = 348.968
-margin_bottom = 709.525
+margin_left = 43.101
+margin_top = 566.636
+margin_right = 220.101
+margin_bottom = 616.636
 text = "Isolar Pessoa Selecionada"
 __meta__ = {
 "_edit_use_anchors_": false

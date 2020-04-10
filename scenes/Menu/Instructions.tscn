@@ -11,7 +11,7 @@ size = 20
 use_filter = true
 font_data = SubResource( 1 )
 
-[node name="Continue" instance=ExtResource( 1 )]
+[node name="Instructions" instance=ExtResource( 1 )]
 
 [node name="VBoxContainer" parent="CenterContainer" index="0"]
 margin_left = 239.0
