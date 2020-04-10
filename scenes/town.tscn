@@ -279,16 +279,28 @@ __meta__ = {
 }
 
 [node name="painel2" type="Label" parent="."]
-margin_left = 949.569
-margin_top = 474.094
-margin_right = 1240.57
-margin_bottom = 674.094
+margin_left = 950.0
+margin_top = 443.0
+margin_right = 1241.0
+margin_bottom = 674.0
 custom_styles/normal = SubResource( 5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "Anotações"
+text = "
+Anotações"
 align = 1
-valign = 1
 autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextEdit" type="TextEdit" parent="painel2"]
+margin_left = 1.0
+margin_top = 34.0
+margin_right = 290.0
+margin_bottom = 230.0
+text = "(escreva o que quiser aqui)"
+show_line_numbers = true
+wrap_enabled = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
