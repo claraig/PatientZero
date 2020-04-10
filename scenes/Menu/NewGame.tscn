@@ -1,7 +1,8 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Fonts/blackground_60.tres" type="DynamicFont" id=1]
-[ext_resource path="res://scenes/Game/ReturnToTitle.gd" type="Script" id=2]
+[ext_resource path="res://scenes/Menu/ReturnToTitle.gd" type="Script" id=2]
+
 
 [node name="NewGame" type="Control"]
 anchor_right = 1.0

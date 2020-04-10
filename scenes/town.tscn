@@ -247,12 +247,15 @@ position = Vector2( 640, 360 )
 scale = Vector2( 1280, 720 )
 texture = SubResource( 3 )
 region_rect = Rect2( 1280, 0, 0, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Infos" type="Label" parent="."]
-margin_left = 952.0
-margin_top = 107.0
-margin_right = 1241.0
-margin_bottom = 163.0
+margin_left = 168.833
+margin_top = 12.658
+margin_right = 457.833
+margin_bottom = 68.658
 custom_styles/normal = SubResource( 4 )
 align = 1
 valign = 1
@@ -262,10 +265,10 @@ __meta__ = {
 }
 
 [node name="painel" type="Label" parent="."]
-margin_left = 950.861
-margin_top = 179.437
-margin_right = 1241.86
-margin_bottom = 542.437
+margin_left = 962.492
+margin_top = 112.235
+margin_right = 1253.49
+margin_bottom = 475.234
 custom_styles/normal = SubResource( 5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Informações"
@@ -277,6 +280,8 @@ __meta__ = {
 }
 
 [node name="Places" type="Node2D" parent="."]
+visible = false
+position = Vector2( 0, 42.6477 )
 
 [node name="Mall" type="Node2D" parent="Places"]
 script = ExtResource( 18 )
@@ -377,6 +382,9 @@ __meta__ = {
 
 [node name="Population" type="Node2D" parent="."]
 script = SubResource( 6 )
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Cal" type="Node" parent="Population"]
 script = SubResource( 7 )
@@ -479,31 +487,31 @@ __meta__ = {
 [node name="Sprites" type="Node" parent="."]
 
 [node name="spr_town" type="Sprite" parent="Sprites"]
-visible = false
-position = Vector2( 546.375, 295.479 )
+position = Vector2( 528.282, 366.559 )
 scale = Vector2( 0.357306, 0.357306 )
 texture = ExtResource( 8 )
 
 [node name="spr_town2" type="Sprite" parent="Sprites"]
+visible = false
 position = Vector2( 546.375, 295.479 )
 scale = Vector2( 0.357, 0.357 )
 texture = ExtResource( 1 )
 
 [node name="NextTurn" type="Button" parent="."]
-margin_left = 476.917
-margin_top = 614.559
-margin_right = 593.917
-margin_bottom = 663.559
+margin_left = 473.04
+margin_top = 17.4909
+margin_right = 590.04
+margin_bottom = 66.4909
 text = "Proximo Turno"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="."]
-margin_left = 623.0
-margin_top = 613.0
-margin_right = 725.0
-margin_bottom = 663.0
+[node name="Isolar" type="Button" parent="."]
+margin_left = 171.968
+margin_top = 659.525
+margin_right = 348.968
+margin_bottom = 709.525
 text = "Isolar Pessoa Selecionada"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -522,4 +530,4 @@ __meta__ = {
 [connection signal="button_down" from="Population/Neil/Button" to="Population/Neil" method="_on_Button_button_down"]
 [connection signal="button_down" from="Population/Margaret/Button" to="Population/Margaret" method="_on_Button_button_down"]
 [connection signal="button_down" from="NextTurn" to="." method="_on_NextTurn_button_down"]
-[connection signal="button_down" from="Button" to="Population" method="_on_Button_button_down"]
+[connection signal="button_down" from="Isolar" to="Population" method="_on_Button_button_down"]
