@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://assets/town/town2.jpg" type="Texture" id=1]
 [ext_resource path="res://assets/town/school.jpg" type="Texture" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/town/airport.jpg" type="Texture" id=5]
 [ext_resource path="res://assets/town/Mall.jpg" type="Texture" id=6]
 [ext_resource path="res://assets/town/market.jpg" type="Texture" id=7]
+[ext_resource path="res://scenes/InfoTurno.gd" type="Script" id=8]
 [ext_resource path="res://scripts/place.gd" type="Script" id=18]
 
 [sub_resource type="GDScript" id=1]
@@ -122,6 +123,7 @@ func _passarTurno():
 		_atualizarInfos()
 	else:
 		get_node(\"InfoTurno\").set_text(\"Você encontrou o paciente zero, parabéns!\")
+		get_node('InfoTurno')._corVenceu()
 
 func _tirarIsolamento():
 	get_node(\"Population\").isolado = \"\"
@@ -134,6 +136,7 @@ func _on_NextTurn_button_down():
 		_passarTurno()
 	else:
 		get_node(\"InfoTurno\").set_text(\"Todos Morreram! FIm de Jogo =(\")
+		get_node('InfoTurno')._corPerdeu()
 "
 
 [sub_resource type="Gradient" id=2]
@@ -144,7 +147,7 @@ colors = PoolColorArray( 1, 1, 1, 1 )
 gradient = SubResource( 2 )
 width = 1
 
-[sub_resource type="StyleBoxFlat" id=4]
+[sub_resource type="StyleBoxFlat" id=8]
 
 [sub_resource type="StyleBoxFlat" id=5]
 
@@ -246,19 +249,17 @@ position = Vector2( 640, 360 )
 scale = Vector2( 1280, 720 )
 texture = SubResource( 3 )
 region_rect = Rect2( 1280, 0, 0, 0 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="InfoTurno" type="Label" parent="."]
-margin_left = 168.833
-margin_top = 12.658
-margin_right = 457.833
-margin_bottom = 68.658
-custom_styles/normal = SubResource( 4 )
+margin_left = 290.133
+margin_top = 17.3234
+margin_right = 579.133
+margin_bottom = 73.3234
+custom_styles/normal = SubResource( 8 )
 align = 1
 valign = 1
 autowrap = true
+script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -305,8 +306,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sprites" type="Node" parent="."]
+
+[node name="spr_town2" type="Sprite" parent="Sprites"]
+show_behind_parent = true
+position = Vector2( 547.242, 338.675 )
+scale = Vector2( 0.357, 0.357 )
+texture = ExtResource( 1 )
+
 [node name="Places" type="Node2D" parent="."]
-visible = false
 position = Vector2( 0, 42.6477 )
 
 [node name="Mall" type="Node2D" parent="Places"]
@@ -408,9 +416,6 @@ __meta__ = {
 
 [node name="Population" type="Node2D" parent="."]
 script = SubResource( 6 )
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Cal" type="Node" parent="Population"]
 script = SubResource( 7 )
@@ -510,27 +515,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Sprites" type="Node" parent="."]
-
-[node name="spr_town2" type="Sprite" parent="Sprites"]
-position = Vector2( 575.234, 365.501 )
-scale = Vector2( 0.357, 0.357 )
-texture = ExtResource( 1 )
-
 [node name="NextTurn" type="Button" parent="."]
-margin_left = 473.04
-margin_top = 17.4909
-margin_right = 590.04
-margin_bottom = 66.4909
+margin_left = 594.34
+margin_top = 22.1563
+margin_right = 711.34
+margin_bottom = 71.1563
 text = "Proximo Turno"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Isolar" type="Button" parent="."]
-margin_left = 43.101
+margin_left = 15.1086
 margin_top = 566.636
-margin_right = 220.101
+margin_right = 192.109
 margin_bottom = 616.636
 text = "Isolar Pessoa Selecionada"
 __meta__ = {
