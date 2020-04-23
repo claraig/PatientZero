@@ -1,7 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://scenes/Menu/NewGame.tscn" type="PackedScene" id=1]
-
+[ext_resource path="res://assets/audio/key1.wav" type="AudioStream" id=2]
 
 [node name="Options" instance=ExtResource( 1 )]
 
@@ -16,3 +16,6 @@ text = "options scene
 
 [node name="Button" parent="CenterContainer/VBoxContainer" index="1"]
 margin_right = 363.0
+
+[node name="audio" type="AudioStreamPlayer" parent="CenterContainer/VBoxContainer/Button" index="0"]
+stream = ExtResource( 2 )

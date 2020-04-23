@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/DoorKnobOpening1.wav-d40908f8a3a7a6ca79fb65c33b852fa3.sample"
+
+[deps]
+
+source_file="res://assets/audio/DoorKnobOpening1.wav"
+dest_files=[ "res://.import/DoorKnobOpening1.wav-d40908f8a3a7a6ca79fb65c33b852fa3.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

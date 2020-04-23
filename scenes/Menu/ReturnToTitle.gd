@@ -11,4 +11,5 @@ extends Control
 
 
 func _on_Button_pressed():
+	get_node('CenterContainer/VBoxContainer/Button/audio').play()
 	get_tree().change_scene("res://scenes/Menu.tscn")
