@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=47 format=2]
 
 [ext_resource path="res://assets/town/town2.png" type="Texture" id=1]
 [ext_resource path="res://assets/autoral/escola.png" type="Texture" id=2]
@@ -30,6 +30,7 @@
 [ext_resource path="res://assets/autoral/escritorio-hover.png" type="Texture" id=28]
 [ext_resource path="res://assets/autoral/aeroporto-hover.png" type="Texture" id=29]
 [ext_resource path="res://assets/autoral/painel-texto.png" type="Texture" id=30]
+[ext_resource path="res://assets/autoral/computer.png" type="Texture" id=31]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -191,9 +192,9 @@ func _on_NextTurn_button_down():
 	if(quantidadeMortos < pessoas.size()-1):
 		get_node('Sons/turno').play()
 		_passarTurno()
-		$jornal.show()
-		$jornal/j_mortes.show()
-		$bJornal.show()
+		$canvas_jornal/jornal.show()
+		$canvas_jornal/jornal/j_mortes.show()
+		$canvas_jornal/bJornal.show()
 	else:
 		get_node(\"display-canvas-bg/frase\").set_text(\"Todos Morreram! FIm de Jogo =(\")
 		get_node('Sons/perdeu').play()
@@ -224,8 +225,11 @@ width = 1
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 1, 0.847059, 0, 1 )
 
+[sub_resource type="StyleBoxFlat" id=15]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
 [sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 0.545098, 0.517647, 0.517647, 1 )
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [sub_resource type="DynamicFontData" id=6]
 hinting = 0
@@ -448,20 +452,17 @@ scale = Vector2( 0.489, 0.475 )
 z_index = 5
 texture = ExtResource( 30 )
 
-[node name="painel" type="Label" parent="."]
-margin_left = 1013.0
-margin_top = 285.0
-margin_right = 1263.0
-margin_bottom = 702.0
+[node name="painel" type="TextEdit" parent="."]
+margin_left = 1033.0
+margin_top = 357.0
+margin_right = 1250.0
+margin_bottom = 522.0
+custom_styles/read_only = SubResource( 15 )
 custom_styles/normal = SubResource( 5 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Informações"
-align = 1
-valign = 1
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
+readonly = true
+smooth_scrolling = true
 
 [node name="painelFicha" type="Label" parent="."]
 margin_left = 138.0
@@ -989,6 +990,12 @@ position = Vector2( 158.138, 670.74 )
 scale = Vector2( 0.191552, 0.250766 )
 z_index = -1
 texture = ExtResource( 20 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 1141.28, 521.238 )
+scale = Vector2( 0.262, 0.397 )
+z_index = -10
+texture = ExtResource( 31 )
 [connection signal="button_down" from="Places/Shopping/TextureButton" to="Places/Shopping" method="_on_TextureButton_button_down"]
 [connection signal="button_down" from="Places/Shopping/Button" to="Places/Shopping" method="_on_Button_button_down"]
 [connection signal="button_down" from="Places/Escola/TextureButton" to="Places/Escola" method="_on_TextureButton_button_down"]
