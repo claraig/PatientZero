@@ -26,6 +26,7 @@ func _on_Button_button_down():
 
 
 func _on_TextureButton_button_down():
+	get_parent().get_parent().get_node("Sons/clicar_lugar").play()
 	texto = "Lugar: "+str(name)+"\n"
 	formatarVisitantes()
 	get_parent().get_parent().get_node("painel").set_text(texto)
