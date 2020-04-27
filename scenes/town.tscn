@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=2]
+[gd_scene load_steps=54 format=2]
 
 [ext_resource path="res://assets/town/town2.png" type="Texture" id=1]
 [ext_resource path="res://assets/autoral/escola.png" type="Texture" id=2]
@@ -33,6 +33,7 @@
 [ext_resource path="res://assets/autoral/computer.png" type="Texture" id=31]
 [ext_resource path="res://assets/autoral/jornal_venceu.png" type="Texture" id=32]
 [ext_resource path="res://assets/autoral/botaoIsolar2.png" type="Texture" id=33]
+[ext_resource path="res://assets/audio/eklee-KeyPressOld05.wav" type="AudioStream" id=34]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -218,6 +219,11 @@ func _venceu():
 	for p in pessoas:
 		if(p.name == get_node(\"Population\").isolado && p.pacienteZero):
 			venceu = true
+
+
+func _on_TextEdit_gui_input(event: InputEvent) -> void:
+	if event is InputEventKey  and event.pressed:
+		get_node('Sons/digitar').play()
 "
 
 [sub_resource type="Gradient" id=2]
@@ -492,19 +498,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="bloco de notas" type="Label" parent="."]
-margin_left = 985.834
-margin_top = 40.8247
-margin_right = 1276.83
-margin_bottom = 274.825
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "
-"
-align = 1
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="bloco de notas" type="Node2D" parent="."]
+position = Vector2( 983.234, 69.981 )
 
 [node name="notas" type="Sprite" parent="bloco de notas"]
 position = Vector2( 152.729, 98.6499 )
@@ -541,7 +536,8 @@ stream = ExtResource( 10 )
 [node name="turno" type="AudioStreamPlayer2D" parent="Sons"]
 stream = ExtResource( 11 )
 
-[node name="AudioStreamPlayer2D3" type="AudioStreamPlayer2D" parent="Sons"]
+[node name="digitar" type="AudioStreamPlayer2D" parent="Sons"]
+stream = ExtResource( 34 )
 
 [node name="Sprites" type="Node" parent="."]
 
@@ -1021,6 +1017,7 @@ position = Vector2( 1141.28, 521.238 )
 scale = Vector2( 0.262, 0.397 )
 z_index = -10
 texture = ExtResource( 31 )
+[connection signal="gui_input" from="bloco de notas/TextEdit" to="." method="_on_TextEdit_gui_input"]
 [connection signal="button_down" from="Places/Shopping/TextureButton" to="Places/Shopping" method="_on_TextureButton_button_down"]
 [connection signal="button_down" from="Places/Shopping/Button" to="Places/Shopping" method="_on_Button_button_down"]
 [connection signal="button_down" from="Places/Escola/TextureButton" to="Places/Escola" method="_on_TextureButton_button_down"]
