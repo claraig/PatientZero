@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=48 format=2]
 
 [ext_resource path="res://assets/town/town2.png" type="Texture" id=1]
 [ext_resource path="res://assets/autoral/escola.png" type="Texture" id=2]
@@ -31,6 +31,8 @@
 [ext_resource path="res://assets/autoral/aeroporto-hover.png" type="Texture" id=29]
 [ext_resource path="res://assets/autoral/painel-texto.png" type="Texture" id=30]
 [ext_resource path="res://assets/autoral/computer.png" type="Texture" id=31]
+[ext_resource path="res://assets/autoral/botaoIsolar2.png" type="Texture" id=32]
+[ext_resource path="res://assets/autoral/botaoIsolar2-hover.png" type="Texture" id=33]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -354,9 +356,6 @@ draw_center = false
 
 [sub_resource type="StyleBoxFlat" id=11]
 bg_color = Color( 0.623529, 0.282353, 0.0666667, 1 )
-
-[sub_resource type="StyleBoxFlat" id=12]
-bg_color = Color( 0.933333, 0.427451, 0.180392, 1 )
 
 [sub_resource type="DynamicFont" id=13]
 size = 68
@@ -949,13 +948,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Isolar" type="Button" parent="."]
-margin_left = 83.4321
-margin_top = 157.649
-margin_right = 260.432
-margin_bottom = 207.649
-custom_styles/normal = SubResource( 12 )
-text = "Isolar Pessoa Selecionada"
+[node name="Isolar" type="TextureButton" parent="."]
+margin_left = 108.27
+margin_top = 166.122
+margin_right = 213.27
+margin_bottom = 215.122
+texture_normal = ExtResource( 32 )
+texture_hover = ExtResource( 33 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1086,7 +1085,7 @@ texture = ExtResource( 31 )
 [connection signal="button_down" from="Places/Restaurante/Button" to="Places/Restaurante" method="_on_Button_button_down"]
 [connection signal="button_down" from="Places/Escritorio/TextureButton" to="Places/Escritorio" method="_on_TextureButton_button_down"]
 [connection signal="button_down" from="Places/Escritorio/Button" to="Places/Escritorio" method="_on_Button_button_down"]
-[connection signal="button_down" from="Places/Aeroporto/TextureButton" to="Places/Escritorio" method="_on_TextureButton_button_down"]
+[connection signal="button_down" from="Places/Aeroporto/TextureButton" to="Places/Aeroporto" method="_on_TextureButton_button_down"]
 [connection signal="button_down" from="Places/Aeroporto/Button" to="Places/Aeroporto" method="_on_Button_button_down"]
 [connection signal="button_down" from="Population/Cal/Button" to="Population/Cal" method="_on_Button_button_down"]
 [connection signal="button_down" from="Population/Catia/Button" to="Population/Catia" method="_on_Button_button_down"]
