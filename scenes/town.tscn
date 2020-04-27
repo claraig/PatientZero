@@ -561,20 +561,20 @@ __meta__ = {
 [node name="venceu" type="AudioStreamPlayer" parent="Sons"]
 stream = ExtResource( 12 )
 
+[node name="clicar_lugar" type="AudioStreamPlayer2D" parent="Sons"]
+stream = ExtResource( 38 )
+
 [node name="perdeu" type="AudioStreamPlayer" parent="Sons"]
 stream = ExtResource( 9 )
+
+[node name="clicar_arquivo" type="AudioStreamPlayer2D" parent="Sons"]
+stream = ExtResource( 10 )
 
 [node name="turno" type="AudioStreamPlayer2D" parent="Sons"]
 stream = ExtResource( 11 )
 
 [node name="teclar" type="AudioStreamPlayer2D" parent="Sons"]
 stream = ExtResource( 32 )
-
-[node name="clicar_arquivo" type="AudioStreamPlayer2D" parent="Sons"]
-stream = ExtResource( 10 )
-
-[node name="clicar_lugar" type="AudioStreamPlayer2D" parent="Sons"]
-stream = ExtResource( 38 )
 
 [node name="Sprites" type="Node" parent="."]
 
