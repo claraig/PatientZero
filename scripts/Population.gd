@@ -19,7 +19,7 @@ func _inicializaPessoas():
 	var listaPessoas = get_children()
 	for n in listaPessoas : 
 		randomize()
-		n.imunidade = rand_range(1,5)
+		n.imunidade = rand_range(3,5)
 		
 func _inicializarPacienteZero():
 	randomize()

@@ -47,14 +47,14 @@ var venceu = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 
-	turnoAtual = 0
+	turnoAtual = 1
 	venceu = false
 
 	$canvas_jornal/jornal/j_mortes.hide()	 #ainda não morreu ninguém
 	$canvas_jornal/jornal.show()
 	$canvas_jornal/jornal/j_dia1.show()
 	$canvas_jornal/bJornal.show() #background escuro
-
+	get_node('Sons/turno').play()
 	pessoas = get_node(\"Population\").get_children()
 	print(pessoas)
 	lugares = get_node(\"Places\").get_children()
@@ -99,9 +99,7 @@ func _movimentoVisitacao():
 			randomize()
 			var place2 = randi()%lugares.size()-1
 			if (place1 == place2):
-				place2+=1
 				lugares[place1].visitantes[turnoAtual-1].pessoas.push_back(p.name)
-				lugares[place2].visitantes[turnoAtual-1].pessoas.push_back(p.name)
 			else:
 				lugares[place1].visitantes[turnoAtual-1].pessoas.push_back(p.name)
 				lugares[place2].visitantes[turnoAtual-1].pessoas.push_back(p.name)
@@ -140,12 +138,9 @@ func _diminuindoImunidade():
 			p.imunidade-=1
 		if(p.imunidade == 0 && !p.morta):
 			p.morta = true
+			p.turnoMorte = turnoAtual
 			quantidadeMortos+=1
 #			p.get_node(\"Button\").visible = false
-#
-#			p.get_node(\"Button\").add_color_override(\"font_color\", Color( 0.74, 0.72, 0.42, 1 ))
-#			p.get_node(\"Button\").clear_color(\"font_color\", Color(99,248,43))
-
 			if(quantidadeDoentes > 0):
 				quantidadeDoentes-=1
 
@@ -153,7 +148,7 @@ func _desabilitarMortosPraNaoVirarZumbi():
 	for p in pessoas:
 		print(p.get_children())
 		if(p.morta):
-			p.get_node(\"Button\").disabled = true
+			p.get_node(\"Button\").add_color_override(\"font_color\", Color( 1, 0.1, 0.1, 1 ))
 
 
 
@@ -172,23 +167,24 @@ func _inserirTurnoLugares():
 
 
 func _passarTurno():
-	turnoAtual+=1
 	_venceu()
 	if(!venceu):
 		_inserirTurnoLugares()
 		_movimentoVisitacao()
-		_diminuindoImunidade()
-		_desabilitarMortosPraNaoVirarZumbi()
 		_passandoDoenca()
 		_tirarIsolamento()
-		_atualizarInfos()
 	else:
 		get_node(\"display-canvas-bg/frase\").set_text(\"Você encontrou o paciente zero, parabéns!\")
 		get_node('Sons/venceu').play()
 		get_node(\"canvas-info-bg/InfoTurno\")._corVenceu()
+		
+	_desabilitarMortosPraNaoVirarZumbi()
+	_atualizarInfos()
 
 
 func _on_NextTurn_button_down():
+	turnoAtual+=1
+	_diminuindoImunidade()
 	if(quantidadeMortos < pessoas.size()-1):
 		get_node('Sons/turno').play()
 		_passarTurno()
@@ -196,9 +192,15 @@ func _on_NextTurn_button_down():
 		$canvas_jornal/jornal/j_mortes.show()
 		$canvas_jornal/bJornal.show()
 	else:
+		_desabilitarMortosPraNaoVirarZumbi()
+		_atualizarInfos()
 		get_node(\"display-canvas-bg/frase\").set_text(\"Todos Morreram! FIm de Jogo =(\")
 		get_node('Sons/perdeu').play()
 		get_node(\"canvas-info-bg/InfoTurno\")._corPerdeu()
+		get_node(\"NextTurn\").visible = false
+		get_node(\"NextTurn\").disabled = true
+		get_node(\"RetornaMenu\").visible = true
+		get_node(\"RetornaMenu\").disabled = false
 
 
 func _on_bJornal_button_up() -> void:
@@ -212,6 +214,14 @@ func _venceu():
 	for p in pessoas:
 		if(p.name == get_node(\"Population\").isolado && p.pacienteZero):
 			venceu = true
+			get_node(\"NextTurn\").visible = false
+			get_node(\"NextTurn\").disabled = true
+			get_node(\"RetornaMenu\").visible = true
+			get_node(\"RetornaMenu\").disabled = false
+
+
+func _on_RetornaMenu_button_down():
+	get_tree().change_scene(\"res://scenes/Menu.tscn\")
 "
 
 [sub_resource type="Gradient" id=2]
@@ -258,7 +268,7 @@ func _inicializaPessoas():
 	var listaPessoas = get_children()
 	for n in listaPessoas :
 		randomize()
-		n.imunidade = rand_range(1,5)
+		n.imunidade = rand_range(3,5)
 
 func _inicializarPacienteZero():
 	randomize()
@@ -283,7 +293,7 @@ func _printPessoas():
 func _on_Button_button_down():
 		for p in get_children():
 			p.get_node(\"Button\").disabled = false
-			if(p.name == selecionado):
+			if(p.name == selecionado && !p.morta):
 				p.get_node(\"Button\").disabled = true
 				isolado = selecionado
 				get_parent().get_node(\"display-canvas-bg/pessoaIsolada\").set_text(selecionado)
@@ -304,6 +314,7 @@ var doente:bool = false
 var pacienteZero:bool = false
 var maximo_contatos:int = 2
 var turnoAdoecimento
+var turnoMorte
 var texto: String
 
 # Called when the node enters the scene tree for the first time.
@@ -324,11 +335,13 @@ func _on_Button_button_down():
 
 	texto = \"Nome: \"+str(name)+\"\\n\"
 	get_parent().get_parent().get_node(\"Population\").selecionado = name
+	
+	if(morta):
+		texto += \"Morreu Turno \"+ str(turnoMorte)+ \"\\n\"
 	if(doente):
 		formatarInteracoes()
 	else :
 		texto += \"Essa pessoa ainda não foi ao hospital!\"
-	get_parent().get_parent().get_node(\"painel\").set_text(texto)
 	get_parent().get_parent().get_node(\"painelFicha\").set_text(texto)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -459,10 +472,16 @@ margin_right = 1250.0
 margin_bottom = 522.0
 custom_styles/read_only = SubResource( 15 )
 custom_styles/normal = SubResource( 5 )
+custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_colors/line_number_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_readonly = Color( 0, 0, 0, 1 )
 text = "Informações"
 readonly = true
 smooth_scrolling = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="painelFicha" type="Label" parent="."]
 margin_left = 138.0
@@ -749,13 +768,61 @@ script = SubResource( 8 )
 script = SubResource( 9 )
 
 [node name="Button" type="Button" parent="Population/Cal"]
-margin_left = 28.6825
-margin_top = 520.0
-margin_right = 105.683
-margin_bottom = 551.0
+margin_left = 29.3459
+margin_top = 529.288
+margin_right = 106.346
+margin_bottom = 560.288
 custom_fonts/font = ExtResource( 23 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
 text = "Cal"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Catia" type="Node" parent="Population"]
+script = SubResource( 9 )
+
+[node name="Button" type="Button" parent="Population/Catia"]
+margin_left = 61.6537
+margin_top = 508.663
+margin_right = 134.654
+margin_bottom = 539.663
+custom_fonts/font = ExtResource( 23 )
+custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+text = "Catia"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Ivo" type="Node" parent="Population"]
+script = SubResource( 9 )
+
+[node name="Button" type="Button" parent="Population/Ivo"]
+margin_left = 129.986
+margin_top = 509.327
+margin_right = 202.986
+margin_bottom = 540.327
+custom_fonts/font = ExtResource( 23 )
+custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+text = "Ivo"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Leo" type="Node" parent="Population"]
+script = SubResource( 9 )
+
+[node name="Button" type="Button" parent="Population/Leo"]
+margin_left = 197.44
+margin_top = 508.0
+margin_right = 270.44
+margin_bottom = 539.0
+custom_fonts/font = ExtResource( 23 )
+custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+text = "Leo"
 flat = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -765,10 +832,10 @@ __meta__ = {
 script = SubResource( 9 )
 
 [node name="Button" type="Button" parent="Population/Mark"]
-margin_left = 101.31
-margin_top = 519.677
-margin_right = 176.31
-margin_bottom = 550.677
+margin_left = 100.647
+margin_top = 528.302
+margin_right = 175.647
+margin_bottom = 559.302
 custom_fonts/font = ExtResource( 23 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
 text = "Mark"
@@ -781,10 +848,10 @@ __meta__ = {
 script = SubResource( 9 )
 
 [node name="Button" type="Button" parent="Population/Sinty"]
-margin_left = 166.015
-margin_top = 519.872
-margin_right = 247.015
-margin_bottom = 550.872
+margin_left = 165.352
+margin_top = 527.833
+margin_right = 246.352
+margin_bottom = 558.833
 custom_fonts/font = ExtResource( 23 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
 text = "Sinty"
@@ -797,10 +864,10 @@ __meta__ = {
 script = SubResource( 9 )
 
 [node name="Button" type="Button" parent="Population/Eron"]
-margin_left = 234.33
-margin_top = 520.873
-margin_right = 307.33
-margin_bottom = 551.873
+margin_left = 236.984
+margin_top = 528.171
+margin_right = 309.984
+margin_bottom = 559.171
 custom_fonts/font = ExtResource( 23 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
 text = "Eron"
@@ -814,9 +881,9 @@ script = SubResource( 9 )
 
 [node name="Button" type="Button" parent="Population/Judite"]
 margin_left = 78.4875
-margin_top = 546.195
+margin_top = 551.502
 margin_right = 149.488
-margin_bottom = 577.195
+margin_bottom = 582.502
 custom_fonts/font = ExtResource( 23 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
 text = "Judite"
@@ -829,10 +896,10 @@ __meta__ = {
 script = SubResource( 9 )
 
 [node name="Button" type="Button" parent="Population/Neil"]
-margin_left = 144.828
-margin_top = 544.36
-margin_right = 217.828
-margin_bottom = 575.36
+margin_left = 144.165
+margin_top = 552.321
+margin_right = 217.165
+margin_bottom = 583.321
 custom_fonts/font = ExtResource( 23 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
 text = "Neil"
@@ -845,10 +912,10 @@ __meta__ = {
 script = SubResource( 9 )
 
 [node name="Button" type="Button" parent="Population/Mary"]
-margin_left = 212.465
-margin_top = 544.0
-margin_right = 276.465
-margin_bottom = 575.0
+margin_left = 213.128
+margin_top = 552.625
+margin_right = 277.128
+margin_bottom = 583.625
 custom_styles/disabled = SubResource( 10 )
 custom_fonts/font = ExtResource( 23 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
@@ -865,6 +932,19 @@ margin_right = 219.14
 margin_bottom = 410.564
 custom_styles/normal = SubResource( 11 )
 text = "Próximo Dia"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RetornaMenu" type="Button" parent="."]
+visible = false
+margin_left = 102.14
+margin_top = 363.67
+margin_right = 219.14
+margin_bottom = 412.67
+custom_styles/normal = SubResource( 11 )
+disabled = true
+text = "Menu Principal"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1009,6 +1089,9 @@ texture = ExtResource( 31 )
 [connection signal="button_down" from="Places/Aeroporto/TextureButton" to="Places/Escritorio" method="_on_TextureButton_button_down"]
 [connection signal="button_down" from="Places/Aeroporto/Button" to="Places/Aeroporto" method="_on_Button_button_down"]
 [connection signal="button_down" from="Population/Cal/Button" to="Population/Cal" method="_on_Button_button_down"]
+[connection signal="button_down" from="Population/Catia/Button" to="Population/Catia" method="_on_Button_button_down"]
+[connection signal="button_down" from="Population/Ivo/Button" to="Population/Ivo" method="_on_Button_button_down"]
+[connection signal="button_down" from="Population/Leo/Button" to="Population/Leo" method="_on_Button_button_down"]
 [connection signal="button_down" from="Population/Mark/Button" to="Population/Mark" method="_on_Button_button_down"]
 [connection signal="button_down" from="Population/Sinty/Button" to="Population/Sinty" method="_on_Button_button_down"]
 [connection signal="button_down" from="Population/Eron/Button" to="Population/Eron" method="_on_Button_button_down"]
@@ -1017,5 +1100,6 @@ texture = ExtResource( 31 )
 [connection signal="button_down" from="Population/Mary/Button" to="Population/Mary" method="_on_Button_button_down"]
 [connection signal="button_down" from="NextTurn" to="canvas_jornal/jornal" method="_on_NextTurn_button_down"]
 [connection signal="button_down" from="NextTurn" to="." method="_on_NextTurn_button_down"]
+[connection signal="button_down" from="RetornaMenu" to="." method="_on_RetornaMenu_button_down"]
 [connection signal="button_down" from="Isolar" to="Population" method="_on_Button_button_down"]
 [connection signal="button_up" from="canvas_jornal/bJornal" to="." method="_on_bJornal_button_up"]
