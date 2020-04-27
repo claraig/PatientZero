@@ -1,0 +1,15 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://resource/resPessoas.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+nome = " Cal"
+ehPacienteZero = false
+maximoContatos = 0
+foiHospital = false
+imunidade = 10
+isolado = false
+doente = false
+morreu = false
+turnoInfectado = 0

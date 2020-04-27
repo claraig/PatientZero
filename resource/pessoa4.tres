@@ -1,0 +1,17 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://resource/resPessoas.gd" type="Script" id=1]
+[ext_resource path="res://assets/menu/cidade.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+nome = " Jessica"
+ehPacienteZero = false
+maximoContatos = 0
+foiHospital = false
+imunidade = 10
+isolado = false
+doente = false
+morreu = false
+turnoInfectado = 0
+avatar = ExtResource( 2 )

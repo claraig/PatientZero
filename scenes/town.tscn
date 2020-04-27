@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://assets/town/town2.png" type="Texture" id=1]
 [ext_resource path="res://assets/autoral/escola.png" type="Texture" id=2]
@@ -30,6 +30,7 @@
 [ext_resource path="res://assets/autoral/escritorio-hover.png" type="Texture" id=28]
 [ext_resource path="res://assets/autoral/aeroporto-hover.png" type="Texture" id=29]
 [ext_resource path="res://assets/autoral/painel-texto.png" type="Texture" id=30]
+[ext_resource path="res://Fonts/courier.tres" type="DynamicFont" id=31]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -53,6 +54,7 @@ func _ready():
 	$canvas_jornal/jornal.show()
 	$canvas_jornal/jornal/j_dia1.show()
 	$canvas_jornal/bJornal.show() #background escuro
+	$ficha/FichaFechada.show()
 
 	pessoas = get_node(\"Population\").get_children()
 	print(pessoas)
@@ -66,8 +68,8 @@ func _atualizarInfos():
 	get_node(\"display-canvas-bg/dia\").set_text(str(turnoAtual))
 	get_node(\"display-canvas-bg/doentes\").set_text(str(quantidadeDoentes))
 	get_node(\"display-canvas-bg/mortos\").set_text(str(quantidadeMortos))
-	
-	
+
+
 
 	# Atualizar Jornal com mortes
 	var jmortes = \"Vírus matou\\n\" + str(quantidadeMortos) + \" pessoa(s).\"
@@ -82,12 +84,6 @@ func _encontraPacienteZero():
 	for n in pessoas:
 		if(n.pacienteZero == 1):
 			pacienteZero = n
-
-#func _movimentoPacienteZero():
-#	var lugaresFrequentados = []
-#	var pessoasEncontradas = []
-#	for i in range(0, 1):
-#		pacienteZero.inte
 
 
 func _movimentoVisitacao():
@@ -155,7 +151,6 @@ func _desabilitarMortosPraNaoVirarZumbi():
 			p.get_node(\"Button\").disabled = true
 
 
-
 func _tirarIsolamento():
 
 	for p in pessoas:
@@ -172,6 +167,9 @@ func _inserirTurnoLugares():
 
 func _passarTurno():
 	turnoAtual+=1
+	$Isolar.hide()
+	$painelFicha.hide()
+	$ficha/FichaFechada.show()
 	_venceu()
 	if(!venceu):
 		_inserirTurnoLugares()
@@ -191,9 +189,9 @@ func _on_NextTurn_button_down():
 	if(quantidadeMortos < pessoas.size()-1):
 		get_node('Sons/turno').play()
 		_passarTurno()
-		$jornal.show()
-		$jornal/j_mortes.show()
-		$bJornal.show()
+		$canvas_jornal/jornal.show()
+		$canvas_jornal/jornal/j_mortes.show()
+		$canvas_jornal/bJornal.show()
 	else:
 		get_node(\"display-canvas-bg/frase\").set_text(\"Todos Morreram! FIm de Jogo =(\")
 		get_node('Sons/perdeu').play()
@@ -235,9 +233,9 @@ font_path = "res://Fonts/COUR.TTF"
 outline_color = Color( 0, 0, 0, 1 )
 font_data = SubResource( 6 )
 
-[sub_resource type="StyleBoxFlat" id=14]
+[sub_resource type="StyleBoxFlat" id=8]
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=9]
 script/source = "extends Node
 
 var isolado:String = \"\"
@@ -290,7 +288,7 @@ func _on_Button_button_down():
 #	pass
 "
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=10]
 script/source = "extends Node
 
 var imunidade:int
@@ -331,17 +329,17 @@ func _on_Button_button_down():
 #func _process(delta):
 "
 
-[sub_resource type="StyleBoxFlat" id=10]
+[sub_resource type="StyleBoxFlat" id=11]
 bg_color = Color( 0.596078, 0.72549, 0.721569, 1 )
 draw_center = false
 
-[sub_resource type="StyleBoxFlat" id=11]
+[sub_resource type="StyleBoxFlat" id=12]
 bg_color = Color( 0.623529, 0.282353, 0.0666667, 1 )
 
-[sub_resource type="StyleBoxFlat" id=12]
+[sub_resource type="StyleBoxFlat" id=13]
 bg_color = Color( 0.933333, 0.427451, 0.180392, 1 )
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="DynamicFont" id=14]
 size = 68
 font_data = ExtResource( 15 )
 
@@ -504,6 +502,7 @@ margin_left = 39.3665
 margin_top = 47.2025
 margin_right = 265.366
 margin_bottom = 203.203
+custom_fonts/font = ExtResource( 31 )
 custom_colors/background_color = Color( 0.368627, 0.368627, 0.372549, 1 )
 text = "(escreva o que quiser aqui)"
 syntax_highlighting = true
@@ -732,7 +731,7 @@ margin_right = 1316.86
 margin_bottom = 536.493
 rect_rotation = -8.06005
 rect_scale = Vector2( 0.347381, 0.36 )
-custom_styles/hover = SubResource( 14 )
+custom_styles/hover = SubResource( 8 )
 icon = ExtResource( 4 )
 flat = true
 __meta__ = {
@@ -742,10 +741,10 @@ __meta__ = {
 [node name="Population" type="Node2D" parent="."]
 position = Vector2( 85.1284, 283.145 )
 z_index = -7
-script = SubResource( 8 )
+script = SubResource( 9 )
 
 [node name="Cal" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 10 )
 
 [node name="Button" type="Button" parent="Population/Cal"]
 margin_left = 28.6825
@@ -761,7 +760,7 @@ __meta__ = {
 }
 
 [node name="Mark" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 10 )
 
 [node name="Button" type="Button" parent="Population/Mark"]
 margin_left = 101.31
@@ -777,7 +776,7 @@ __meta__ = {
 }
 
 [node name="Sinty" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 10 )
 
 [node name="Button" type="Button" parent="Population/Sinty"]
 margin_left = 166.015
@@ -793,7 +792,7 @@ __meta__ = {
 }
 
 [node name="Eron" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 10 )
 
 [node name="Button" type="Button" parent="Population/Eron"]
 margin_left = 234.33
@@ -809,7 +808,7 @@ __meta__ = {
 }
 
 [node name="Judite" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 10 )
 
 [node name="Button" type="Button" parent="Population/Judite"]
 margin_left = 78.4875
@@ -825,7 +824,7 @@ __meta__ = {
 }
 
 [node name="Neil" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 10 )
 
 [node name="Button" type="Button" parent="Population/Neil"]
 margin_left = 144.828
@@ -841,14 +840,14 @@ __meta__ = {
 }
 
 [node name="Mary" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 10 )
 
 [node name="Button" type="Button" parent="Population/Mary"]
 margin_left = 212.465
 margin_top = 544.0
 margin_right = 276.465
 margin_bottom = 575.0
-custom_styles/disabled = SubResource( 10 )
+custom_styles/disabled = SubResource( 11 )
 custom_fonts/font = ExtResource( 23 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
 text = "Mary"
@@ -862,7 +861,7 @@ margin_left = 102.14
 margin_top = 361.564
 margin_right = 219.14
 margin_bottom = 410.564
-custom_styles/normal = SubResource( 11 )
+custom_styles/normal = SubResource( 12 )
 text = "Próximo Dia"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -873,7 +872,7 @@ margin_left = 83.4321
 margin_top = 157.649
 margin_right = 260.432
 margin_bottom = 207.649
-custom_styles/normal = SubResource( 12 )
+custom_styles/normal = SubResource( 13 )
 text = "Isolar Pessoa Selecionada"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -959,7 +958,7 @@ margin_left = 218.0
 margin_top = 35.0
 margin_right = 466.0
 margin_bottom = 340.0
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 14 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -20
 text = "Cidade tem x infectados"
