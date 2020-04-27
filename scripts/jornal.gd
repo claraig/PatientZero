@@ -5,9 +5,7 @@ var podegirar:bool
 
 func _ready():
 	podegirar = false
-#	$j_dia1.hide()
-#	_scale = Vector2(0, 0)
-#	pass
+
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -19,7 +17,6 @@ func _process(delta):
 				set_scale(_scale)
 				# girando o jornal
 				rotation += 45 * delta
-#	pass
 
 
 func _on_NextTurn_button_down() -> void:

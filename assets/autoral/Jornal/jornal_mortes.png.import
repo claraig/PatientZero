@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/jornal_dia0.png-483262b413a90ce90a1b2d50bfbc8a70.stex"
+path="res://.import/jornal_mortes.png-413be877b3aace6fe6b49c2b2a27d5b2.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/autoral/jornal_dia0.png"
-dest_files=[ "res://.import/jornal_dia0.png-483262b413a90ce90a1b2d50bfbc8a70.stex" ]
+source_file="res://assets/autoral/Jornal/jornal_mortes.png"
+dest_files=[ "res://.import/jornal_mortes.png-413be877b3aace6fe6b49c2b2a27d5b2.stex" ]
 
 [params]
 

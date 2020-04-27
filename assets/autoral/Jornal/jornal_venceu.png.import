@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/botaoIsolar2.png-0faf2e733546da6551d92a018544f110.stex"
+path="res://.import/jornal_venceu.png-f337257d967a132e76186a19aa13bfee.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/autoral/botaoIsolar2.png"
-dest_files=[ "res://.import/botaoIsolar2.png-0faf2e733546da6551d92a018544f110.stex" ]
+source_file="res://assets/autoral/Jornal/jornal_venceu.png"
+dest_files=[ "res://.import/jornal_venceu.png-f337257d967a132e76186a19aa13bfee.stex" ]
 
 [params]
 

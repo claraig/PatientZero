@@ -21,7 +21,7 @@ func _inicializaPessoas():
 		randomize()
 <<<<<<< HEAD
 		n.imunidade = rand_range(3,5)
-		
+
 =======
 		n.imunidade = rand_range(1,5)
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=47 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://assets/town/town2.png" type="Texture" id=1]
 [ext_resource path="res://assets/autoral/escola.png" type="Texture" id=2]
@@ -9,16 +9,15 @@
 [ext_resource path="res://assets/autoral/restaurante.png" type="Texture" id=7]
 [ext_resource path="res://scenes/InfoTurno.gd" type="Script" id=8]
 [ext_resource path="res://assets/audio/ALERT_Error.wav" type="AudioStream" id=9]
-[ext_resource path="res://assets/audio/DoorKnobOpening1.wav" type="AudioStream" id=10]
 [ext_resource path="res://assets/audio/TurningPage1.wav" type="AudioStream" id=11]
 [ext_resource path="res://assets/audio/MESSAGE-B_Accept.wav" type="AudioStream" id=12]
-[ext_resource path="res://assets/autoral/jornal_mortes.png" type="Texture" id=13]
+[ext_resource path="res://assets/autoral/Jornal/jornal_mortes.png" type="Texture" id=13]
 [ext_resource path="res://Fonts/twCenC_100.tres" type="DynamicFont" id=14]
 [ext_resource path="res://Fonts/twCenC_68.tres" type="DynamicFontData" id=15]
 [ext_resource path="res://scripts/jornal.gd" type="Script" id=16]
 [ext_resource path="res://assets/autoral/ficha.png" type="Texture" id=17]
 [ext_resource path="res://scripts/place.gd" type="Script" id=18]
-[ext_resource path="res://assets/autoral/jornal_dia0.png" type="Texture" id=19]
+[ext_resource path="res://assets/autoral/Jornal/jornal_dia0.png" type="Texture" id=19]
 [ext_resource path="res://assets/autoral/abasA.png" type="Texture" id=20]
 [ext_resource path="res://assets/autoral/notepad.png" type="Texture" id=21]
 [ext_resource path="res://assets/autoral/ficha_aberta.png" type="Texture" id=22]
@@ -31,6 +30,12 @@
 [ext_resource path="res://assets/autoral/aeroporto-hover.png" type="Texture" id=29]
 [ext_resource path="res://assets/autoral/painel-texto.png" type="Texture" id=30]
 [ext_resource path="res://assets/autoral/computer.png" type="Texture" id=31]
+[ext_resource path="res://assets/audio/eklee-KeyPressOld05.wav" type="AudioStream" id=32]
+[ext_resource path="res://assets/autoral/Jornal/jornal_venceu.png" type="Texture" id=33]
+[ext_resource path="res://assets/autoral/Botoes/botaoIsolar2.png" type="Texture" id=34]
+[ext_resource path="res://assets/autoral/Jornal/jornal_doentes.png" type="Texture" id=35]
+[ext_resource path="res://assets/autoral/Botoes/botaoDia.png" type="Texture" id=36]
+[ext_resource path="res://assets/autoral/Botoes/botauMenu.png" type="Texture" id=37]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -50,9 +55,13 @@ func _ready():
 	turnoAtual = 1
 	venceu = false
 
-	$canvas_jornal/jornal/j_mortes.hide()	 #ainda não morreu ninguém
 	$canvas_jornal/jornal.show()
 	$canvas_jornal/jornal/j_dia1.show()
+
+	$canvas_jornal/jornal/j_doentes.hide()
+	$canvas_jornal/jornal/j_mortes.hide()	 #ainda não morreu ninguém
+	$canvas_jornal/jornal/j_venceu.hide()	#ainda não encontrou
+
 	$canvas_jornal/bJornal.show() #background escuro
 	get_node('Sons/turno').play()
 	pessoas = get_node(\"Population\").get_children()
@@ -67,8 +76,12 @@ func _atualizarInfos():
 	get_node(\"display-canvas-bg/dia\").set_text(str(turnoAtual))
 	get_node(\"display-canvas-bg/doentes\").set_text(str(quantidadeDoentes))
 	get_node(\"display-canvas-bg/mortos\").set_text(str(quantidadeMortos))
-	
-	
+
+
+	# Atualizar Jornal doentes
+	var jdoentes = \"Cidade tem \" + str(quantidadeDoentes) + \" doente(s).\"
+	get_node('canvas_jornal/jornal/j_doentes/j_doentes/jinfec').set_text(jdoentes)
+
 
 	# Atualizar Jornal com mortes
 	var jmortes = \"Vírus matou\\n\" + str(quantidadeMortos) + \" pessoa(s).\"
@@ -77,6 +90,10 @@ func _atualizarInfos():
 	get_node('canvas_jornal/jornal/j_mortes/j_mortes/jinfec').set_text(jinfectados)
 	var jturno = \"Dia \" + str(turnoAtual)
 	get_node('canvas_jornal/jornal/j_mortes/j_mortes/jturno').set_text(jturno)
+
+	# Atualizar Jornal vitória
+	get_node('canvas_jornal/jornal/j_venceu/j_venceu/jturno').set_text(jturno)
+
 
 
 func _encontraPacienteZero():
@@ -153,7 +170,6 @@ func _desabilitarMortosPraNaoVirarZumbi():
 
 
 func _tirarIsolamento():
-
 	for p in pessoas:
 		if(p.name == get_node(\"Population\").isolado):
 			p.get_node(\"Button\").disabled = false
@@ -174,10 +190,11 @@ func _passarTurno():
 		_passandoDoenca()
 		_tirarIsolamento()
 	else:
+		$canvas_jornal/jornal/j_venceu.show()
 		get_node(\"display-canvas-bg/frase\").set_text(\"Você encontrou o paciente zero, parabéns!\")
 		get_node('Sons/venceu').play()
 		get_node(\"canvas-info-bg/InfoTurno\")._corVenceu()
-		
+
 	_desabilitarMortosPraNaoVirarZumbi()
 	_atualizarInfos()
 
@@ -189,7 +206,11 @@ func _on_NextTurn_button_down():
 		get_node('Sons/turno').play()
 		_passarTurno()
 		$canvas_jornal/jornal.show()
-		$canvas_jornal/jornal/j_mortes.show()
+		if(quantidadeMortos == 0):
+			$canvas_jornal/jornal/j_mortes.hide()
+			$canvas_jornal/jornal/j_doentes.show()
+		else:
+			$canvas_jornal/jornal/j_mortes.show()
 		$canvas_jornal/bJornal.show()
 	else:
 		_desabilitarMortosPraNaoVirarZumbi()
@@ -201,6 +222,7 @@ func _on_NextTurn_button_down():
 		get_node(\"NextTurn\").disabled = true
 		get_node(\"RetornaMenu\").visible = true
 		get_node(\"RetornaMenu\").disabled = false
+
 
 
 func _on_bJornal_button_up() -> void:
@@ -222,6 +244,11 @@ func _venceu():
 
 func _on_RetornaMenu_button_down():
 	get_tree().change_scene(\"res://scenes/Menu.tscn\")
+
+
+func _on_TextEdit_gui_input(event: InputEvent) -> void:
+	if event is InputEventKey  and event.pressed:
+		get_node('Sons/teclar').play()
 "
 
 [sub_resource type="Gradient" id=2]
@@ -235,23 +262,23 @@ width = 1
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 1, 0.847059, 0, 1 )
 
-[sub_resource type="StyleBoxFlat" id=15]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
-
 [sub_resource type="StyleBoxFlat" id=5]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
-[sub_resource type="DynamicFontData" id=6]
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="DynamicFontData" id=7]
 hinting = 0
 font_path = "res://Fonts/COUR.TTF"
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=8]
 outline_color = Color( 0, 0, 0, 1 )
-font_data = SubResource( 6 )
+font_data = SubResource( 7 )
 
-[sub_resource type="StyleBoxFlat" id=14]
+[sub_resource type="StyleBoxFlat" id=9]
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=10]
 script/source = "extends Node
 
 var isolado:String = \"\"
@@ -304,7 +331,7 @@ func _on_Button_button_down():
 #	pass
 "
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=11]
 script/source = "extends Node
 
 var imunidade:int
@@ -348,18 +375,22 @@ func _on_Button_button_down():
 #func _process(delta):
 "
 
-[sub_resource type="StyleBoxFlat" id=10]
+[sub_resource type="StyleBoxFlat" id=12]
 bg_color = Color( 0.596078, 0.72549, 0.721569, 1 )
 draw_center = false
 
-[sub_resource type="StyleBoxFlat" id=11]
+[sub_resource type="StyleBoxFlat" id=13]
 bg_color = Color( 0.623529, 0.282353, 0.0666667, 1 )
 
-[sub_resource type="StyleBoxFlat" id=12]
+[sub_resource type="StyleBoxFlat" id=14]
 bg_color = Color( 0.933333, 0.427451, 0.180392, 1 )
 
-[sub_resource type="DynamicFont" id=13]
-size = 68
+[sub_resource type="DynamicFont" id=15]
+size = 90
+font_data = ExtResource( 15 )
+
+[sub_resource type="DynamicFont" id=16]
+size = 65
 font_data = ExtResource( 15 )
 
 [node name="Town" type="Node2D"]
@@ -470,8 +501,8 @@ margin_left = 1033.0
 margin_top = 357.0
 margin_right = 1250.0
 margin_bottom = 522.0
-custom_styles/read_only = SubResource( 15 )
-custom_styles/normal = SubResource( 5 )
+custom_styles/read_only = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 custom_colors/line_number_color = Color( 0, 0, 0, 1 )
@@ -488,7 +519,7 @@ margin_left = 138.0
 margin_top = 65.0
 margin_right = 286.0
 margin_bottom = 151.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Informações"
 align = 1
@@ -498,19 +529,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="bloco de notas" type="Label" parent="."]
-margin_left = 985.834
-margin_top = 40.8247
-margin_right = 1276.83
-margin_bottom = 274.825
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "
-"
-align = 1
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="bloco de notas" type="Node2D" parent="."]
+position = Vector2( 984.4, 65.3156 )
 
 [node name="notas" type="Sprite" parent="bloco de notas"]
 position = Vector2( 152.729, 98.6499 )
@@ -541,13 +561,11 @@ stream = ExtResource( 12 )
 [node name="perdeu" type="AudioStreamPlayer" parent="Sons"]
 stream = ExtResource( 9 )
 
-[node name="porta" type="AudioStreamPlayer2D" parent="Sons"]
-stream = ExtResource( 10 )
-
 [node name="turno" type="AudioStreamPlayer2D" parent="Sons"]
 stream = ExtResource( 11 )
 
-[node name="AudioStreamPlayer2D3" type="AudioStreamPlayer2D" parent="Sons"]
+[node name="teclar" type="AudioStreamPlayer2D" parent="Sons"]
+stream = ExtResource( 32 )
 
 [node name="Sprites" type="Node" parent="."]
 
@@ -752,7 +770,7 @@ margin_right = 1316.86
 margin_bottom = 536.493
 rect_rotation = -8.06005
 rect_scale = Vector2( 0.347381, 0.36 )
-custom_styles/hover = SubResource( 14 )
+custom_styles/hover = SubResource( 9 )
 icon = ExtResource( 4 )
 flat = true
 __meta__ = {
@@ -762,10 +780,10 @@ __meta__ = {
 [node name="Population" type="Node2D" parent="."]
 position = Vector2( 85.1284, 283.145 )
 z_index = -7
-script = SubResource( 8 )
+script = SubResource( 10 )
 
 [node name="Cal" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 11 )
 
 [node name="Button" type="Button" parent="Population/Cal"]
 margin_left = 29.3459
@@ -781,7 +799,7 @@ __meta__ = {
 }
 
 [node name="Catia" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 11 )
 
 [node name="Button" type="Button" parent="Population/Catia"]
 margin_left = 61.6537
@@ -797,7 +815,7 @@ __meta__ = {
 }
 
 [node name="Ivo" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 11 )
 
 [node name="Button" type="Button" parent="Population/Ivo"]
 margin_left = 129.986
@@ -813,7 +831,7 @@ __meta__ = {
 }
 
 [node name="Leo" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 11 )
 
 [node name="Button" type="Button" parent="Population/Leo"]
 margin_left = 197.44
@@ -829,7 +847,7 @@ __meta__ = {
 }
 
 [node name="Mark" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 11 )
 
 [node name="Button" type="Button" parent="Population/Mark"]
 margin_left = 100.647
@@ -845,7 +863,7 @@ __meta__ = {
 }
 
 [node name="Sinty" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 11 )
 
 [node name="Button" type="Button" parent="Population/Sinty"]
 margin_left = 165.352
@@ -861,7 +879,7 @@ __meta__ = {
 }
 
 [node name="Eron" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 11 )
 
 [node name="Button" type="Button" parent="Population/Eron"]
 margin_left = 236.984
@@ -877,7 +895,7 @@ __meta__ = {
 }
 
 [node name="Judite" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 11 )
 
 [node name="Button" type="Button" parent="Population/Judite"]
 margin_left = 78.4875
@@ -893,7 +911,7 @@ __meta__ = {
 }
 
 [node name="Neil" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 11 )
 
 [node name="Button" type="Button" parent="Population/Neil"]
 margin_left = 144.165
@@ -909,14 +927,14 @@ __meta__ = {
 }
 
 [node name="Mary" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 11 )
 
 [node name="Button" type="Button" parent="Population/Mary"]
 margin_left = 213.128
 margin_top = 552.625
 margin_right = 277.128
 margin_bottom = 583.625
-custom_styles/disabled = SubResource( 10 )
+custom_styles/disabled = SubResource( 12 )
 custom_fonts/font = ExtResource( 23 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
 text = "Mary"
@@ -926,36 +944,38 @@ __meta__ = {
 }
 
 [node name="NextTurn" type="Button" parent="."]
-margin_left = 102.14
-margin_top = 361.564
-margin_right = 219.14
-margin_bottom = 410.564
-custom_styles/normal = SubResource( 11 )
-text = "Próximo Dia"
+margin_left = 69.3422
+margin_top = 360.834
+margin_right = 261.342
+margin_bottom = 412.834
+custom_styles/normal = SubResource( 13 )
+icon = ExtResource( 36 )
+flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="RetornaMenu" type="Button" parent="."]
 visible = false
-margin_left = 102.14
-margin_top = 363.67
-margin_right = 219.14
-margin_bottom = 412.67
-custom_styles/normal = SubResource( 11 )
+margin_left = 64.8168
+margin_top = 357.838
+margin_right = 268.817
+margin_bottom = 415.838
 disabled = true
-text = "Menu Principal"
+icon = ExtResource( 37 )
+flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Isolar" type="Button" parent="."]
-margin_left = 83.4321
-margin_top = 157.649
-margin_right = 260.432
-margin_bottom = 207.649
-custom_styles/normal = SubResource( 12 )
-text = "Isolar Pessoa Selecionada"
+margin_left = 110.992
+margin_top = 169.664
+margin_right = 215.992
+margin_bottom = 219.664
+custom_styles/normal = SubResource( 14 )
+icon = ExtResource( 34 )
+flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -981,12 +1001,12 @@ __meta__ = {
 }
 
 [node name="jornal" type="Node2D" parent="canvas_jornal"]
-visible = false
 position = Vector2( 654.412, 375.177 )
 z_index = 143
 script = ExtResource( 16 )
 
 [node name="j_dia1" type="Node2D" parent="canvas_jornal/jornal"]
+visible = false
 z_index = 35
 script = ExtResource( 16 )
 
@@ -994,6 +1014,44 @@ script = ExtResource( 16 )
 scale = Vector2( 0.4, 0.4 )
 z_index = 67
 texture = ExtResource( 19 )
+
+[node name="j_doentes" type="Node2D" parent="canvas_jornal/jornal"]
+z_index = 39
+
+[node name="j_doentes" type="Sprite" parent="canvas_jornal/jornal/j_doentes"]
+scale = Vector2( 0.45, 0.45 )
+z_index = 96
+texture = ExtResource( 35 )
+
+[node name="jturno" type="Label" parent="canvas_jornal/jornal/j_doentes/j_doentes"]
+margin_left = 122.0
+margin_top = -415.0
+margin_right = 450.0
+margin_bottom = -307.0
+custom_fonts/font = ExtResource( 14 )
+custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
+custom_constants/line_spacing = -25
+text = "Dia 2"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="jinfec" type="Label" parent="canvas_jornal/jornal/j_doentes/j_doentes"]
+margin_left = -249.0
+margin_top = 198.0
+margin_right = 320.0
+margin_bottom = 503.0
+custom_fonts/font = SubResource( 15 )
+custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
+custom_constants/line_spacing = -20
+text = "Cidade tem x infectados"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="j_mortes" type="Node2D" parent="canvas_jornal/jornal"]
 visible = false
@@ -1040,10 +1098,34 @@ margin_left = 218.0
 margin_top = 35.0
 margin_right = 466.0
 margin_bottom = 340.0
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 16 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -20
 text = "Cidade tem x infectados"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="j_venceu" type="Node2D" parent="canvas_jornal/jornal"]
+visible = false
+z_index = 39
+
+[node name="j_venceu" type="Sprite" parent="canvas_jornal/jornal/j_venceu"]
+scale = Vector2( 0.45, 0.45 )
+z_index = 96
+texture = ExtResource( 33 )
+
+[node name="jturno" type="Label" parent="canvas_jornal/jornal/j_venceu/j_venceu"]
+margin_left = 122.0
+margin_top = -415.0
+margin_right = 450.0
+margin_bottom = -307.0
+custom_fonts/font = ExtResource( 14 )
+custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
+custom_constants/line_spacing = -25
+text = "Dia 2"
 align = 1
 autowrap = true
 __meta__ = {
@@ -1076,6 +1158,7 @@ position = Vector2( 1141.28, 521.238 )
 scale = Vector2( 0.262, 0.397 )
 z_index = -10
 texture = ExtResource( 31 )
+[connection signal="gui_input" from="bloco de notas/TextEdit" to="." method="_on_TextEdit_gui_input"]
 [connection signal="button_down" from="Places/Shopping/TextureButton" to="Places/Shopping" method="_on_TextureButton_button_down"]
 [connection signal="button_down" from="Places/Shopping/Button" to="Places/Shopping" method="_on_Button_button_down"]
 [connection signal="button_down" from="Places/Escola/TextureButton" to="Places/Escola" method="_on_TextureButton_button_down"]
