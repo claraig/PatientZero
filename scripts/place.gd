@@ -23,3 +23,10 @@ func _on_Button_button_down():
 	texto = "Lugar: "+str(name)+"\n"
 	formatarVisitantes()
 	get_parent().get_parent().get_node("painel").set_text(texto)
+
+
+func _on_TextureButton_button_down():
+	texto = "Lugar: "+str(name)+"\n"
+	formatarVisitantes()
+	get_parent().get_parent().get_node("painel").set_text(texto)
+
