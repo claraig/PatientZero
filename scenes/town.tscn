@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 [gd_scene load_steps=53 format=2]
-=======
-[gd_scene load_steps=48 format=2]
->>>>>>> f9a8dc315438b22f2278e719e0376669d7dc7f96
 
 [ext_resource path="res://assets/town/town2.png" type="Texture" id=1]
 [ext_resource path="res://assets/autoral/escola.png" type="Texture" id=2]
@@ -34,17 +30,12 @@
 [ext_resource path="res://assets/autoral/aeroporto-hover.png" type="Texture" id=29]
 [ext_resource path="res://assets/autoral/painel-texto.png" type="Texture" id=30]
 [ext_resource path="res://assets/autoral/computer.png" type="Texture" id=31]
-<<<<<<< HEAD
 [ext_resource path="res://assets/audio/eklee-KeyPressOld05.wav" type="AudioStream" id=32]
 [ext_resource path="res://assets/autoral/Jornal/jornal_venceu.png" type="Texture" id=33]
 [ext_resource path="res://assets/autoral/Botoes/botaoIsolar2.png" type="Texture" id=34]
 [ext_resource path="res://assets/autoral/Jornal/jornal_doentes.png" type="Texture" id=35]
 [ext_resource path="res://assets/autoral/Botoes/botaoDia.png" type="Texture" id=36]
 [ext_resource path="res://assets/autoral/Botoes/botauMenu.png" type="Texture" id=37]
-=======
-[ext_resource path="res://assets/autoral/botaoIsolar2.png" type="Texture" id=32]
-[ext_resource path="res://assets/autoral/botaoIsolar2-hover.png" type="Texture" id=33]
->>>>>>> f9a8dc315438b22f2278e719e0376669d7dc7f96
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -391,7 +382,6 @@ draw_center = false
 [sub_resource type="StyleBoxFlat" id=13]
 bg_color = Color( 0.623529, 0.282353, 0.0666667, 1 )
 
-<<<<<<< HEAD
 [sub_resource type="StyleBoxFlat" id=14]
 bg_color = Color( 0.933333, 0.427451, 0.180392, 1 )
 
@@ -401,10 +391,6 @@ font_data = ExtResource( 15 )
 
 [sub_resource type="DynamicFont" id=16]
 size = 65
-=======
-[sub_resource type="DynamicFont" id=13]
-size = 68
->>>>>>> f9a8dc315438b22f2278e719e0376669d7dc7f96
 font_data = ExtResource( 15 )
 
 [node name="Town" type="Node2D"]
@@ -982,7 +968,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-<<<<<<< HEAD
 [node name="Isolar" type="Button" parent="."]
 margin_left = 110.992
 margin_top = 169.664
@@ -991,15 +976,6 @@ margin_bottom = 219.664
 custom_styles/normal = SubResource( 14 )
 icon = ExtResource( 34 )
 flat = true
-=======
-[node name="Isolar" type="TextureButton" parent="."]
-margin_left = 108.27
-margin_top = 166.122
-margin_right = 213.27
-margin_bottom = 215.122
-texture_normal = ExtResource( 32 )
-texture_hover = ExtResource( 33 )
->>>>>>> f9a8dc315438b22f2278e719e0376669d7dc7f96
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1025,6 +1001,7 @@ __meta__ = {
 }
 
 [node name="jornal" type="Node2D" parent="canvas_jornal"]
+visible = false
 position = Vector2( 654.412, 375.177 )
 z_index = 143
 script = ExtResource( 16 )
@@ -1193,7 +1170,7 @@ texture = ExtResource( 31 )
 [connection signal="button_down" from="Places/Restaurante/Button" to="Places/Restaurante" method="_on_Button_button_down"]
 [connection signal="button_down" from="Places/Escritorio/TextureButton" to="Places/Escritorio" method="_on_TextureButton_button_down"]
 [connection signal="button_down" from="Places/Escritorio/Button" to="Places/Escritorio" method="_on_Button_button_down"]
-[connection signal="button_down" from="Places/Aeroporto/TextureButton" to="Places/Aeroporto" method="_on_TextureButton_button_down"]
+[connection signal="button_down" from="Places/Aeroporto/TextureButton" to="Places/Escritorio" method="_on_TextureButton_button_down"]
 [connection signal="button_down" from="Places/Aeroporto/Button" to="Places/Aeroporto" method="_on_Button_button_down"]
 [connection signal="button_down" from="Population/Cal/Button" to="Population/Cal" method="_on_Button_button_down"]
 [connection signal="button_down" from="Population/Catia/Button" to="Population/Catia" method="_on_Button_button_down"]
