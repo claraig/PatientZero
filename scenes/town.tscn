@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=53 format=2]
 
 [ext_resource path="res://assets/town/town2.png" type="Texture" id=1]
 [ext_resource path="res://assets/autoral/escola.png" type="Texture" id=2]
@@ -30,7 +30,9 @@
 [ext_resource path="res://assets/autoral/escritorio-hover.png" type="Texture" id=28]
 [ext_resource path="res://assets/autoral/aeroporto-hover.png" type="Texture" id=29]
 [ext_resource path="res://assets/autoral/painel-texto.png" type="Texture" id=30]
-[ext_resource path="res://Fonts/courier.tres" type="DynamicFont" id=31]
+[ext_resource path="res://assets/autoral/computer.png" type="Texture" id=31]
+[ext_resource path="res://assets/autoral/jornal_venceu.png" type="Texture" id=32]
+[ext_resource path="res://assets/autoral/botaoIsolar2.png" type="Texture" id=33]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -54,7 +56,6 @@ func _ready():
 	$canvas_jornal/jornal.show()
 	$canvas_jornal/jornal/j_dia1.show()
 	$canvas_jornal/bJornal.show() #background escuro
-	$ficha/FichaFechada.show()
 
 	pessoas = get_node(\"Population\").get_children()
 	print(pessoas)
@@ -84,6 +85,12 @@ func _encontraPacienteZero():
 	for n in pessoas:
 		if(n.pacienteZero == 1):
 			pacienteZero = n
+
+#func _movimentoPacienteZero():
+#	var lugaresFrequentados = []
+#	var pessoasEncontradas = []
+#	for i in range(0, 1):
+#		pacienteZero.inte
 
 
 func _movimentoVisitacao():
@@ -151,6 +158,7 @@ func _desabilitarMortosPraNaoVirarZumbi():
 			p.get_node(\"Button\").disabled = true
 
 
+
 func _tirarIsolamento():
 
 	for p in pessoas:
@@ -167,9 +175,6 @@ func _inserirTurnoLugares():
 
 func _passarTurno():
 	turnoAtual+=1
-	$Isolar.hide()
-	$painelFicha.hide()
-	$ficha/FichaFechada.show()
 	_venceu()
 	if(!venceu):
 		_inserirTurnoLugares()
@@ -183,6 +188,10 @@ func _passarTurno():
 		get_node(\"display-canvas-bg/frase\").set_text(\"Você encontrou o paciente zero, parabéns!\")
 		get_node('Sons/venceu').play()
 		get_node(\"canvas-info-bg/InfoTurno\")._corVenceu()
+
+		$canvas_jornal/jornal.show()
+		$canvas_jornal/jornal/j_venceu.show()
+		$canvas_jornal/bJornal.show()
 
 
 func _on_NextTurn_button_down():
@@ -223,19 +232,22 @@ width = 1
 bg_color = Color( 1, 0.847059, 0, 1 )
 
 [sub_resource type="StyleBoxFlat" id=5]
-bg_color = Color( 0.545098, 0.517647, 0.517647, 1 )
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
-[sub_resource type="DynamicFontData" id=6]
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="DynamicFontData" id=7]
 hinting = 0
 font_path = "res://Fonts/COUR.TTF"
 
-[sub_resource type="DynamicFont" id=7]
+[sub_resource type="DynamicFont" id=8]
 outline_color = Color( 0, 0, 0, 1 )
-font_data = SubResource( 6 )
+font_data = SubResource( 7 )
 
-[sub_resource type="StyleBoxFlat" id=8]
+[sub_resource type="StyleBoxFlat" id=9]
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=10]
 script/source = "extends Node
 
 var isolado:String = \"\"
@@ -288,7 +300,7 @@ func _on_Button_button_down():
 #	pass
 "
 
-[sub_resource type="GDScript" id=10]
+[sub_resource type="GDScript" id=11]
 script/source = "extends Node
 
 var imunidade:int
@@ -329,17 +341,24 @@ func _on_Button_button_down():
 #func _process(delta):
 "
 
-[sub_resource type="StyleBoxFlat" id=11]
+[sub_resource type="StyleBoxFlat" id=12]
 bg_color = Color( 0.596078, 0.72549, 0.721569, 1 )
 draw_center = false
 
-[sub_resource type="StyleBoxFlat" id=12]
+[sub_resource type="StyleBoxFlat" id=13]
 bg_color = Color( 0.623529, 0.282353, 0.0666667, 1 )
 
-[sub_resource type="StyleBoxFlat" id=13]
-bg_color = Color( 0.933333, 0.427451, 0.180392, 1 )
+[sub_resource type="StyleBoxEmpty" id=17]
 
-[sub_resource type="DynamicFont" id=14]
+[sub_resource type="StyleBoxEmpty" id=21]
+
+[sub_resource type="StyleBoxEmpty" id=19]
+
+[sub_resource type="StyleBoxEmpty" id=20]
+
+[sub_resource type="StyleBoxEmpty" id=16]
+
+[sub_resource type="DynamicFont" id=15]
 size = 68
 font_data = ExtResource( 15 )
 
@@ -446,27 +465,24 @@ scale = Vector2( 0.489, 0.475 )
 z_index = 5
 texture = ExtResource( 30 )
 
-[node name="painel" type="Label" parent="."]
-margin_left = 1013.0
-margin_top = 285.0
-margin_right = 1263.0
-margin_bottom = 702.0
-custom_styles/normal = SubResource( 5 )
+[node name="painel" type="TextEdit" parent="."]
+margin_left = 1033.0
+margin_top = 357.0
+margin_right = 1250.0
+margin_bottom = 522.0
+custom_styles/read_only = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Informações"
-align = 1
-valign = 1
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
+readonly = true
+smooth_scrolling = true
 
 [node name="painelFicha" type="Label" parent="."]
 margin_left = 138.0
 margin_top = 65.0
 margin_right = 286.0
 margin_bottom = 151.0
-custom_fonts/font = SubResource( 7 )
+custom_fonts/font = SubResource( 8 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Informações"
 align = 1
@@ -502,7 +518,6 @@ margin_left = 39.3665
 margin_top = 47.2025
 margin_right = 265.366
 margin_bottom = 203.203
-custom_fonts/font = ExtResource( 31 )
 custom_colors/background_color = Color( 0.368627, 0.368627, 0.372549, 1 )
 text = "(escreva o que quiser aqui)"
 syntax_highlighting = true
@@ -731,7 +746,7 @@ margin_right = 1316.86
 margin_bottom = 536.493
 rect_rotation = -8.06005
 rect_scale = Vector2( 0.347381, 0.36 )
-custom_styles/hover = SubResource( 8 )
+custom_styles/hover = SubResource( 9 )
 icon = ExtResource( 4 )
 flat = true
 __meta__ = {
@@ -741,10 +756,10 @@ __meta__ = {
 [node name="Population" type="Node2D" parent="."]
 position = Vector2( 85.1284, 283.145 )
 z_index = -7
-script = SubResource( 9 )
+script = SubResource( 10 )
 
 [node name="Cal" type="Node" parent="Population"]
-script = SubResource( 10 )
+script = SubResource( 11 )
 
 [node name="Button" type="Button" parent="Population/Cal"]
 margin_left = 28.6825
@@ -760,7 +775,7 @@ __meta__ = {
 }
 
 [node name="Mark" type="Node" parent="Population"]
-script = SubResource( 10 )
+script = SubResource( 11 )
 
 [node name="Button" type="Button" parent="Population/Mark"]
 margin_left = 101.31
@@ -776,7 +791,7 @@ __meta__ = {
 }
 
 [node name="Sinty" type="Node" parent="Population"]
-script = SubResource( 10 )
+script = SubResource( 11 )
 
 [node name="Button" type="Button" parent="Population/Sinty"]
 margin_left = 166.015
@@ -792,7 +807,7 @@ __meta__ = {
 }
 
 [node name="Eron" type="Node" parent="Population"]
-script = SubResource( 10 )
+script = SubResource( 11 )
 
 [node name="Button" type="Button" parent="Population/Eron"]
 margin_left = 234.33
@@ -808,7 +823,7 @@ __meta__ = {
 }
 
 [node name="Judite" type="Node" parent="Population"]
-script = SubResource( 10 )
+script = SubResource( 11 )
 
 [node name="Button" type="Button" parent="Population/Judite"]
 margin_left = 78.4875
@@ -824,7 +839,7 @@ __meta__ = {
 }
 
 [node name="Neil" type="Node" parent="Population"]
-script = SubResource( 10 )
+script = SubResource( 11 )
 
 [node name="Button" type="Button" parent="Population/Neil"]
 margin_left = 144.828
@@ -840,14 +855,14 @@ __meta__ = {
 }
 
 [node name="Mary" type="Node" parent="Population"]
-script = SubResource( 10 )
+script = SubResource( 11 )
 
 [node name="Button" type="Button" parent="Population/Mary"]
 margin_left = 212.465
 margin_top = 544.0
 margin_right = 276.465
 margin_bottom = 575.0
-custom_styles/disabled = SubResource( 11 )
+custom_styles/disabled = SubResource( 12 )
 custom_fonts/font = ExtResource( 23 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
 text = "Mary"
@@ -861,19 +876,23 @@ margin_left = 102.14
 margin_top = 361.564
 margin_right = 219.14
 margin_bottom = 410.564
-custom_styles/normal = SubResource( 12 )
+custom_styles/normal = SubResource( 13 )
 text = "Próximo Dia"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Isolar" type="Button" parent="."]
-margin_left = 83.4321
-margin_top = 157.649
-margin_right = 260.432
-margin_bottom = 207.649
-custom_styles/normal = SubResource( 13 )
-text = "Isolar Pessoa Selecionada"
+margin_left = 116.824
+margin_top = 164.998
+margin_right = 233.824
+margin_bottom = 214.998
+custom_styles/hover = SubResource( 17 )
+custom_styles/pressed = SubResource( 21 )
+custom_styles/focus = SubResource( 19 )
+custom_styles/disabled = SubResource( 20 )
+custom_styles/normal = SubResource( 16 )
+icon = ExtResource( 33 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -958,7 +977,7 @@ margin_left = 218.0
 margin_top = 35.0
 margin_right = 466.0
 margin_bottom = 340.0
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 15 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -20
 text = "Cidade tem x infectados"
@@ -967,6 +986,14 @@ autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="j_venceu" type="Node2D" parent="canvas_jornal/jornal"]
+z_index = 39
+
+[node name="j_venceu" type="Sprite" parent="canvas_jornal/jornal/j_venceu"]
+scale = Vector2( 0.45, 0.45 )
+z_index = 96
+texture = ExtResource( 32 )
 
 [node name="ficha" type="Node2D" parent="."]
 position = Vector2( 164.705, 127.693 )
@@ -988,6 +1015,12 @@ position = Vector2( 158.138, 670.74 )
 scale = Vector2( 0.191552, 0.250766 )
 z_index = -1
 texture = ExtResource( 20 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 1141.28, 521.238 )
+scale = Vector2( 0.262, 0.397 )
+z_index = -10
+texture = ExtResource( 31 )
 [connection signal="button_down" from="Places/Shopping/TextureButton" to="Places/Shopping" method="_on_TextureButton_button_down"]
 [connection signal="button_down" from="Places/Shopping/Button" to="Places/Shopping" method="_on_Button_button_down"]
 [connection signal="button_down" from="Places/Escola/TextureButton" to="Places/Escola" method="_on_TextureButton_button_down"]
@@ -1007,7 +1040,7 @@ texture = ExtResource( 20 )
 [connection signal="button_down" from="Population/Judite/Button" to="Population/Judite" method="_on_Button_button_down"]
 [connection signal="button_down" from="Population/Neil/Button" to="Population/Neil" method="_on_Button_button_down"]
 [connection signal="button_down" from="Population/Mary/Button" to="Population/Mary" method="_on_Button_button_down"]
-[connection signal="button_down" from="NextTurn" to="canvas_jornal/jornal" method="_on_NextTurn_button_down"]
 [connection signal="button_down" from="NextTurn" to="." method="_on_NextTurn_button_down"]
+[connection signal="button_down" from="NextTurn" to="canvas_jornal/jornal" method="_on_NextTurn_button_down"]
 [connection signal="button_down" from="Isolar" to="Population" method="_on_Button_button_down"]
 [connection signal="button_up" from="canvas_jornal/bJornal" to="." method="_on_bJornal_button_up"]

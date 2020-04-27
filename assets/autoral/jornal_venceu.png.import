@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/city_predioA.png-87029a6963c23d2cb3e123104f91ef42.stex"
+path="res://.import/jornal_venceu.png-fdc3ee7b52a1f8de702e2138dbca511b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/autoral/city_predioA.png"
-dest_files=[ "res://.import/city_predioA.png-87029a6963c23d2cb3e123104f91ef42.stex" ]
+source_file="res://assets/autoral/jornal_venceu.png"
+dest_files=[ "res://.import/jornal_venceu.png-fdc3ee7b52a1f8de702e2138dbca511b.stex" ]
 
 [params]
 

@@ -24,7 +24,6 @@ func formatarInteracoes():
 	texto += "Adoeceu Turno "+ str(turnoAdoecimento)+ "\n"
 
 func _on_Button_button_down():
-#	get_parent().get_parent().get_parent().get_node()
 	texto = "Nome: "+str(name)+"\n"
 	get_parent().get_parent().get_node("Population").selecionado = name
 	if(doente):
