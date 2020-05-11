@@ -20,5 +20,5 @@ func _ready():
 #func _process(delta):
 
 func _on_Button_button_down():
-	get_parent().get_parent().get_parent().get_node("painel").set_text(nome)
+	get_parent().get_parent().get_parent().get_node("painelPC").set_text(nome)
 
