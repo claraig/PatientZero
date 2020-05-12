@@ -3,7 +3,6 @@
 [ext_resource path="res://Fonts/blackground_60.tres" type="DynamicFont" id=1]
 [ext_resource path="res://scenes/Menu/ReturnToTitle.gd" type="Script" id=2]
 
-
 [node name="NewGame" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0

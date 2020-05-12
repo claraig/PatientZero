@@ -6,4 +6,4 @@
 script = null
 
 [node name="Label2" parent="." index="0"]
-text = "new game"
+text = "novo jogo"

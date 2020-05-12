@@ -12,11 +12,11 @@ func _ready():
 
 func formatarVisitantes():
 	for dado in visitantes:
-		texto += "Turno: "+ str(dado.turno)+ "\nVisitantes: " + str(dado.pessoas)+ "\n"
+		texto += "Dia: "+ str(dado.turno)+ "\nVisitantes: " + str(dado.pessoas)+ "\n"
 
 
 func _on_Button_button_down() -> void:
-	visitantes.push_back({"turno":1, "pessoas":"bia, ze, marco"})
+	visitantes.push_back({"dia":1, "pessoas":"bia, ze, marco"})
 	texto = "Lugar: "+str(name)+"\n"
 	formatarVisitantes()
 	get_parent().get_parent().get_parent().get_node("painel").set_text(texto)

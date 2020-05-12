@@ -1,50 +1,52 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scenes/Menu/NewGame.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/audio/key1.wav" type="AudioStream" id=2]
+[ext_resource path="res://Fonts/COURBD.TTF" type="DynamicFontData" id=3]
+[ext_resource path="res://Fonts/twCenC_100.tres" type="DynamicFont" id=4]
 
-[sub_resource type="DynamicFontData" id=1]
-antialiased = false
-font_path = "res://Fonts/MICROSS.TTF"
-
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=1]
 size = 20
 use_filter = true
-font_data = SubResource( 1 )
+font_data = ExtResource( 3 )
 
 [node name="Instructions" instance=ExtResource( 1 )]
 
 [node name="VBoxContainer" parent="CenterContainer" index="0"]
 margin_left = 240.0
-margin_top = 129.0
+margin_top = 34.0
 margin_right = 1040.0
-margin_bottom = 590.0
+margin_bottom = 685.0
 rect_min_size = Vector2( 800, 0 )
 custom_constants/separation = 30
 alignment = 1
 
 [node name="Label" parent="CenterContainer/VBoxContainer" index="0"]
 margin_right = 800.0
-margin_bottom = 64.0
-text = "Instructions"
+margin_bottom = 108.0
+custom_fonts/font = ExtResource( 4 )
+text = "Instruções"
 align = 1
 
 [node name="text" type="Label" parent="CenterContainer/VBoxContainer" index="1"]
-margin_top = 94.0
+margin_top = 138.0
 margin_right = 800.0
-margin_bottom = 361.0
-custom_fonts/font = SubResource( 2 )
-text = "O mundo enfrenta uma situação de pandemia. O vírus começa a se espalhar pela cidade. Você precisa ser rápido e verificar as pessoas que foram infectadas enquanto tentar descobrir quem é o paciente zero, imune à doença.
+margin_bottom = 551.0
+custom_fonts/font = SubResource( 1 )
+text = "O mundo enfrenta uma situação de pandemia. O vírus começa a se espalhar pela cidade. Você precisa ser rápido e usar lógica e estratégia para verificar as pessoas que foram infectadas enquanto tentar descobrir quem é o paciente zero, imune à doença.
 
-Clicando nos prédios você verá quem esteve lá em cada turno. Verifique por onde andaram as pessoas infectadas e isole-as, para evitar que contaminem mais pessoas. Apenas uma pessoa pode ser isolada por turno. 
+O mural apresenta informações diárias e os locais da cidade e clicando nos prédios você pode verificar diariamente por onde andaram as pessoas e com quem tiveram contato.
 
-Encontre o Paciente Zero e o isole para conseguir desenvolver uma vacina a partir deste e salvar a vida da população antes que seja tarde demais."
+É possível isolar uma pessoa por turno. 
+
+Você pode usar isto para evitar que mais pessoas sejam contaminadas. Isolando o Paciente Zero você poderá  examiná-lo para desenvolver uma vacina e, a partir desta, salvar a vida da população.
+Encontre-o antes que seja tarde demais."
 autowrap = true
 
 [node name="Button" parent="CenterContainer/VBoxContainer" index="2"]
-margin_top = 391.0
+margin_top = 581.0
 margin_right = 800.0
-margin_bottom = 461.0
+margin_bottom = 651.0
 
 [node name="audio" type="AudioStreamPlayer" parent="CenterContainer/VBoxContainer/Button" index="0"]
 stream = ExtResource( 2 )

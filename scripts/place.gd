@@ -15,7 +15,7 @@ func _ready():
 
 func formatarVisitantes():
 	for dado in visitantes:
-		texto += "Turno: "+ str(dado.turno)+ "\nVisitantes: \n " + str(dado.pessoas)+ "\n"
+		texto += "Dia: " + str(dado.turno)+ "\nVisitantes: \n" + str(dado.pessoas)+ "\n"
 
 func _on_Button_button_down():
 #	visitantes.push_back({"turno":1, "pessoas":["cal", "maria", "oaquim"]})

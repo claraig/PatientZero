@@ -21,7 +21,7 @@ func _ready():
 #func _process(delta):
 
 func formatarInteracoes():
-	texto += "Adoeceu Turno "+ str(turnoAdoecimento)+ "\n"
+	texto += "Adoeceu Dia "+ str(turnoAdoecimento)+ "\n"
 
 func _on_Button_button_down():
 	texto = "Nome: "+str(name)+"\n"
