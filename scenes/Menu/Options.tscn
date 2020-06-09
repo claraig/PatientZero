@@ -1,9 +1,20 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://assets/menu/options/menu_opcoes.png" type="Texture" id=1]
 [ext_resource path="res://assets/audio/key1.wav" type="AudioStream" id=2]
 [ext_resource path="res://Fonts/blackground_60.tres" type="DynamicFont" id=3]
 [ext_resource path="res://scenes/Menu/ReturnToTitle.gd" type="Script" id=4]
+[ext_resource path="res://Fonts/TCCM____.TTF" type="DynamicFontData" id=5]
+[ext_resource path="res://assets/autoral/Botoes/seta.png" type="Texture" id=6]
+[ext_resource path="res://Fonts/COURBD.TTF" type="DynamicFontData" id=7]
+
+[sub_resource type="DynamicFont" id=1]
+size = 30
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 34
+font_data = ExtResource( 5 )
 
 [node name="Options" type="Node2D"]
 script = ExtResource( 4 )
@@ -26,4 +37,59 @@ text = "back"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="dificuldade" type="Label" parent="."]
+margin_left = 635.874
+margin_top = 215.145
+margin_right = 844.874
+margin_bottom = 254.145
+rect_rotation = -5.98964
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.286275, 0.211765, 0.105882, 1 )
+text = "Dificuldade"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="valorDificuldade" type="Label" parent="."]
+margin_left = 874.98
+margin_top = 185.097
+margin_right = 990.98
+margin_bottom = 224.097
+rect_rotation = -6.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.286275, 0.211765, 0.105882, 1 )
+text = "Muito Dificil"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="aumentaDificuldade" type="Button" parent="."]
+margin_left = 985.292
+margin_top = 175.588
+margin_right = 1139.29
+margin_bottom = 323.588
+rect_rotation = -6.0
+rect_scale = Vector2( 0.283603, 0.24631 )
+icon = ExtResource( 6 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="diminuiDificuldade" type="Button" parent="."]
+margin_left = 882.407
+margin_top = 222.518
+margin_right = 1036.41
+margin_bottom = 370.518
+rect_rotation = 173.0
+rect_scale = Vector2( 0.283603, 0.24631 )
+icon = ExtResource( 6 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="b_back" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="aumentaDificuldade" to="." method="_on_aumentaDificuldade_pressed"]
+[connection signal="pressed" from="diminuiDificuldade" to="." method="_on_diminuiDificuldade_pressed"]

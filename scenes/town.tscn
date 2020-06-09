@@ -77,7 +77,7 @@ script/source = "extends Node2D
 var turnoAtual:int
 var quantidadeDoentes:int = 0
 var quantidadeMortos:int = 0
-var pessoas
+var pessoas:Array
 var lugares
 var pacienteZero
 var venceu = false
@@ -100,6 +100,7 @@ func _ready():
 	pessoas = get_node(\"Population\").listaPessoas
 	print(pessoas)
 	lugares = get_node(\"Places\").get_children()
+	_encontraPacienteZero()
 	_passarTurno()
 	_atualizarInfos()
 
@@ -132,7 +133,7 @@ func _atualizarInfos():
 
 func _encontraPacienteZero():
 	for n in pessoas:
-		if(n.pacienteZero == 1):
+		if(n.pacienteZero):
 			pacienteZero = n
 
 #func _movimentoPacienteZero():
@@ -170,7 +171,15 @@ func _passandoDoenca():
 			quantidadeDoentes+=1
 			p.turnoAdoecimento = turnoAtual
 			p.get_node(\"Button\").add_color_override(\"font_color\", Color( 1, 1, 1, 1 ))
+			
 
+func adoecerPacienteZero():
+	#caso reste 40% das pessoas não doentes o paciente zero aparece como doente. 
+	if ((((pessoas.size() - quantidadeDoentes)/quantidadeDoentes)*100) <= 40 && !pacienteZero.doente):
+		quantidadeDoentes+=1
+		pacienteZero.doente = true
+		pacienteZero.turnoAdoecimento = turnoAtual
+		pacienteZero.get_node(\"Button\").add_color_override(\"font_color\", Color( 1, 1, 1, 1 ))
 
 func _retornaContaminada(doente, visitantes):
 	var sorteado = doente
@@ -183,7 +192,7 @@ func _retornaContaminada(doente, visitantes):
 
 func _diminuindoImunidade():
 	for p in pessoas:
-		if(p.doente && p.imunidade > 0):
+		if(p.doente && p.imunidade > 0 && !p.pacienteZero):
 			p.imunidade-=1
 		if(p.imunidade == 0 && !p.morta):
 			p.morta = true
@@ -220,6 +229,7 @@ func _passarTurno():
 		_inserirTurnoLugares()
 		_movimentoVisitacao()
 		_passandoDoenca()
+		adoecerPacienteZero()
 		_tirarIsolamento()
 	else:
 		$canvas_jornal/jornal/j_venceu.show()
@@ -1511,8 +1521,8 @@ __meta__ = {
 [connection signal="button_down" from="PopulationMuitoDificil/Enzo/Button" to="PopulationMuitoDificil/Enzo" method="_on_Button_button_down"]
 [connection signal="button_down" from="PopulationMuitoDificil/Luka/Button" to="PopulationMuitoDificil/Luka" method="_on_Button_button_down"]
 [connection signal="button_down" from="PopulationMuitoDificil/Mila/Button" to="PopulationMuitoDificil/Mila" method="_on_Button_button_down"]
-[connection signal="button_down" from="NextTurn" to="canvas_jornal/jornal" method="_on_NextTurn_button_down"]
 [connection signal="button_down" from="NextTurn" to="." method="_on_NextTurn_button_down"]
+[connection signal="button_down" from="NextTurn" to="canvas_jornal/jornal" method="_on_NextTurn_button_down"]
 [connection signal="button_down" from="RetornaMenu" to="." method="_on_RetornaMenu_button_down"]
 [connection signal="button_down" from="Isolar" to="Population" method="_on_Button_button_down"]
 [connection signal="button_up" from="canvas_jornal/bJornal" to="." method="_on_bJornal_button_up"]
