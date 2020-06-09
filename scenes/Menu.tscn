@@ -1,5 +1,6 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
+[ext_resource path="res://assets/menu/inicial/fios.png" type="Texture" id=1]
 [ext_resource path="res://assets/FadeIn.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/menu/inicial/menu_fundo.png" type="Texture" id=8]
 [ext_resource path="res://assets/audio/grama.wav" type="AudioStream" id=9]
@@ -78,9 +79,9 @@ __meta__ = {
 }
 
 [node name="instrucoes" type="TextureButton" parent="mural"]
-margin_left = 608.422
+margin_left = 625.264
 margin_top = 173.685
-margin_right = 743.422
+margin_right = 760.264
 margin_bottom = 330.685
 rect_rotation = -7.68379
 texture_normal = ExtResource( 11 )
@@ -90,10 +91,10 @@ __meta__ = {
 }
 
 [node name="opcoes" type="TextureButton" parent="mural"]
-margin_left = 945.475
-margin_top = 182.684
-margin_right = 1081.48
-margin_bottom = 339.684
+margin_left = 910.738
+margin_top = 178.473
+margin_right = 1046.74
+margin_bottom = 335.473
 rect_rotation = -4.48227
 rect_scale = Vector2( 0.841189, 0.841189 )
 texture_normal = ExtResource( 16 )
@@ -139,6 +140,10 @@ volume_db = 1.541
 
 [node name="FadeIn" parent="." instance=ExtResource( 4 )]
 visible = false
+
+[node name="fios" type="Sprite" parent="."]
+position = Vector2( 641.777, 358.211 )
+texture = ExtResource( 1 )
 [connection signal="pressed" from="mural/novojogo" to="." method="_on_novojogo_pressed"]
 [connection signal="pressed" from="mural/instrucoes" to="." method="_on_instrucoes_pressed"]
 [connection signal="pressed" from="mural/opcoes" to="." method="_on_opcoes_pressed"]
