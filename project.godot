@@ -18,6 +18,10 @@ _global_script_class_icons={
 config/name="p_zero_menu"
 run/main_scene="res://scenes/Menu.tscn"
 
+[autoload]
+
+Configuracoes="*res://scripts/configuracoes.gd"
+
 [display]
 
 window/size/width=1280
