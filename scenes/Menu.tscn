@@ -66,11 +66,11 @@ texture = ExtResource( 8 )
 [node name="mural" type="Node2D" parent="."]
 
 [node name="novojogo" type="TextureButton" parent="mural"]
-margin_left = 243.158
-margin_top = 185.264
-margin_right = 394.158
-margin_bottom = 361.264
-rect_rotation = 5.37859
+margin_left = 277.895
+margin_top = 173.685
+margin_right = 428.895
+margin_bottom = 349.685
+rect_rotation = 9.28497
 texture_normal = ExtResource( 14 )
 texture_hover = ExtResource( 21 )
 __meta__ = {
@@ -78,10 +78,10 @@ __meta__ = {
 }
 
 [node name="instrucoes" type="TextureButton" parent="mural"]
-margin_left = 613.685
-margin_top = 162.106
-margin_right = 748.685
-margin_bottom = 319.106
+margin_left = 608.422
+margin_top = 173.685
+margin_right = 743.422
+margin_bottom = 330.685
 rect_rotation = -7.68379
 texture_normal = ExtResource( 11 )
 texture_hover = ExtResource( 10 )
@@ -90,10 +90,10 @@ __meta__ = {
 }
 
 [node name="opcoes" type="TextureButton" parent="mural"]
-margin_left = 546.527
-margin_top = 394.263
-margin_right = 682.527
-margin_bottom = 551.263
+margin_left = 945.475
+margin_top = 182.684
+margin_right = 1081.48
+margin_bottom = 339.684
 rect_rotation = -4.48227
 rect_scale = Vector2( 0.841189, 0.841189 )
 texture_normal = ExtResource( 16 )
@@ -103,10 +103,10 @@ __meta__ = {
 }
 
 [node name="creditos" type="TextureButton" parent="mural"]
-margin_left = 917.897
-margin_top = 195.79
-margin_right = 1083.9
-margin_bottom = 293.79
+margin_left = 525.265
+margin_top = 396.843
+margin_right = 691.268
+margin_bottom = 494.843
 texture_normal = ExtResource( 15 )
 texture_hover = ExtResource( 19 )
 __meta__ = {
@@ -114,10 +114,10 @@ __meta__ = {
 }
 
 [node name="sair" type="TextureButton" parent="mural"]
-margin_left = 1018.95
-margin_top = 367.369
-margin_right = 1143.95
-margin_bottom = 507.369
+margin_left = 1056.84
+margin_top = 288.421
+margin_right = 1181.84
+margin_bottom = 428.421
 texture_normal = ExtResource( 20 )
 texture_hover = ExtResource( 12 )
 __meta__ = {
@@ -125,7 +125,7 @@ __meta__ = {
 }
 
 [node name="simbolo" type="Sprite" parent="mural"]
-position = Vector2( 489.742, 320.317 )
+position = Vector2( 518.163, 296.106 )
 texture = ExtResource( 18 )
 
 [node name="ficha" type="Sprite" parent="mural"]

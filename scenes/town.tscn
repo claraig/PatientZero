@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=2]
+[gd_scene load_steps=83 format=2]
 
 [ext_resource path="res://assets/town/town2.png" type="Texture" id=1]
 [ext_resource path="res://assets/autoral/Locais/escola.png" type="Texture" id=2]
@@ -8,7 +8,7 @@
 [ext_resource path="res://assets/autoral/Locais/escritorio.png" type="Texture" id=6]
 [ext_resource path="res://assets/autoral/Locais/restaurante.png" type="Texture" id=7]
 [ext_resource path="res://scenes/InfoTurno.gd" type="Script" id=8]
-[ext_resource path="res://assets/audio/ALERT_Error.wav" type="AudioStream" id=9]
+[ext_resource path="res://assets/audio/error_002.ogg" type="AudioStream" id=9]
 [ext_resource path="res://assets/audio/arquive-click.wav" type="AudioStream" id=10]
 [ext_resource path="res://assets/audio/TurningPage1.wav" type="AudioStream" id=11]
 [ext_resource path="res://assets/audio/MESSAGE-B_Accept.wav" type="AudioStream" id=12]
@@ -47,6 +47,26 @@
 [ext_resource path="res://Fonts/COURBD.TTF" type="DynamicFontData" id=45]
 [ext_resource path="res://assets/autoral/Objetos/luminaria_roxa.png" type="Texture" id=46]
 [ext_resource path="res://assets/autoral/Objetos/luminaria_verde.png" type="Texture" id=47]
+[ext_resource path="res://assets/autoral/Lugares/lojaB.png" type="Texture" id=48]
+[ext_resource path="res://assets/autoral/Lugares/loja.png" type="Texture" id=49]
+[ext_resource path="res://assets/autoral/Lugares/lojaA.png" type="Texture" id=50]
+[ext_resource path="res://assets/autoral/Lugares/escolaA.png" type="Texture" id=51]
+[ext_resource path="res://assets/autoral/Lugares/escola.png" type="Texture" id=52]
+[ext_resource path="res://assets/autoral/Lugares/escolaB.png" type="Texture" id=53]
+[ext_resource path="res://assets/autoral/Lugares/mercado.png" type="Texture" id=54]
+[ext_resource path="res://assets/autoral/Lugares/mercadoB.png" type="Texture" id=55]
+[ext_resource path="res://assets/autoral/Lugares/restauranteB.png" type="Texture" id=56]
+[ext_resource path="res://assets/autoral/Lugares/escritorio.png" type="Texture" id=57]
+[ext_resource path="res://assets/autoral/Lugares/rodoviariaA.png" type="Texture" id=58]
+[ext_resource path="res://assets/autoral/Lugares/restauranteA.png" type="Texture" id=59]
+[ext_resource path="res://assets/autoral/Lugares/restaurante.png" type="Texture" id=60]
+[ext_resource path="res://assets/autoral/Lugares/escritorioB.png" type="Texture" id=61]
+[ext_resource path="res://assets/autoral/Lugares/mercadoA.png" type="Texture" id=62]
+[ext_resource path="res://assets/autoral/Lugares/rodoviaria.png" type="Texture" id=63]
+[ext_resource path="res://assets/autoral/Lugares/escritorioA.png" type="Texture" id=64]
+[ext_resource path="res://assets/autoral/Lugares/rodoviariaB.png" type="Texture" id=65]
+[ext_resource path="res://assets/menu/inicial/ficha.png" type="Texture" id=66]
+[ext_resource path="res://assets/menu/inicial/simbolo.png" type="Texture" id=67]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -58,7 +78,6 @@ var pessoas
 var lugares
 var pacienteZero
 var venceu = false
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -82,6 +101,8 @@ func _ready():
 	_atualizarInfos()
 
 func _atualizarInfos():
+
+	get_node('Fichas/FichaFechada').show()
 
 	var texto = \"Dia Atual: \" + str(turnoAtual) + \"  Doentes: \" + str(quantidadeDoentes) + \"  Mortos: \" + str(quantidadeMortos)
 	get_node(\"display-canvas-bg/dia\").set_text(str(turnoAtual))
@@ -145,9 +166,7 @@ func _passandoDoenca():
 			p.doente = true
 			quantidadeDoentes+=1
 			p.turnoAdoecimento = turnoAtual
-			p.get_node(\"Button\").add_color_override(\"font_color\", Color( 1, 0.5, 0.31, 0.7 ))
-
-#			p.get_node(\"Button\").add_color_override(\"font_color\", Color(9,248,43))
+			p.get_node(\"Button\").add_color_override(\"font_color\", Color( 1, 1, 1, 1 ))
 
 
 func _retornaContaminada(doente, visitantes):
@@ -175,7 +194,7 @@ func _desabilitarMortosPraNaoVirarZumbi():
 	for p in pessoas:
 		print(p.get_children())
 		if(p.morta):
-			p.get_node(\"Button\").add_color_override(\"font_color\", Color( 1, 0.1, 0.1, 1 ))
+			p.get_node(\"Button\").add_color_override(\"font_color\",  Color( 1, 0.5, 0.31, 0.7 ))
 
 
 
@@ -264,28 +283,29 @@ func _on_TextEdit_gui_input(event: InputEvent) -> void:
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 1, 0.847059, 0, 1 )
 
-[sub_resource type="DynamicFont" id=15]
+[sub_resource type="DynamicFont" id=3]
 size = 17
 use_filter = true
 font_data = ExtResource( 45 )
 
-[sub_resource type="StyleBoxFlat" id=3]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
-
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
-[sub_resource type="DynamicFontData" id=5]
+[sub_resource type="StyleBoxFlat" id=5]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="DynamicFont" id=16]
+font_data = ExtResource( 45 )
+
+[sub_resource type="DynamicFontData" id=6]
 hinting = 0
 font_path = "res://Fonts/COUR.TTF"
 
-[sub_resource type="DynamicFont" id=6]
+[sub_resource type="DynamicFont" id=7]
 outline_color = Color( 0, 0, 0, 1 )
-font_data = SubResource( 5 )
+font_data = SubResource( 6 )
 
-[sub_resource type="StyleBoxFlat" id=7]
-
-[sub_resource type="GDScript" id=8]
+[sub_resource type="GDScript" id=9]
 script/source = "extends Node
 
 var isolado:String = \"\"
@@ -338,7 +358,7 @@ func _on_Button_button_down():
 #	pass
 "
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=10]
 script/source = "extends Node
 
 var imunidade:int
@@ -359,7 +379,7 @@ func _ready():
 	pass
 
 func formatarInteracoes():
-	texto += \"Adoeceu dia \"+ str(turnoAdoecimento)+ \"\\n\"
+	texto += \"Adoeceu dia \"+ str(turnoAdoecimento)+ \"\\n\\n Imunidade:\" + str(imunidade)
 
 func _on_Button_button_down():
 	get_parent().get_parent().get_node(\"Sons/clicar_arquivo\").play()
@@ -382,21 +402,21 @@ func _on_Button_button_down():
 #func _process(delta):
 "
 
-[sub_resource type="StyleBoxFlat" id=10]
+[sub_resource type="StyleBoxFlat" id=11]
 bg_color = Color( 0.596078, 0.72549, 0.721569, 1 )
 draw_center = false
 
-[sub_resource type="StyleBoxFlat" id=11]
+[sub_resource type="StyleBoxFlat" id=12]
 bg_color = Color( 0.623529, 0.282353, 0.0666667, 1 )
 
-[sub_resource type="StyleBoxFlat" id=12]
+[sub_resource type="StyleBoxFlat" id=13]
 bg_color = Color( 0.933333, 0.427451, 0.180392, 1 )
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="DynamicFont" id=14]
 size = 90
 font_data = ExtResource( 15 )
 
-[sub_resource type="DynamicFont" id=14]
+[sub_resource type="DynamicFont" id=15]
 size = 65
 font_data = ExtResource( 15 )
 
@@ -450,7 +470,7 @@ margin_left = 801.983
 margin_top = 62.8696
 margin_right = 845.983
 margin_bottom = 84.8696
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.235294, 0.211765, 0.180392, 1 )
 text = "Dia"
 __meta__ = {
@@ -459,10 +479,10 @@ __meta__ = {
 
 [node name="Label2" type="Label" parent="Cartaz"]
 margin_left = 683.631
-margin_top = 92.2521
+margin_top = 93.2521
 margin_right = 837.631
-margin_bottom = 164.252
-custom_fonts/font = SubResource( 15 )
+margin_bottom = 165.252
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.235294, 0.211765, 0.180392, 1 )
 text = "Doentes
 Mortos
@@ -476,9 +496,10 @@ __meta__ = {
 
 [node name="dia" type="Label" parent="display-canvas-bg"]
 margin_left = 848.537
-margin_top = 65.7839
+margin_top = 60.7839
 margin_right = 876.537
-margin_bottom = 85.7839
+margin_bottom = 80.7839
+custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
 valign = 1
@@ -492,6 +513,7 @@ margin_left = 850.537
 margin_top = 89.7839
 margin_right = 982.537
 margin_bottom = 109.784
+custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
 valign = 1
@@ -505,6 +527,7 @@ margin_left = 850.537
 margin_top = 116.784
 margin_right = 981.537
 margin_bottom = 136.784
+custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
 valign = 1
@@ -515,9 +538,10 @@ __meta__ = {
 
 [node name="pessoaIsolada" type="Label" parent="display-canvas-bg"]
 margin_left = 850.537
-margin_top = 143.784
+margin_top = 140.784
 margin_right = 982.537
-margin_bottom = 165.784
+margin_bottom = 162.784
+custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
 valign = 1
@@ -551,8 +575,8 @@ margin_left = 945.0
 margin_top = 348.0
 margin_right = 1162.0
 margin_bottom = 547.0
-custom_styles/read_only = SubResource( 3 )
-custom_styles/normal = SubResource( 4 )
+custom_styles/read_only = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
 custom_fonts/font = ExtResource( 39 )
 custom_colors/font_color_selected = Color( 0, 0, 0, 1 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
@@ -581,7 +605,7 @@ margin_left = 63.0
 margin_top = 54.0
 margin_right = 265.0
 margin_bottom = 195.0
-custom_fonts/font = ExtResource( 39 )
+custom_fonts/font = SubResource( 16 )
 custom_colors/background_color = Color( 0.368627, 0.368627, 0.372549, 1 )
 text = "pode escrever aqui"
 syntax_highlighting = true
@@ -601,6 +625,7 @@ stream = ExtResource( 38 )
 
 [node name="perdeu" type="AudioStreamPlayer" parent="Sons"]
 stream = ExtResource( 9 )
+mix_target = 1
 
 [node name="clicar_arquivo" type="AudioStreamPlayer2D" parent="Sons"]
 stream = ExtResource( 10 )
@@ -617,7 +642,7 @@ position = Vector2( 161.705, 127.693 )
 [node name="FichaFechada" type="Sprite" parent="Fichas"]
 position = Vector2( -13, 39 )
 scale = Vector2( 0.33, 0.33 )
-z_index = -1
+z_index = 2
 texture = ExtResource( 17 )
 
 [node name="FichaAberta" type="Sprite" parent="Fichas"]
@@ -640,7 +665,7 @@ margin_left = -39.705
 margin_top = -23.693
 margin_right = 108.295
 margin_bottom = 62.307
-custom_fonts/font = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 text = "Informações"
 align = 1
@@ -693,6 +718,16 @@ rotation = 0.169487
 scale = Vector2( 0.850868, 0.850868 )
 texture = ExtResource( 47 )
 
+[node name="simbolo" type="Sprite" parent="SpritesObjetos"]
+position = Vector2( 395.088, 133.749 )
+texture = ExtResource( 67 )
+
+[node name="ficha" type="Sprite" parent="SpritesObjetos"]
+position = Vector2( 925.778, 346.608 )
+scale = Vector2( 0.888919, 0.856764 )
+z_index = -9
+texture = ExtResource( 66 )
+
 [node name="Places" type="Node2D" parent="."]
 position = Vector2( -12, 42.6477 )
 z_index = -10
@@ -700,12 +735,13 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Shopping" type="Node2D" parent="Places"]
+[node name="Lojas" type="Node2D" parent="Places"]
 position = Vector2( 24.0103, 62.6147 )
 z_index = 10
 script = ExtResource( 18 )
 
-[node name="TextureButton" type="TextureButton" parent="Places/Shopping"]
+[node name="TextureButton" type="TextureButton" parent="Places/Lojas"]
+visible = false
 margin_left = 498.183
 margin_top = 123.322
 margin_right = 1010.18
@@ -718,18 +754,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="Places/Shopping"]
-visible = false
-modulate = Color( 0.776471, 0.713726, 0.713726, 1 )
-margin_left = 611.799
-margin_top = 410.173
-margin_right = 1135.8
-margin_bottom = 874.173
-rect_rotation = -7.91883
-rect_scale = Vector2( 0.347381, 0.36 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-icon = ExtResource( 5 )
-flat = true
+[node name="botao" type="TextureButton" parent="Places/Lojas"]
+margin_left = 396.844
+margin_top = 283.316
+margin_right = 696.844
+margin_bottom = 639.316
+rect_rotation = -5.18058
+rect_scale = Vector2( 0.417337, 0.417337 )
+texture_normal = ExtResource( 49 )
+texture_pressed = ExtResource( 48 )
+texture_hover = ExtResource( 50 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -740,6 +774,7 @@ z_index = 10
 script = ExtResource( 18 )
 
 [node name="TextureButton" type="TextureButton" parent="Places/Escola"]
+visible = false
 margin_left = 423.119
 margin_top = 305.829
 margin_right = 935.119
@@ -752,17 +787,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="Places/Escola"]
-visible = false
-modulate = Color( 0.776471, 0.713726, 0.713726, 1 )
-margin_left = 418.561
-margin_top = 435.965
-margin_right = 942.561
-margin_bottom = 867.965
-rect_rotation = 16.1989
-rect_scale = Vector2( 0.347381, 0.36 )
-icon = ExtResource( 2 )
-flat = true
+[node name="botao" type="TextureButton" parent="Places/Escola"]
+margin_left = 748.078
+margin_top = 171.716
+margin_right = 900.078
+margin_bottom = 355.716
+rect_rotation = 3.04285
+rect_scale = Vector2( 0.819423, 0.819423 )
+texture_normal = ExtResource( 52 )
+texture_pressed = ExtResource( 53 )
+texture_hover = ExtResource( 51 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -773,6 +807,7 @@ z_index = 10
 script = ExtResource( 18 )
 
 [node name="TextureButton" type="TextureButton" parent="Places/Mercado"]
+visible = false
 margin_left = 336.809
 margin_top = 185.161
 margin_right = 848.809
@@ -785,17 +820,16 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="Places/Mercado"]
-visible = false
-modulate = Color( 0.776471, 0.713726, 0.713726, 1 )
-margin_left = 331.103
-margin_top = 241.389
-margin_right = 855.103
-margin_bottom = 673.389
-rect_rotation = -11.1106
-rect_scale = Vector2( 0.347381, 0.36 )
-icon = ExtResource( 3 )
-flat = true
+[node name="botao" type="TextureButton" parent="Places/Mercado"]
+margin_left = 695.615
+margin_top = 326.103
+margin_right = 995.615
+margin_bottom = 682.103
+rect_rotation = 6.66231
+rect_scale = Vector2( 0.417337, 0.417337 )
+texture_normal = ExtResource( 54 )
+texture_pressed = ExtResource( 55 )
+texture_hover = ExtResource( 62 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -806,6 +840,7 @@ z_index = 10
 script = ExtResource( 18 )
 
 [node name="TextureButton" type="TextureButton" parent="Places/Restaurante"]
+visible = false
 margin_left = 761.96
 margin_top = 172.322
 margin_right = 1273.96
@@ -818,26 +853,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="Places/Restaurante"]
-visible = false
-modulate = Color( 0.776471, 0.713726, 0.713726, 1 )
-margin_left = 832.042
-margin_top = 287.864
-margin_right = 1356.04
-margin_bottom = 719.865
-rect_scale = Vector2( 0.347381, 0.36 )
-icon = ExtResource( 7 )
-flat = true
+[node name="botao" type="TextureButton" parent="Places/Restaurante"]
+margin_left = 369.036
+margin_top = 188.473
+margin_right = 669.036
+margin_bottom = 544.473
+rect_scale = Vector2( 0.417337, 0.417337 )
+texture_normal = ExtResource( 60 )
+texture_pressed = ExtResource( 56 )
+texture_hover = ExtResource( 59 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Escritorio" type="Node2D" parent="Places"]
+[node name="Escritório" type="Node2D" parent="Places"]
 position = Vector2( -3, 0 )
 z_index = 10
 script = ExtResource( 18 )
 
-[node name="TextureButton" type="TextureButton" parent="Places/Escritorio"]
+[node name="TextureButton" type="TextureButton" parent="Places/Escritório"]
+visible = false
 margin_left = 329.238
 margin_top = 5.53602
 margin_right = 841.238
@@ -850,27 +885,27 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="Places/Escritorio"]
-visible = false
-modulate = Color( 0.776471, 0.713726, 0.713726, 1 )
-margin_left = 380.186
-margin_top = -1.2626
-margin_right = 904.186
-margin_bottom = 470.737
-rect_rotation = 11.398
-rect_scale = Vector2( 0.347381, 0.36 )
-icon = ExtResource( 6 )
-flat = true
+[node name="botao" type="TextureButton" parent="Places/Escritório"]
+margin_left = 547.488
+margin_top = 200.137
+margin_right = 847.488
+margin_bottom = 556.137
+rect_rotation = -6.48091
+rect_scale = Vector2( 0.417337, 0.417337 )
+texture_normal = ExtResource( 57 )
+texture_pressed = ExtResource( 61 )
+texture_hover = ExtResource( 64 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Aeroporto" type="Node2D" parent="Places"]
+[node name="Rodoviária" type="Node2D" parent="Places"]
 position = Vector2( -3, 0 )
 z_index = 10
 script = ExtResource( 18 )
 
-[node name="TextureButton" type="TextureButton" parent="Places/Aeroporto"]
+[node name="TextureButton" type="TextureButton" parent="Places/Rodoviária"]
+visible = false
 margin_left = 650.217
 margin_top = 310.101
 margin_right = 1162.22
@@ -883,18 +918,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="Places/Aeroporto"]
-visible = false
-modulate = Color( 0.776471, 0.713726, 0.713726, 1 )
-margin_left = 802.862
-margin_top = 18.493
-margin_right = 1316.86
-margin_bottom = 536.493
-rect_rotation = -8.06005
-rect_scale = Vector2( 0.347381, 0.36 )
-custom_styles/hover = SubResource( 7 )
-icon = ExtResource( 4 )
-flat = true
+[node name="botao" type="TextureButton" parent="Places/Rodoviária"]
+margin_left = 535.824
+margin_top = 27.5168
+margin_right = 835.824
+margin_bottom = 383.517
+rect_scale = Vector2( 0.417337, 0.417337 )
+texture_normal = ExtResource( 63 )
+texture_pressed = ExtResource( 65 )
+texture_hover = ExtResource( 58 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -902,15 +934,15 @@ __meta__ = {
 [node name="Population" type="Node2D" parent="."]
 position = Vector2( 85.1284, 283.145 )
 z_index = -7
-script = SubResource( 8 )
-
-[node name="Catia" type="Node" parent="Population"]
 script = SubResource( 9 )
 
+[node name="Catia" type="Node" parent="Population"]
+script = SubResource( 10 )
+
 [node name="Button" type="Button" parent="Population/Catia"]
-margin_left = 92.0
+margin_left = 91.0
 margin_top = 478.0
-margin_right = 149.0
+margin_right = 148.0
 margin_bottom = 502.0
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
@@ -921,13 +953,13 @@ __meta__ = {
 }
 
 [node name="Ivo" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 10 )
 
 [node name="Button" type="Button" parent="Population/Ivo"]
 margin_left = 157.0
-margin_top = 479.0
+margin_top = 478.0
 margin_right = 211.0
-margin_bottom = 503.0
+margin_bottom = 502.0
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
 text = "Ivo"
@@ -937,7 +969,7 @@ __meta__ = {
 }
 
 [node name="Leo" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 10 )
 
 [node name="Button" type="Button" parent="Population/Leo"]
 margin_left = 222.0
@@ -953,7 +985,7 @@ __meta__ = {
 }
 
 [node name="Cal" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 10 )
 
 [node name="Button" type="Button" parent="Population/Cal"]
 margin_left = 68.0
@@ -969,7 +1001,7 @@ __meta__ = {
 }
 
 [node name="Mark" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 10 )
 
 [node name="Button" type="Button" parent="Population/Mark"]
 margin_left = 125.0
@@ -985,7 +1017,7 @@ __meta__ = {
 }
 
 [node name="Sinty" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 10 )
 
 [node name="Button" type="Button" parent="Population/Sinty"]
 margin_left = 186.0
@@ -1001,7 +1033,7 @@ __meta__ = {
 }
 
 [node name="Eron" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 10 )
 
 [node name="Button" type="Button" parent="Population/Eron"]
 margin_left = 256.0
@@ -1017,12 +1049,12 @@ __meta__ = {
 }
 
 [node name="Judite" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 10 )
 
 [node name="Button" type="Button" parent="Population/Judite"]
-margin_left = 101.0
+margin_left = 100.0
 margin_top = 512.0
-margin_right = 167.0
+margin_right = 166.0
 margin_bottom = 536.0
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
@@ -1033,7 +1065,7 @@ __meta__ = {
 }
 
 [node name="Neil" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 10 )
 
 [node name="Button" type="Button" parent="Population/Neil"]
 margin_left = 166.0
@@ -1049,14 +1081,14 @@ __meta__ = {
 }
 
 [node name="Mary" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 10 )
 
 [node name="Button" type="Button" parent="Population/Mary"]
 margin_left = 234.0
 margin_top = 511.0
 margin_right = 288.0
 margin_bottom = 535.0
-custom_styles/disabled = SubResource( 10 )
+custom_styles/disabled = SubResource( 11 )
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
 text = "Mary"
@@ -1070,7 +1102,7 @@ margin_left = 56.3422
 margin_top = 287.834
 margin_right = 248.342
 margin_bottom = 339.834
-custom_styles/normal = SubResource( 11 )
+custom_styles/normal = SubResource( 12 )
 icon = ExtResource( 36 )
 flat = true
 __meta__ = {
@@ -1095,7 +1127,7 @@ margin_left = 94.992
 margin_top = 208.664
 margin_right = 199.992
 margin_bottom = 258.664
-custom_styles/normal = SubResource( 12 )
+custom_styles/normal = SubResource( 13 )
 icon = ExtResource( 34 )
 flat = true
 __meta__ = {
@@ -1166,7 +1198,7 @@ margin_left = -249.0
 margin_top = 198.0
 margin_right = 320.0
 margin_bottom = 503.0
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 14 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -20
 text = "Cidade tem x infectados"
@@ -1221,7 +1253,7 @@ margin_left = 218.0
 margin_top = 35.0
 margin_right = 466.0
 margin_bottom = 340.0
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 15 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -20
 text = "Cidade tem x infectados"
@@ -1255,18 +1287,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="gui_input" from="bloco de notas/TextEdit" to="." method="_on_TextEdit_gui_input"]
-[connection signal="button_down" from="Places/Shopping/TextureButton" to="Places/Shopping" method="_on_TextureButton_button_down"]
-[connection signal="button_down" from="Places/Shopping/Button" to="Places/Shopping" method="_on_Button_button_down"]
+[connection signal="button_down" from="Places/Lojas/TextureButton" to="Places/Lojas" method="_on_TextureButton_button_down"]
+[connection signal="pressed" from="Places/Lojas/botao" to="Places/Lojas" method="_on_botao_pressed"]
 [connection signal="button_down" from="Places/Escola/TextureButton" to="Places/Escola" method="_on_TextureButton_button_down"]
-[connection signal="button_down" from="Places/Escola/Button" to="Places/Escola" method="_on_Button_button_down"]
+[connection signal="pressed" from="Places/Escola/botao" to="Places/Escola" method="_on_botao_pressed"]
 [connection signal="button_down" from="Places/Mercado/TextureButton" to="Places/Mercado" method="_on_TextureButton_button_down"]
-[connection signal="button_down" from="Places/Mercado/Button" to="Places/Mercado" method="_on_Button_button_down"]
+[connection signal="pressed" from="Places/Mercado/botao" to="Places/Mercado" method="_on_botao_pressed"]
 [connection signal="button_down" from="Places/Restaurante/TextureButton" to="Places/Restaurante" method="_on_TextureButton_button_down"]
-[connection signal="button_down" from="Places/Restaurante/Button" to="Places/Restaurante" method="_on_Button_button_down"]
-[connection signal="button_down" from="Places/Escritorio/TextureButton" to="Places/Escritorio" method="_on_TextureButton_button_down"]
-[connection signal="button_down" from="Places/Escritorio/Button" to="Places/Escritorio" method="_on_Button_button_down"]
-[connection signal="button_down" from="Places/Aeroporto/TextureButton" to="Places/Aeroporto" method="_on_TextureButton_button_down"]
-[connection signal="button_down" from="Places/Aeroporto/Button" to="Places/Aeroporto" method="_on_Button_button_down"]
+[connection signal="pressed" from="Places/Restaurante/botao" to="Places/Restaurante" method="_on_botao_pressed"]
+[connection signal="button_down" from="Places/Escritório/TextureButton" to="Places/Escritório" method="_on_TextureButton_button_down"]
+[connection signal="pressed" from="Places/Escritório/botao" to="Places/Escritório" method="_on_botao_pressed"]
+[connection signal="button_down" from="Places/Rodoviária/TextureButton" to="Places/Rodoviária" method="_on_TextureButton_button_down"]
+[connection signal="pressed" from="Places/Rodoviária/botao" to="Places/Rodoviária" method="_on_botao_pressed"]
 [connection signal="button_down" from="Population/Catia/Button" to="Population/Catia" method="_on_Button_button_down"]
 [connection signal="button_down" from="Population/Ivo/Button" to="Population/Ivo" method="_on_Button_button_down"]
 [connection signal="button_down" from="Population/Leo/Button" to="Population/Leo" method="_on_Button_button_down"]
@@ -1277,8 +1309,8 @@ __meta__ = {
 [connection signal="button_down" from="Population/Judite/Button" to="Population/Judite" method="_on_Button_button_down"]
 [connection signal="button_down" from="Population/Neil/Button" to="Population/Neil" method="_on_Button_button_down"]
 [connection signal="button_down" from="Population/Mary/Button" to="Population/Mary" method="_on_Button_button_down"]
-[connection signal="button_down" from="NextTurn" to="canvas_jornal/jornal" method="_on_NextTurn_button_down"]
 [connection signal="button_down" from="NextTurn" to="." method="_on_NextTurn_button_down"]
+[connection signal="button_down" from="NextTurn" to="canvas_jornal/jornal" method="_on_NextTurn_button_down"]
 [connection signal="button_down" from="RetornaMenu" to="." method="_on_RetornaMenu_button_down"]
 [connection signal="button_down" from="Isolar" to="Population" method="_on_Button_button_down"]
 [connection signal="button_up" from="canvas_jornal/bJornal" to="." method="_on_bJornal_button_up"]
