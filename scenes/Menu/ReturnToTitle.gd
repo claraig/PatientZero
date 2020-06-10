@@ -14,8 +14,8 @@ func _ready() -> void:
 func _on_Button_pressed():
 	get_node('audio').play()
 	get_tree().change_scene("res://scenes/Menu.tscn")
-	
-	
+
+
 func atualizaValorDificuldade():
 	var dificuldade = get_node("/root/Configuracoes").dificuldade
 	var labelValorDificuldade = get_node("valorDificuldade")
@@ -28,8 +28,8 @@ func atualizaValorDificuldade():
 	else:
 		labelValorDificuldade.text = "Muito Difícil"
 		labelValorDificuldade.add_color_override("font_color", Color(0.776, 0, 0))
-		
-		
+
+
 
 
 func _on_aumentaDificuldade_pressed():

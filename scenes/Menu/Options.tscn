@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/menu/options/menu_opcoes.png" type="Texture" id=1]
 [ext_resource path="res://assets/audio/key1.wav" type="AudioStream" id=2]
-[ext_resource path="res://Fonts/blackground_60.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Fonts/b_voltar.tres" type="DynamicFont" id=3]
 [ext_resource path="res://scenes/Menu/ReturnToTitle.gd" type="Script" id=4]
 [ext_resource path="res://Fonts/TCCM____.TTF" type="DynamicFontData" id=5]
 [ext_resource path="res://assets/autoral/Botoes/seta.png" type="Texture" id=6]
@@ -27,13 +27,17 @@ texture = ExtResource( 1 )
 stream = ExtResource( 2 )
 
 [node name="b_back" type="Button" parent="."]
-margin_left = 911.92
-margin_top = 565.907
-margin_right = 1069.92
-margin_bottom = 635.907
+margin_left = 884.219
+margin_top = 582.527
+margin_right = 1077.22
+margin_bottom = 652.527
 rect_rotation = -7.16776
 custom_fonts/font = ExtResource( 3 )
-text = "back"
+custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
+custom_colors/font_color_hover = Color( 0.521569, 0.47451, 0.419608, 1 )
+custom_colors/font_color_pressed = Color( 0.266667, 0.192157, 0.0901961, 1 )
+text = "voltar"
+flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
