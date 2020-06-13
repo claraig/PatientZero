@@ -1,12 +1,9 @@
-[gd_scene load_steps=91 format=2]
+[gd_scene load_steps=84 format=2]
 
 [ext_resource path="res://assets/town/town2.png" type="Texture" id=1]
-[ext_resource path="res://assets/autoral/Locais/escola.png" type="Texture" id=2]
-[ext_resource path="res://assets/autoral/Locais/mercado.png" type="Texture" id=3]
-[ext_resource path="res://assets/autoral/Locais/aeroporto.png" type="Texture" id=4]
-[ext_resource path="res://assets/autoral/Locais/shopping.png" type="Texture" id=5]
-[ext_resource path="res://assets/autoral/Locais/escritorio.png" type="Texture" id=6]
-[ext_resource path="res://assets/autoral/Locais/restaurante.png" type="Texture" id=7]
+[ext_resource path="res://assets/autoral/Botoes/opcaoMenu.png" type="Texture" id=2]
+[ext_resource path="res://assets/autoral/Botoes/opcaoSair.png" type="Texture" id=3]
+[ext_resource path="res://assets/autoral/Fichas/fichaPersonalizada.png" type="Texture" id=4]
 [ext_resource path="res://scenes/InfoTurno.gd" type="Script" id=8]
 [ext_resource path="res://assets/audio/ALERT_Error.wav" type="AudioStream" id=9]
 [ext_resource path="res://assets/audio/arquive-click.wav" type="AudioStream" id=10]
@@ -23,12 +20,6 @@
 [ext_resource path="res://assets/autoral/notepad.png" type="Texture" id=21]
 [ext_resource path="res://assets/autoral/Fichas/ficha_aberta.png" type="Texture" id=22]
 [ext_resource path="res://assets/autoral/Fichas/arquivo2.png" type="Texture" id=23]
-[ext_resource path="res://assets/autoral/Locais/shopping-hover.png" type="Texture" id=24]
-[ext_resource path="res://assets/autoral/Locais/escola-hover.png" type="Texture" id=25]
-[ext_resource path="res://assets/autoral/Locais/restaurante-hover.png" type="Texture" id=26]
-[ext_resource path="res://assets/autoral/Locais/mercado-hover.png" type="Texture" id=27]
-[ext_resource path="res://assets/autoral/Locais/escritorio-hover.png" type="Texture" id=28]
-[ext_resource path="res://assets/autoral/Locais/aeroporto-hover.png" type="Texture" id=29]
 [ext_resource path="res://assets/autoral/painel-texto.png" type="Texture" id=30]
 [ext_resource path="res://assets/autoral/cartaz.png" type="Texture" id=31]
 [ext_resource path="res://assets/audio/eklee-KeyPressOld05.wav" type="AudioStream" id=32]
@@ -70,9 +61,7 @@
 [ext_resource path="res://assets/autoral/Fichas/arquivo-fundo.png" type="Texture" id=68]
 [ext_resource path="res://assets/autoral/Fichas/arquivo-muito-dificil.png" type="Texture" id=69]
 [ext_resource path="res://assets/autoral/Fichas/arquivo-dificil.png" type="Texture" id=70]
-[ext_resource path="res://assets/autoral/Botoes/opcaoMenu.png" type="Texture" id=71]
 [ext_resource path="res://assets/autoral/Botoes/menuSanduiche.png" type="Texture" id=72]
-[ext_resource path="res://assets/autoral/Botoes/opcaoSair.png" type="Texture" id=73]
 [ext_resource path="res://assets/autoral/Botoes/pause.png" type="Texture" id=74]
 [ext_resource path="res://Fonts/POWDRFT_.ttf" type="DynamicFontData" id=75]
 
@@ -87,7 +76,6 @@ var lugares
 var pacienteZero
 var venceu = false
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 
 	turnoAtual = 1
@@ -103,6 +91,7 @@ func _ready():
 	$canvas_jornal/jornal/j_venceu.hide()	#ainda não encontrou
 
 	$canvas_jornal/bJornal.show() #background escuro
+
 	get_node('Sons/turno').play()
 	pessoas = get_node(\"Population\").listaPessoas
 	print(pessoas)
@@ -120,7 +109,6 @@ func _atualizarInfos():
 	get_node(\"display-canvas-bg/doentes\").set_text(str(quantidadeDoentes))
 	get_node(\"display-canvas-bg/mortos\").set_text(str(quantidadeMortos))
 
-
 	# Atualizar Jornal com apenas doentes
 	var jdoentes = \"Cidade tem \" + str(quantidadeDoentes) + \" doente(s).\"
 	get_node('canvas_jornal/jornal/j_doentes/j_doentes/jinfec').set_text(jdoentes)
@@ -137,18 +125,10 @@ func _atualizarInfos():
 	get_node('canvas_jornal/jornal/j_venceu/j_venceu/jturno').set_text(jturno)
 
 
-
 func _encontraPacienteZero():
 	for n in pessoas:
 		if(n.pacienteZero):
 			pacienteZero = n
-
-#func _movimentoPacienteZero():
-#	var lugaresFrequentados = []
-#	var pessoasEncontradas = []
-#	for i in range(0, 1):
-#		pacienteZero.inte
-
 
 func _movimentoVisitacao():
 	for p in pessoas:
@@ -229,7 +209,6 @@ func _inserirTurnoLugares():
 	for l in lugares:
 		l.visitantes.push_back({\"turno\":turnoAtual,\"pessoas\":[]})
 
-
 func _passarTurno():
 	_venceu()
 	if(!venceu):
@@ -272,15 +251,12 @@ func _on_NextTurn_button_down():
 		get_node(\"RetornaMenu\").visible = true
 		get_node(\"RetornaMenu\").disabled = false
 
-
-
 func _on_bJornal_button_up() -> void:
 	$canvas_jornal/jornal.hide()
 	$canvas_jornal/bJornal.hide()
 	get_node(\"canvas_jornal/jornal\")._reset()
 
 # Venceu
-
 func _venceu():
 	for p in pessoas:
 		if(p.name == get_node(\"Population\").isolado && p.pacienteZero):
@@ -294,17 +270,15 @@ func _venceu():
 func _on_RetornaMenu_button_down():
 	get_tree().change_scene(\"res://scenes/Menu.tscn\")
 
-
 func _on_TextEdit_gui_input(event: InputEvent) -> void:
 	if event is InputEventKey  and event.pressed:
 		get_node('Sons/teclar').play()
 
 
-#  MENU POU UP
+#  MENU POP UP
 
 func _on_Menu_pressed() -> void:
 	get_node('MenuPopup').show()
-
 
 func _on_menu_pressed() -> void:
 	get_tree().change_scene(\"res://scenes/Menu.tscn\")
@@ -458,21 +432,27 @@ func _on_Button_button_down():
 bg_color = Color( 0.596078, 0.72549, 0.721569, 1 )
 draw_center = false
 
-[sub_resource type="StyleBoxFlat" id=11]
-bg_color = Color( 0.623529, 0.282353, 0.0666667, 1 )
+[sub_resource type="StyleBoxEmpty" id=11]
 
-[sub_resource type="StyleBoxFlat" id=12]
-bg_color = Color( 0.933333, 0.427451, 0.180392, 1 )
+[sub_resource type="StyleBoxEmpty" id=12]
 
-[sub_resource type="DynamicFont" id=13]
+[sub_resource type="StyleBoxEmpty" id=13]
+
+[sub_resource type="StyleBoxEmpty" id=14]
+
+[sub_resource type="DynamicFont" id=15]
 size = 90
 font_data = ExtResource( 15 )
 
-[sub_resource type="DynamicFont" id=14]
+[sub_resource type="DynamicFont" id=16]
 size = 65
 font_data = ExtResource( 15 )
 
-[sub_resource type="DynamicFont" id=15]
+[sub_resource type="StyleBoxEmpty" id=17]
+
+[sub_resource type="StyleBoxEmpty" id=18]
+
+[sub_resource type="DynamicFont" id=19]
 size = 32
 font_data = ExtResource( 75 )
 
@@ -717,10 +697,17 @@ z_index = 2
 texture = ExtResource( 17 )
 
 [node name="FichaAberta" type="Sprite" parent="Fichas"]
+visible = false
 position = Vector2( -13, 28 )
 scale = Vector2( 0.33, 0.33 )
 z_index = -2
 texture = ExtResource( 22 )
+
+[node name="FichaAberta2" type="Sprite" parent="Fichas"]
+position = Vector2( -14.6466, 26.8336 )
+scale = Vector2( 0.467218, 0.467218 )
+z_index = -2
+texture = ExtResource( 4 )
 
 [node name="Arquivo" type="Sprite" parent="Fichas"]
 position = Vector2( 14.9935, 454.824 )
@@ -821,20 +808,6 @@ position = Vector2( 24.0103, 52.6147 )
 z_index = 10
 script = ExtResource( 18 )
 
-[node name="TextureButton" type="TextureButton" parent="Places/Lojas"]
-visible = false
-margin_left = 498.183
-margin_top = 123.322
-margin_right = 1010.18
-margin_bottom = 528.322
-rect_rotation = -7.58113
-rect_scale = Vector2( 0.382, 0.428 )
-texture_normal = ExtResource( 5 )
-texture_hover = ExtResource( 24 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="botao" type="TextureButton" parent="Places/Lojas"]
 margin_left = 343.658
 margin_top = -12.5291
@@ -842,6 +815,7 @@ margin_right = 643.658
 margin_bottom = 343.471
 rect_rotation = -5.18058
 rect_scale = Vector2( 0.417337, 0.417337 )
+keep_pressed_outside = true
 texture_normal = ExtResource( 49 )
 texture_pressed = ExtResource( 48 )
 texture_hover = ExtResource( 50 )
@@ -854,20 +828,6 @@ position = Vector2( -3, 0 )
 z_index = 10
 script = ExtResource( 18 )
 
-[node name="TextureButton" type="TextureButton" parent="Places/Escola"]
-visible = false
-margin_left = 423.119
-margin_top = 305.829
-margin_right = 935.119
-margin_bottom = 710.829
-rect_rotation = 23.0083
-rect_scale = Vector2( 0.382, 0.428 )
-texture_normal = ExtResource( 2 )
-texture_hover = ExtResource( 25 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="botao" type="TextureButton" parent="Places/Escola"]
 margin_left = 748.078
 margin_top = 171.716
@@ -875,6 +835,7 @@ margin_right = 900.078
 margin_bottom = 355.716
 rect_rotation = 3.04285
 rect_scale = Vector2( 0.819423, 0.819423 )
+keep_pressed_outside = true
 texture_normal = ExtResource( 52 )
 texture_pressed = ExtResource( 53 )
 texture_hover = ExtResource( 51 )
@@ -887,20 +848,6 @@ position = Vector2( -3, 0 )
 z_index = 10
 script = ExtResource( 18 )
 
-[node name="TextureButton" type="TextureButton" parent="Places/Mercado"]
-visible = false
-margin_left = 336.809
-margin_top = 185.161
-margin_right = 848.809
-margin_bottom = 590.161
-rect_rotation = -9.56306
-rect_scale = Vector2( 0.382, 0.428 )
-texture_normal = ExtResource( 3 )
-texture_hover = ExtResource( 27 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="botao" type="TextureButton" parent="Places/Mercado"]
 margin_left = 691.183
 margin_top = 326.103
@@ -908,6 +855,7 @@ margin_right = 991.183
 margin_bottom = 682.103
 rect_rotation = 6.66231
 rect_scale = Vector2( 0.417337, 0.417337 )
+keep_pressed_outside = true
 texture_normal = ExtResource( 54 )
 texture_pressed = ExtResource( 55 )
 texture_hover = ExtResource( 62 )
@@ -920,26 +868,13 @@ position = Vector2( -3, 0 )
 z_index = 10
 script = ExtResource( 18 )
 
-[node name="TextureButton" type="TextureButton" parent="Places/Restaurante"]
-visible = false
-margin_left = 761.96
-margin_top = 172.322
-margin_right = 1273.96
-margin_bottom = 577.322
-rect_rotation = 1.23337
-rect_scale = Vector2( 0.382, 0.428 )
-texture_normal = ExtResource( 7 )
-texture_hover = ExtResource( 26 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="botao" type="TextureButton" parent="Places/Restaurante"]
 margin_left = 369.036
 margin_top = 188.473
 margin_right = 669.036
 margin_bottom = 544.473
 rect_scale = Vector2( 0.417337, 0.417337 )
+keep_pressed_outside = true
 texture_normal = ExtResource( 60 )
 texture_pressed = ExtResource( 56 )
 texture_hover = ExtResource( 59 )
@@ -952,20 +887,6 @@ position = Vector2( -3, 0 )
 z_index = 10
 script = ExtResource( 18 )
 
-[node name="TextureButton" type="TextureButton" parent="Places/Escritório"]
-visible = false
-margin_left = 329.238
-margin_top = 5.53602
-margin_right = 841.238
-margin_bottom = 410.536
-rect_rotation = 1.4679
-rect_scale = Vector2( 0.382, 0.428 )
-texture_normal = ExtResource( 6 )
-texture_hover = ExtResource( 28 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="botao" type="TextureButton" parent="Places/Escritório"]
 margin_left = 536.408
 margin_top = 218.974
@@ -973,6 +894,7 @@ margin_right = 836.408
 margin_bottom = 574.974
 rect_rotation = -6.48091
 rect_scale = Vector2( 0.417337, 0.417337 )
+keep_pressed_outside = true
 texture_normal = ExtResource( 57 )
 texture_pressed = ExtResource( 61 )
 texture_hover = ExtResource( 64 )
@@ -985,26 +907,13 @@ position = Vector2( -3, 0 )
 z_index = 10
 script = ExtResource( 18 )
 
-[node name="TextureButton" type="TextureButton" parent="Places/Rodoviária"]
-visible = false
-margin_left = 650.217
-margin_top = 310.101
-margin_right = 1162.22
-margin_bottom = 715.101
-rect_rotation = 10.6387
-rect_scale = Vector2( 0.382, 0.428 )
-texture_normal = ExtResource( 4 )
-texture_hover = ExtResource( 29 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="botao" type="TextureButton" parent="Places/Rodoviária"]
 margin_left = 535.824
 margin_top = 27.5168
 margin_right = 835.824
 margin_bottom = 383.517
 rect_scale = Vector2( 0.417337, 0.417337 )
+keep_pressed_outside = true
 texture_normal = ExtResource( 63 )
 texture_pressed = ExtResource( 65 )
 texture_hover = ExtResource( 58 )
@@ -1344,7 +1253,7 @@ margin_left = 56.3422
 margin_top = 287.834
 margin_right = 248.342
 margin_bottom = 339.834
-custom_styles/normal = SubResource( 11 )
+custom_styles/hover = SubResource( 11 )
 icon = ExtResource( 36 )
 flat = true
 __meta__ = {
@@ -1357,6 +1266,7 @@ margin_left = 50.4124
 margin_top = 283.6
 margin_right = 254.413
 margin_bottom = 341.6
+custom_styles/hover = SubResource( 12 )
 disabled = true
 icon = ExtResource( 37 )
 flat = true
@@ -1365,15 +1275,17 @@ __meta__ = {
 }
 
 [node name="MenuSanduiche" type="Button" parent="."]
-margin_left = 3.01562
+margin_left = 9.01562
 margin_top = -2.43214
-margin_right = 71.0156
+margin_right = 77.0156
 margin_bottom = 55.5679
 rect_scale = Vector2( 0.859638, 0.859638 )
+custom_styles/hover = SubResource( 13 )
 icon = ExtResource( 72 )
 flat = true
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": false,
+"_editor_description_": ""
 }
 
 [node name="Isolar" type="Button" parent="."]
@@ -1381,7 +1293,7 @@ margin_left = 94.992
 margin_top = 198.664
 margin_right = 199.992
 margin_bottom = 248.664
-custom_styles/normal = SubResource( 12 )
+custom_styles/hover = SubResource( 14 )
 icon = ExtResource( 34 )
 flat = true
 __meta__ = {
@@ -1452,7 +1364,7 @@ margin_left = -249.0
 margin_top = 198.0
 margin_right = 320.0
 margin_bottom = 503.0
-custom_fonts/font = SubResource( 13 )
+custom_fonts/font = SubResource( 15 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -20
 text = "Cidade tem x infectados"
@@ -1507,7 +1419,7 @@ margin_left = 218.0
 margin_top = 35.0
 margin_right = 466.0
 margin_bottom = 340.0
-custom_fonts/font = SubResource( 14 )
+custom_fonts/font = SubResource( 16 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -20
 text = "Cidade tem x infectados"
@@ -1546,11 +1458,12 @@ position = Vector2( 650.844, 359.566 )
 texture = ExtResource( 74 )
 
 [node name="menu" type="Button" parent="MenuPopup"]
-margin_left = -101.399
-margin_top = -43.2133
-margin_right = 99.601
-margin_bottom = 8.78668
-icon = ExtResource( 71 )
+margin_left = -101.0
+margin_top = -43.0
+margin_right = 100.0
+margin_bottom = 9.0
+custom_styles/hover = SubResource( 17 )
+icon = ExtResource( 2 )
 flat = true
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1561,18 +1474,20 @@ margin_left = -101.399
 margin_top = 13.2964
 margin_right = 99.601
 margin_bottom = 64.2964
-icon = ExtResource( 73 )
+custom_styles/hover = SubResource( 17 )
+icon = ExtResource( 3 )
 flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="cancela" type="Button" parent="MenuPopup"]
-margin_left = 90.0
-margin_top = -92.0
-margin_right = 123.0
-margin_bottom = -45.0
-custom_fonts/font = SubResource( 15 )
+margin_left = 87.0
+margin_top = -90.0
+margin_right = 106.0
+margin_bottom = -49.0
+custom_styles/normal = SubResource( 18 )
+custom_fonts/font = SubResource( 19 )
 text = "x"
 flat = true
 __meta__ = {
@@ -1581,17 +1496,11 @@ __meta__ = {
 [connection signal="gui_input" from="bloco de notas/TextEdit" to="." method="_on_TextEdit_gui_input"]
 [connection signal="ready" from="Fichas/Arquivo/dificil" to="Population" method="_on_dificil_ready"]
 [connection signal="ready" from="Fichas/Arquivo/muitoDificil" to="Population" method="_on_muitoDificil_ready"]
-[connection signal="button_down" from="Places/Lojas/TextureButton" to="Places/Lojas" method="_on_TextureButton_button_down"]
 [connection signal="pressed" from="Places/Lojas/botao" to="Places/Lojas" method="_on_botao_pressed"]
-[connection signal="button_down" from="Places/Escola/TextureButton" to="Places/Escola" method="_on_TextureButton_button_down"]
 [connection signal="pressed" from="Places/Escola/botao" to="Places/Escola" method="_on_botao_pressed"]
-[connection signal="button_down" from="Places/Mercado/TextureButton" to="Places/Mercado" method="_on_TextureButton_button_down"]
 [connection signal="pressed" from="Places/Mercado/botao" to="Places/Mercado" method="_on_botao_pressed"]
-[connection signal="button_down" from="Places/Restaurante/TextureButton" to="Places/Restaurante" method="_on_TextureButton_button_down"]
 [connection signal="pressed" from="Places/Restaurante/botao" to="Places/Restaurante" method="_on_botao_pressed"]
-[connection signal="button_down" from="Places/Escritório/TextureButton" to="Places/Escritório" method="_on_TextureButton_button_down"]
 [connection signal="pressed" from="Places/Escritório/botao" to="Places/Escritório" method="_on_botao_pressed"]
-[connection signal="button_down" from="Places/Rodoviária/TextureButton" to="Places/Rodoviária" method="_on_TextureButton_button_down"]
 [connection signal="pressed" from="Places/Rodoviária/botao" to="Places/Rodoviária" method="_on_botao_pressed"]
 [connection signal="button_down" from="Population/Catia/Button" to="Population/Catia" method="_on_Button_button_down"]
 [connection signal="button_down" from="Population/Ivo/Button" to="Population/Ivo" method="_on_Button_button_down"]
