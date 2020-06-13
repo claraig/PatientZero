@@ -584,6 +584,7 @@ margin_left = 703.537
 margin_top = 171.784
 margin_right = 980.537
 margin_bottom = 200.784
+custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
 valign = 1
