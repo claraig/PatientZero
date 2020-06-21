@@ -1,25 +1,33 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://assets/menu/options/menu_opcoes.png" type="Texture" id=1]
+[ext_resource path="res://assets/autoral/menu/options/menu_opcoes.png" type="Texture" id=1]
 [ext_resource path="res://assets/audio/key1.wav" type="AudioStream" id=2]
 [ext_resource path="res://Fonts/b_voltar.tres" type="DynamicFont" id=3]
 [ext_resource path="res://scenes/Menu/ReturnToTitle.gd" type="Script" id=4]
-[ext_resource path="res://Fonts/TCCM____.TTF" type="DynamicFontData" id=5]
+[ext_resource path="res://assets/autoral/menu/options/opcoes.png" type="Texture" id=5]
 [ext_resource path="res://assets/autoral/Botoes/seta.png" type="Texture" id=6]
 [ext_resource path="res://Fonts/COURBD.TTF" type="DynamicFontData" id=7]
 
 [sub_resource type="DynamicFont" id=1]
 size = 30
+use_filter = true
 font_data = ExtResource( 7 )
 
 [sub_resource type="DynamicFont" id=2]
-size = 34
-font_data = ExtResource( 5 )
+size = 26
+outline_color = Color( 0, 0, 0, 1 )
+use_filter = true
+font_data = ExtResource( 7 )
 
 [node name="Options" type="Node2D"]
 script = ExtResource( 4 )
 
 [node name="fundo" type="Sprite" parent="."]
+position = Vector2( 639.68, 360.759 )
+texture = ExtResource( 5 )
+
+[node name="fundo2" type="Sprite" parent="."]
+visible = false
 position = Vector2( 639.68, 360.759 )
 texture = ExtResource( 1 )
 
@@ -27,10 +35,10 @@ texture = ExtResource( 1 )
 stream = ExtResource( 2 )
 
 [node name="b_back" type="Button" parent="."]
-margin_left = 884.219
-margin_top = 582.527
-margin_right = 1077.22
-margin_bottom = 652.527
+margin_left = 876.465
+margin_top = 592.866
+margin_right = 1069.47
+margin_bottom = 662.866
 rect_rotation = -7.16776
 custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
@@ -43,11 +51,11 @@ __meta__ = {
 }
 
 [node name="dificuldade" type="Label" parent="."]
-margin_left = 635.874
-margin_top = 215.145
-margin_right = 844.874
-margin_bottom = 254.145
-rect_rotation = -5.98964
+margin_left = 613.839
+margin_top = 219.432
+margin_right = 821.839
+margin_bottom = 254.432
+rect_rotation = -6.25872
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.286275, 0.211765, 0.105882, 1 )
 text = "Dificuldade"
@@ -56,24 +64,24 @@ __meta__ = {
 }
 
 [node name="valorDificuldade" type="Label" parent="."]
-margin_left = 874.98
-margin_top = 185.097
-margin_right = 990.98
-margin_bottom = 224.097
-rect_rotation = -6.0
+margin_left = 707.863
+margin_top = 259.052
+margin_right = 915.863
+margin_bottom = 289.052
+rect_rotation = -6.72343
 custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.286275, 0.211765, 0.105882, 1 )
-text = "Muito Dificil"
+text = "Muito Difícil"
 align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="aumentaDificuldade" type="Button" parent="."]
-margin_left = 985.292
-margin_top = 175.588
-margin_right = 1139.29
-margin_bottom = 323.588
+margin_left = 909.189
+margin_top = 231.543
+margin_right = 1063.19
+margin_bottom = 379.543
 rect_rotation = -6.0
 rect_scale = Vector2( 0.283603, 0.24631 )
 icon = ExtResource( 6 )
@@ -83,14 +91,40 @@ __meta__ = {
 }
 
 [node name="diminuiDificuldade" type="Button" parent="."]
-margin_left = 882.407
-margin_top = 222.518
-margin_right = 1036.41
-margin_bottom = 370.518
+margin_left = 714.717
+margin_top = 291.398
+margin_right = 868.72
+margin_bottom = 439.398
 rect_rotation = 173.0
 rect_scale = Vector2( 0.283603, 0.24631 )
 icon = ExtResource( 6 )
 flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Musica" type="Label" parent="."]
+margin_left = 626.763
+margin_top = 326.698
+margin_right = 834.763
+margin_bottom = 361.698
+rect_rotation = -6.25872
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.286275, 0.211765, 0.105882, 1 )
+text = "Música"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Efeitos sonoros" type="Label" parent="."]
+margin_left = 642.508
+margin_top = 428.727
+margin_right = 912.508
+margin_bottom = 463.727
+rect_rotation = -6.25872
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.286275, 0.211765, 0.105882, 1 )
+text = "Efeitos Sonoros"
 __meta__ = {
 "_edit_use_anchors_": false
 }

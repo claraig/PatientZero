@@ -1,32 +1,32 @@
-[gd_scene load_steps=85 format=2]
+[gd_scene load_steps=89 format=2]
 
 [ext_resource path="res://assets/town/town2.png" type="Texture" id=1]
 [ext_resource path="res://assets/autoral/Botoes/opcaoMenu.png" type="Texture" id=2]
 [ext_resource path="res://assets/autoral/Botoes/opcaoSair.png" type="Texture" id=3]
 [ext_resource path="res://assets/autoral/Fichas/fichaPersonalizada.png" type="Texture" id=4]
 [ext_resource path="res://assets/autoral/avatares/1PardoRuivo.png" type="Texture" id=5]
+[ext_resource path="res://Fonts/COUR.TTF" type="DynamicFontData" id=6]
+[ext_resource path="res://assets/autoral/Jornal/j_doentesb.png" type="Texture" id=7]
 [ext_resource path="res://scenes/InfoTurno.gd" type="Script" id=8]
 [ext_resource path="res://assets/audio/ALERT_Error.wav" type="AudioStream" id=9]
 [ext_resource path="res://assets/audio/arquive-click.wav" type="AudioStream" id=10]
 [ext_resource path="res://assets/audio/TurningPage1.wav" type="AudioStream" id=11]
 [ext_resource path="res://assets/audio/MESSAGE-B_Accept.wav" type="AudioStream" id=12]
-[ext_resource path="res://assets/autoral/Jornal/jornal_mortes.png" type="Texture" id=13]
-[ext_resource path="res://Fonts/twCenC_100.tres" type="DynamicFont" id=14]
-[ext_resource path="res://Fonts/twCenC_68.tres" type="DynamicFontData" id=15]
+[ext_resource path="res://assets/autoral/Jornal/j_mortes2.png" type="Texture" id=13]
+[ext_resource path="res://assets/autoral/Jornal/j_venceu.png" type="Texture" id=14]
 [ext_resource path="res://scripts/jornal.gd" type="Script" id=16]
 [ext_resource path="res://assets/autoral/Fichas/ficha.png" type="Texture" id=17]
 [ext_resource path="res://scripts/place.gd" type="Script" id=18]
-[ext_resource path="res://assets/autoral/Jornal/jornal_dia0.png" type="Texture" id=19]
+[ext_resource path="res://assets/autoral/Jornal/jdia0.png" type="Texture" id=19]
 [ext_resource path="res://Fonts/courier_bold.tres" type="DynamicFont" id=20]
 [ext_resource path="res://assets/autoral/notepad.png" type="Texture" id=21]
 [ext_resource path="res://assets/autoral/Fichas/ficha_aberta.png" type="Texture" id=22]
 [ext_resource path="res://assets/autoral/Fichas/arquivo2.png" type="Texture" id=23]
+[ext_resource path="res://Fonts/jornal.tres" type="DynamicFont" id=24]
 [ext_resource path="res://assets/autoral/painel-texto.png" type="Texture" id=30]
 [ext_resource path="res://assets/autoral/cartaz.png" type="Texture" id=31]
 [ext_resource path="res://assets/audio/eklee-KeyPressOld05.wav" type="AudioStream" id=32]
-[ext_resource path="res://assets/autoral/Jornal/jornal_venceu.png" type="Texture" id=33]
 [ext_resource path="res://assets/autoral/Botoes/botaoIsolar2.png" type="Texture" id=34]
-[ext_resource path="res://assets/autoral/Jornal/jornal_doentes.png" type="Texture" id=35]
 [ext_resource path="res://assets/autoral/Botoes/botaoDia.png" type="Texture" id=36]
 [ext_resource path="res://assets/autoral/Botoes/botaoMenu.png" type="Texture" id=37]
 [ext_resource path="res://assets/audio/keyboard.wav" type="AudioStream" id=38]
@@ -57,8 +57,8 @@
 [ext_resource path="res://assets/autoral/Lugares/rodoviaria.png" type="Texture" id=63]
 [ext_resource path="res://assets/autoral/Lugares/escritorioA.png" type="Texture" id=64]
 [ext_resource path="res://assets/autoral/Lugares/rodoviariaB.png" type="Texture" id=65]
-[ext_resource path="res://assets/menu/inicial/ficha.png" type="Texture" id=66]
-[ext_resource path="res://assets/menu/inicial/simbolo.png" type="Texture" id=67]
+[ext_resource path="res://assets/autoral/menu/inicial/ficha.png" type="Texture" id=66]
+[ext_resource path="res://assets/autoral/menu/inicial/simbolo.png" type="Texture" id=67]
 [ext_resource path="res://assets/autoral/Fichas/arquivo-fundo.png" type="Texture" id=68]
 [ext_resource path="res://assets/autoral/Fichas/arquivo-muito-dificil.png" type="Texture" id=69]
 [ext_resource path="res://assets/autoral/Fichas/arquivo-dificil.png" type="Texture" id=70]
@@ -110,26 +110,48 @@ func _atualizarInfos():
 	get_node(\"display-canvas-bg/doentes\").set_text(str(quantidadeDoentes))
 	get_node(\"display-canvas-bg/mortos\").set_text(str(quantidadeMortos))
 
-	# Atualizar Jornal com apenas doentes
-	var jdoentes = \"Cidade tem \" + str(quantidadeDoentes) + \" doente(s).\"
+	# JORNAL
+
+	var jturno = \"Dia \" + str(turnoAtual)
+	get_node('canvas_jornal/jornal/j_mortes/j_mortes/jturno').set_text(jturno)
+	get_node('canvas_jornal/jornal/j_doentes/j_doentes/jturno').set_text(jturno)
+
+	# Atualizar jornal com apenas doentes
+	var jdoentes = \"Cidade tem \"
+	var jinfectados = \"Cidade tem\\n\"
+	if (quantidadeDoentes == 1):
+		jdoentes += str(quantidadeDoentes) + \" doente.\"
+		jinfectados += str(quantidadeDoentes) + \"um  doente.\"
+	else:
+		jdoentes += str(quantidadeDoentes) + \" doentes.\"
+		jinfectados += str(quantidadeDoentes) + \"  doentes.\"
 	get_node('canvas_jornal/jornal/j_doentes/j_doentes/jinfec').set_text(jdoentes)
 
 	# Atualizar Jornal com mortes
-	var jmortes = \"Vírus matou\\n\" + str(quantidadeMortos) + \" pessoa(s).\"
+	var jmortes = \"Vírus matou\\n\"
+	if (quantidadeMortos == 1):
+		jmortes  += \"uma pessoa.\"
+	else:
+		jmortes  += str(quantidadeMortos) + \" pessoas.\"
 	get_node('canvas_jornal/jornal/j_mortes/j_mortes/jmortes').set_text(jmortes)
-	var jinfectados = \"Cidade tem\\n\" + str(quantidadeDoentes) + \"  doente(s).\"
 	get_node('canvas_jornal/jornal/j_mortes/j_mortes/jinfec').set_text(jinfectados)
-	var jturno = \"Dia \" + str(turnoAtual)
-	get_node('canvas_jornal/jornal/j_mortes/j_mortes/jturno').set_text(jturno)
 
 	# Atualizar Jornal vitória
 	get_node('canvas_jornal/jornal/j_venceu/j_venceu/jturno').set_text(jturno)
 
 
+func _on_bJornal_button_up() -> void:
+	$canvas_jornal/jornal.hide()
+	$canvas_jornal/bJornal.hide()
+	get_node(\"canvas_jornal/jornal\")._reset()
+
+#---------------------------------------------------------------------------#
+
 func _encontraPacienteZero():
 	for n in pessoas:
 		if(n.pacienteZero):
 			pacienteZero = n
+
 
 func _movimentoVisitacao():
 	for p in pessoas:
@@ -197,18 +219,9 @@ func _desabilitarMortosPraNaoVirarZumbi():
 			p.get_node(\"Button\").add_color_override(\"font_color\",  Color( 1, 0.5, 0.31, 0.7 ))
 
 
+#---------------------------------------------------------------------------#
 
-func _tirarIsolamento():
-	for p in pessoas:
-		if(p.name == get_node(\"Population\").isolado):
-			p.get_node(\"Button\").disabled = false
-	get_node(\"Population\").isolado = \"\"
-	get_node(\"Population\").selecionado = \"\"
 # Passar de Turno
-
-func _inserirTurnoLugares():
-	for l in lugares:
-		l.visitantes.push_back({\"turno\":turnoAtual,\"pessoas\":[]})
 
 func _passarTurno():
 	_venceu()
@@ -252,10 +265,20 @@ func _on_NextTurn_button_down():
 		get_node(\"RetornaMenu\").visible = true
 		get_node(\"RetornaMenu\").disabled = false
 
-func _on_bJornal_button_up() -> void:
-	$canvas_jornal/jornal.hide()
-	$canvas_jornal/bJornal.hide()
-	get_node(\"canvas_jornal/jornal\")._reset()
+
+func _tirarIsolamento():
+	for p in pessoas:
+		if(p.name == get_node(\"Population\").isolado):
+			p.get_node(\"Button\").disabled = false
+	get_node(\"Population\").isolado = \"\"
+	get_node(\"Population\").selecionado = \"\"
+
+func _inserirTurnoLugares():
+	for l in lugares:
+		l.visitantes.push_back({\"turno\":turnoAtual,\"pessoas\":[]})
+
+#---------------------------------------------------------------------------#
+
 
 # Venceu
 func _venceu():
@@ -271,10 +294,13 @@ func _venceu():
 func _on_RetornaMenu_button_down():
 	get_tree().change_scene(\"res://scenes/Menu.tscn\")
 
+#---------------------------------------------------------------------------#
+
 func _on_TextEdit_gui_input(event: InputEvent) -> void:
 	if event is InputEventKey  and event.pressed:
 		get_node('Sons/teclar').play()
 
+#---------------------------------------------------------------------------#
 
 #  MENU POP UP
 
@@ -398,6 +424,7 @@ var turnoAdoecimento
 var turnoMorte
 var texto: String
 
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	get_parent().get_parent().get_node('Fichas/FichaFechada').show()
@@ -441,13 +468,42 @@ draw_center = false
 
 [sub_resource type="StyleBoxEmpty" id=14]
 
-[sub_resource type="DynamicFont" id=15]
-size = 90
-font_data = ExtResource( 15 )
+[sub_resource type="DynamicFont" id=20]
+size = 61
+use_filter = true
+extra_spacing_top = 6
+font_data = ExtResource( 45 )
 
-[sub_resource type="DynamicFont" id=16]
-size = 65
-font_data = ExtResource( 15 )
+[sub_resource type="DynamicFont" id=21]
+size = 100
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 45 )
+
+[sub_resource type="DynamicFont" id=24]
+size = 47
+outline_size = 1
+outline_color = Color( 0.388235, 0.329412, 0.301961, 1 )
+use_filter = true
+extra_spacing_top = 5
+extra_spacing_bottom = 5
+font_data = ExtResource( 6 )
+
+[sub_resource type="DynamicFontData" id=22]
+font_path = "res://Fonts/COURBD.TTF"
+
+[sub_resource type="DynamicFont" id=25]
+size = 79
+use_filter = true
+font_data = SubResource( 22 )
+
+[sub_resource type="DynamicFont" id=26]
+size = 41
+outline_color = Color( 0.388235, 0.329412, 0.301961, 1 )
+use_filter = true
+extra_spacing_top = 4
+extra_spacing_bottom = 4
+font_data = SubResource( 22 )
 
 [sub_resource type="StyleBoxEmpty" id=17]
 
@@ -623,9 +679,9 @@ texture = ExtResource( 30 )
 
 [node name="painelPC" type="TextEdit" parent="."]
 margin_left = 945.0
-margin_top = 348.0
+margin_top = 355.0
 margin_right = 1162.0
-margin_bottom = 547.0
+margin_bottom = 532.0
 custom_styles/read_only = SubResource( 4 )
 custom_styles/normal = SubResource( 5 )
 custom_fonts/font = ExtResource( 39 )
@@ -942,6 +998,7 @@ margin_right = 147.46
 margin_bottom = 522.987
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Catia"
 flat = true
 __meta__ = {
@@ -958,6 +1015,7 @@ margin_right = 206.137
 margin_bottom = 523.527
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Ivo"
 flat = true
 __meta__ = {
@@ -974,6 +1032,7 @@ margin_right = 265.758
 margin_bottom = 522.906
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Leo"
 flat = true
 __meta__ = {
@@ -990,6 +1049,7 @@ margin_right = 123.217
 margin_bottom = 538.906
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Cal"
 flat = true
 __meta__ = {
@@ -1006,6 +1066,7 @@ margin_right = 179.919
 margin_bottom = 537.825
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Mark"
 flat = true
 __meta__ = {
@@ -1022,6 +1083,7 @@ margin_right = 245.0
 margin_bottom = 537.906
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Sinty"
 flat = true
 __meta__ = {
@@ -1038,6 +1100,7 @@ margin_right = 305.137
 margin_bottom = 539.366
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Eron"
 flat = true
 __meta__ = {
@@ -1054,6 +1117,7 @@ margin_right = 164.919
 margin_bottom = 555.906
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Judite"
 flat = true
 __meta__ = {
@@ -1070,6 +1134,7 @@ margin_right = 223.379
 margin_bottom = 555.906
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Neil"
 flat = true
 __meta__ = {
@@ -1087,6 +1152,7 @@ margin_bottom = 555.446
 custom_styles/disabled = SubResource( 10 )
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Mary"
 flat = true
 __meta__ = {
@@ -1108,6 +1174,7 @@ margin_right = 182.591
 margin_bottom = 509.429
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Neide"
 flat = true
 __meta__ = {
@@ -1125,6 +1192,7 @@ margin_right = 123.071
 margin_bottom = 509.56
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Tom"
 flat = true
 __meta__ = {
@@ -1142,6 +1210,7 @@ margin_right = 296.162
 margin_bottom = 510.409
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Lola"
 flat = true
 __meta__ = {
@@ -1159,6 +1228,7 @@ margin_right = 240.832
 margin_bottom = 508.767
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Kiko"
 flat = true
 __meta__ = {
@@ -1180,6 +1250,7 @@ margin_right = 162.025
 margin_bottom = 494.17
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Biel"
 flat = true
 __meta__ = {
@@ -1197,6 +1268,7 @@ margin_right = 209.979
 margin_bottom = 494.302
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Hugo"
 flat = true
 __meta__ = {
@@ -1214,6 +1286,7 @@ margin_right = 268.298
 margin_bottom = 493.16
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Enzo"
 flat = true
 __meta__ = {
@@ -1231,6 +1304,7 @@ margin_right = 189.085
 margin_bottom = 480.24
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Luka"
 flat = true
 __meta__ = {
@@ -1248,6 +1322,7 @@ margin_right = 242.823
 margin_bottom = 480.24
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
+custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
 text = "Mila"
 flat = true
 __meta__ = {
@@ -1327,38 +1402,53 @@ __meta__ = {
 }
 
 [node name="jornal" type="Node2D" parent="canvas_jornal"]
-visible = false
 position = Vector2( 654.412, 375.177 )
 z_index = 143
 script = ExtResource( 16 )
 
 [node name="j_dia1" type="Node2D" parent="canvas_jornal/jornal"]
-visible = false
 z_index = 35
 script = ExtResource( 16 )
 
 [node name="j_dia0" type="Sprite" parent="canvas_jornal/jornal/j_dia1"]
+position = Vector2( -1.10803, 0 )
 scale = Vector2( 0.4, 0.4 )
 z_index = 67
 texture = ExtResource( 19 )
 
+[node name="jturno2" type="Label" parent="canvas_jornal/jornal/j_dia1/j_dia0"]
+margin_left = 156.087
+margin_top = -602.875
+margin_right = 395.087
+margin_bottom = -521.875
+custom_fonts/font = SubResource( 20 )
+custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
+custom_constants/line_spacing = -25
+text = "Dia 1º"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="j_doentes" type="Node2D" parent="canvas_jornal/jornal"]
+visible = false
 z_index = 39
 
 [node name="j_doentes" type="Sprite" parent="canvas_jornal/jornal/j_doentes"]
 scale = Vector2( 0.45, 0.45 )
 z_index = 96
-texture = ExtResource( 35 )
+texture = ExtResource( 7 )
 
 [node name="jturno" type="Label" parent="canvas_jornal/jornal/j_doentes/j_doentes"]
-margin_left = 122.0
-margin_top = -415.0
-margin_right = 450.0
-margin_bottom = -307.0
-custom_fonts/font = ExtResource( 14 )
+margin_left = 170.754
+margin_top = -604.833
+margin_right = 409.754
+margin_bottom = -523.833
+custom_fonts/font = SubResource( 20 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -25
-text = "Dia 2"
+text = "Dia"
 align = 1
 autowrap = true
 __meta__ = {
@@ -1366,14 +1456,44 @@ __meta__ = {
 }
 
 [node name="jinfec" type="Label" parent="canvas_jornal/jornal/j_doentes/j_doentes"]
-margin_left = -249.0
+margin_left = -467.075
 margin_top = 198.0
-margin_right = 320.0
-margin_bottom = 503.0
-custom_fonts/font = SubResource( 15 )
+margin_right = 445.925
+margin_bottom = 408.0
+custom_fonts/font = SubResource( 21 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -20
 text = "Cidade tem x infectados"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="t" type="Label" parent="canvas_jornal/jornal/j_doentes/j_doentes"]
+margin_left = -474.075
+margin_top = -155.04
+margin_right = 68.9246
+margin_bottom = 156.96
+custom_fonts/font = ExtResource( 24 )
+custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
+custom_constants/line_spacing = -20
+text = "Vírus se espalha pela cidade."
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="t1" type="Label" parent="canvas_jornal/jornal/j_doentes/j_doentes"]
+margin_left = -482.0
+margin_top = 456.764
+margin_right = 438.0
+margin_bottom = 681.764
+custom_fonts/font = SubResource( 24 )
+custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
+custom_constants/line_spacing = -25
+text = "Cientistas estudam como criar uma vacina para combater esta pandemia global."
 align = 1
 autowrap = true
 __meta__ = {
@@ -1390,11 +1510,11 @@ z_index = 96
 texture = ExtResource( 13 )
 
 [node name="jmortes" type="Label" parent="canvas_jornal/jornal/j_mortes/j_mortes"]
-margin_left = -262.0
-margin_top = 225.0
-margin_right = 211.0
-margin_bottom = 416.0
-custom_fonts/font = ExtResource( 14 )
+margin_left = -294.0
+margin_top = 245.0
+margin_right = 251.0
+margin_bottom = 436.0
+custom_fonts/font = SubResource( 25 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -25
 text = "Vírus matou
@@ -1405,27 +1525,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="jturno" type="Label" parent="canvas_jornal/jornal/j_mortes/j_mortes"]
-margin_left = 122.0
-margin_top = -415.0
-margin_right = 450.0
-margin_bottom = -307.0
-custom_fonts/font = ExtResource( 14 )
-custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
-custom_constants/line_spacing = -25
-text = "Dia 2"
-align = 1
-autowrap = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="jinfec" type="Label" parent="canvas_jornal/jornal/j_mortes/j_mortes"]
-margin_left = 218.0
-margin_top = 35.0
-margin_right = 466.0
-margin_bottom = 340.0
-custom_fonts/font = SubResource( 16 )
+margin_left = 206.0
+margin_top = 55.0
+margin_right = 459.0
+margin_bottom = 202.0
+custom_fonts/font = SubResource( 26 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -20
 text = "Cidade tem x infectados"
@@ -1435,24 +1540,38 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="jturno" type="Label" parent="canvas_jornal/jornal/j_mortes/j_mortes"]
+margin_left = 170.754
+margin_top = -604.833
+margin_right = 409.754
+margin_bottom = -523.833
+custom_fonts/font = SubResource( 20 )
+custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
+custom_constants/line_spacing = -25
+text = "Dia"
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="j_venceu" type="Node2D" parent="canvas_jornal/jornal"]
-visible = false
 z_index = 39
 
 [node name="j_venceu" type="Sprite" parent="canvas_jornal/jornal/j_venceu"]
 scale = Vector2( 0.45, 0.45 )
 z_index = 96
-texture = ExtResource( 33 )
+texture = ExtResource( 14 )
 
 [node name="jturno" type="Label" parent="canvas_jornal/jornal/j_venceu/j_venceu"]
-margin_left = 122.0
-margin_top = -415.0
-margin_right = 450.0
-margin_bottom = -307.0
-custom_fonts/font = ExtResource( 14 )
+margin_left = 170.754
+margin_top = -604.833
+margin_right = 409.754
+margin_bottom = -523.833
+custom_fonts/font = SubResource( 20 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -25
-text = "Dia 2"
+text = "Dia"
 align = 1
 autowrap = true
 __meta__ = {
@@ -1528,8 +1647,8 @@ __meta__ = {
 [connection signal="button_down" from="PopulationMuitoDificil/Enzo/Button" to="PopulationMuitoDificil/Enzo" method="_on_Button_button_down"]
 [connection signal="button_down" from="PopulationMuitoDificil/Luka/Button" to="PopulationMuitoDificil/Luka" method="_on_Button_button_down"]
 [connection signal="button_down" from="PopulationMuitoDificil/Mila/Button" to="PopulationMuitoDificil/Mila" method="_on_Button_button_down"]
-[connection signal="button_down" from="NextTurn" to="." method="_on_NextTurn_button_down"]
 [connection signal="button_down" from="NextTurn" to="canvas_jornal/jornal" method="_on_NextTurn_button_down"]
+[connection signal="button_down" from="NextTurn" to="." method="_on_NextTurn_button_down"]
 [connection signal="button_down" from="RetornaMenu" to="." method="_on_RetornaMenu_button_down"]
 [connection signal="pressed" from="MenuSanduiche" to="." method="_on_Menu_pressed"]
 [connection signal="button_down" from="Isolar" to="Population" method="_on_Button_button_down"]

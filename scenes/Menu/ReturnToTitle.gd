@@ -17,7 +17,7 @@ func atualizaValorDificuldade():
 		labelValorDificuldade.add_color_override("font_color", Color(0.212, 0.608, 0.145))
 	elif (dificuldade == 1):
 		labelValorDificuldade.text = "Difícil"
-		labelValorDificuldade.add_color_override("font_color", Color(0.835, 0.859, 0.212))
+		labelValorDificuldade.add_color_override("font_color", Color(0.988, 0.590, 0.212))
 	else:
 		labelValorDificuldade.text = "Muito Difícil"
 		labelValorDificuldade.add_color_override("font_color", Color(0.776, 0, 0))

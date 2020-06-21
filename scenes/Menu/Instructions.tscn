@@ -1,14 +1,23 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Fonts/b_voltar.tres" type="DynamicFont" id=1]
 [ext_resource path="res://assets/audio/key1.wav" type="AudioStream" id=2]
 [ext_resource path="res://Fonts/POWDRFT_.ttf" type="DynamicFontData" id=3]
-[ext_resource path="res://assets/menu/instructions/menu_instrucoes.png" type="Texture" id=4]
+[ext_resource path="res://assets/autoral/menu/instructions/pastinha.png" type="Texture" id=4]
 [ext_resource path="res://scenes/Menu/Instructions.gd" type="Script" id=5]
 [ext_resource path="res://assets/autoral/Lugares/escritorioA.png" type="Texture" id=6]
+[ext_resource path="res://assets/autoral/menu/instructions/menu_instr.png" type="Texture" id=7]
+[ext_resource path="res://assets/autoral/menu/inicial/simbolo.png" type="Texture" id=8]
+[ext_resource path="res://assets/audio/grama.wav" type="AudioStream" id=9]
 
 [sub_resource type="DynamicFont" id=1]
-size = 21
+size = 30
+outline_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
+use_filter = true
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 30
 outline_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
 use_filter = true
 font_data = ExtResource( 3 )
@@ -18,44 +27,44 @@ script = ExtResource( 5 )
 
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 638.424, 360.955 )
-texture = ExtResource( 4 )
+texture = ExtResource( 7 )
 
-[node name="audio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 2 )
+[node name="p1" type="Node2D" parent="."]
+visible = false
 
-[node name="text" type="Label" parent="."]
-margin_left = 191.0
-margin_top = 470.0
-margin_right = 974.0
-margin_bottom = 617.0
+[node name="text" type="Label" parent="p1"]
+margin_left = 197.0
+margin_top = 468.0
+margin_right = 968.0
+margin_bottom = 573.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
-text = "É possível isolar uma pessoa por turno. Você pode usar isto para evitar que mais pessoas sejam contaminadas. Isolando o Paciente Zero você poderá desenvolver uma vacina e salvar a vida da população. Encontre-o antes que seja tarde demais."
+text = "É possível isolar uma pessoa por turno. Isolando o Paciente Zero você poderá desenvolver uma vacina e salvar a vida da população. Encontre-o antes que seja tarde demais."
 align = 3
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="text2" type="Label" parent="."]
-margin_left = 370.812
-margin_top = 202.366
-margin_right = 1116.81
-margin_bottom = 349.366
+[node name="text2" type="Label" parent="p1"]
+margin_left = 389.0
+margin_top = 202.0
+margin_right = 1096.0
+margin_bottom = 361.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
-text = "O mundo enfrenta uma situação de pandemia. O vírus começa a se espalhar pela cidade. Você precisa ser rápido e usar lógica e estratégia para verificar os infectadas enquanto tentar descobrir quem é o paciente zero."
+text = "O mundo enfrenta uma situação de pandemia. O vírus começa a se espalhar pela cidade. Você precisa ser rápido e usar lógica e estratégia, verificando os infectados enquanto tenta descobrir quem é o paciente zero."
 align = 3
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="text3" type="Label" parent="."]
-margin_left = 192.0
-margin_top = 354.0
-margin_right = 1109.0
-margin_bottom = 501.0
+[node name="text3" type="Label" parent="p1"]
+margin_left = 198.0
+margin_top = 360.0
+margin_right = 1101.0
+margin_bottom = 447.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
 text = "O mural apresenta informações diárias e os locais da cidade, onde você pode verificar diariamente por onde andaram as pessoas e com quem tiveram contato."
@@ -65,24 +74,164 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="pag1" type="Node2D" parent="."]
+visible = false
+
+[node name="text2" type="Label" parent="pag1"]
+margin_left = 213.0
+margin_top = 264.789
+margin_right = 1098.0
+margin_bottom = 590.789
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.301961, 0.258824, 0.239216, 1 )
+text = "O mundo enfrenta uma situação de pandemia.
+O vírus começa a se espalhar pela cidade.
+
+Você precisa ser rápido e usar a lógica
+e estratégia, verificando os lugares e os infectados enquanto tenta descobrir
+quem é o Paciente Zero."
+align = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="simbolo" type="Sprite" parent="pag1"]
+position = Vector2( 1002.21, 175.158 )
+scale = Vector2( 1.20015, 1.20015 )
+texture = ExtResource( 8 )
+
+[node name="pag2" type="Node2D" parent="."]
+visible = false
+position = Vector2( 5.26312, 91.5789 )
+
+[node name="text3" type="Label" parent="pag2"]
+margin_left = 478.526
+margin_top = 189.368
+margin_right = 1083.53
+margin_bottom = 432.368
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
+text = "O mural apresenta as informações diárias e os locais da cidade.
+
+Clicando nos locais você saberá por onde andaram as pessoas e com quem tiveram contato."
+align = 3
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="escritorioA" type="Sprite" parent="pag2"]
+position = Vector2( 313.942, 301.128 )
+rotation = -0.091825
+scale = Vector2( 0.62101, 0.62101 )
+texture = ExtResource( 6 )
+
+[node name="pag3" type="Node2D" parent="."]
+position = Vector2( -22.1052, -173.684 )
+
+[node name="text" type="Label" parent="pag3"]
+margin_left = 273.0
+margin_top = 397.0
+margin_right = 783.0
+margin_bottom = 756.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
+text = "A imunidade das pessoas doentes diminui diariamente.
+
+É possível isolar uma pessoa por dia. Isolando o Paciente Zero você desenvolverá uma vacina e pode salvar a vida da população."
+align = 3
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text2" type="Label" parent="pag3"]
+margin_left = 273.895
+margin_top = 736.0
+margin_right = 986.895
+margin_bottom = 774.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
+text = "Encontre-o antes que seja tarde demais!"
+align = 3
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pastinha" type="Sprite" parent="pag3"]
+position = Vector2( 977.483, 530.9 )
+rotation = 0.1717
+scale = Vector2( 0.932763, 0.932763 )
+texture = ExtResource( 4 )
+
+[node name="audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+
+[node name="pag" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+
 [node name="Button" type="Button" parent="."]
-margin_left = 279.446
-margin_top = 601.14
-margin_right = 1079.45
-margin_bottom = 671.14
+margin_left = 289.0
+margin_top = 633.0
+margin_right = 480.0
+margin_bottom = 693.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
 custom_colors/font_color_hover = Color( 0.521569, 0.47451, 0.419608, 1 )
 custom_colors/font_color_pressed = Color( 0.521569, 0.47451, 0.419608, 1 )
-text = "voltar"
+text = "menu"
 flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="escritorioA" type="Sprite" parent="."]
-position = Vector2( 1071.26, 568.708 )
-rotation = 0.107407
-scale = Vector2( 0.615309, 0.615309 )
-texture = ExtResource( 6 )
+[node name="pg1" type="Button" parent="."]
+margin_left = 978.0
+margin_top = 629.0
+margin_right = 1020.0
+margin_bottom = 689.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
+custom_colors/font_color_hover = Color( 0.521569, 0.47451, 0.419608, 1 )
+custom_colors/font_color_pressed = Color( 0.521569, 0.47451, 0.419608, 1 )
+text = "1"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pg2" type="Button" parent="."]
+margin_left = 1018.89
+margin_top = 629.0
+margin_right = 1060.89
+margin_bottom = 689.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
+custom_colors/font_color_hover = Color( 0.521569, 0.47451, 0.419608, 1 )
+custom_colors/font_color_pressed = Color( 0.521569, 0.47451, 0.419608, 1 )
+text = "2"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pg3" type="Button" parent="."]
+margin_left = 1061.16
+margin_top = 629.0
+margin_right = 1103.16
+margin_bottom = 689.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
+custom_colors/font_color_hover = Color( 0.521569, 0.47451, 0.419608, 1 )
+custom_colors/font_color_pressed = Color( 0.521569, 0.47451, 0.419608, 1 )
+text = "3"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="pg1" to="." method="_on_pg1_pressed"]
+[connection signal="pressed" from="pg2" to="." method="_on_pg2_pressed"]
+[connection signal="pressed" from="pg3" to="." method="_on_pg3_pressed"]
