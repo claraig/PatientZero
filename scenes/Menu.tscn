@@ -3,7 +3,7 @@
 [ext_resource path="res://assets/autoral/menu/inicial/fios.png" type="Texture" id=1]
 [ext_resource path="res://assets/FadeIn.tscn" type="PackedScene" id=4]
 [ext_resource path="res://assets/autoral/menu/inicial/menu_fundo.png" type="Texture" id=8]
-[ext_resource path="res://assets/audio/grama.wav" type="AudioStream" id=9]
+[ext_resource path="res://assets/audio/sfx_b_click.wav" type="AudioStream" id=9]
 [ext_resource path="res://assets/autoral/menu/inicial/b_instruções_hover.png" type="Texture" id=10]
 [ext_resource path="res://assets/autoral/menu/inicial/b_instruções.png" type="Texture" id=11]
 [ext_resource path="res://assets/autoral/menu/inicial/b_sair_hover.png" type="Texture" id=12]
@@ -39,6 +39,9 @@ func _on_instrucoes_pressed() -> void:
 
 func _on_opcoes_pressed() -> void:
 	get_node('click').play()
+
+#	get_node('res://scenes/Menu/Options.tscn').get_node('CheckButton1')
+
 	scene_path = \"res://scenes/Menu/Options.tscn\"
 	$FadeIn.show()
 	$FadeIn.fade_in()
@@ -150,5 +153,4 @@ visible = false
 [connection signal="pressed" from="mural/opcoes" to="." method="_on_opcoes_pressed"]
 [connection signal="pressed" from="mural/creditos" to="." method="_on_creditos_pressed"]
 [connection signal="pressed" from="mural/sair" to="." method="_on_sair_pressed"]
-[connection signal="tree_exiting" from="mural/sair" to="." method="_on_sair_tree_exiting"]
 [connection signal="fade_finished" from="FadeIn" to="." method="_on_FadeIn_fade_finished"]

@@ -10,7 +10,7 @@
 [ext_resource path="res://scripts/InfoTurno.gd" type="Script" id=8]
 [ext_resource path="res://assets/audio/ALERT_Error.wav" type="AudioStream" id=9]
 [ext_resource path="res://assets/audio/arquive-click.wav" type="AudioStream" id=10]
-[ext_resource path="res://assets/audio/TurningPage1.wav" type="AudioStream" id=11]
+[ext_resource path="res://assets/audio/sfx_jornal.wav" type="AudioStream" id=11]
 [ext_resource path="res://assets/audio/MESSAGE-B_Accept.wav" type="AudioStream" id=12]
 [ext_resource path="res://assets/autoral/Jornal/j_mortes2.png" type="Texture" id=13]
 [ext_resource path="res://assets/autoral/Jornal/j_venceu.png" type="Texture" id=14]
@@ -29,11 +29,11 @@
 [ext_resource path="res://assets/autoral/avatares/C43.png" type="Texture" id=27]
 [ext_resource path="res://assets/autoral/avatares/C44.png" type="Texture" id=28]
 [ext_resource path="res://assets/autoral/cartaz.png" type="Texture" id=31]
-[ext_resource path="res://assets/audio/eklee-KeyPressOld05.wav" type="AudioStream" id=32]
+[ext_resource path="res://assets/audio/sfx_bloquinho.wav" type="AudioStream" id=32]
 [ext_resource path="res://assets/autoral/Botoes/botaoIsolar2.png" type="Texture" id=34]
 [ext_resource path="res://assets/autoral/Botoes/botaoDia.png" type="Texture" id=36]
 [ext_resource path="res://assets/autoral/Botoes/botaoMenu.png" type="Texture" id=37]
-[ext_resource path="res://assets/audio/keyboard.wav" type="AudioStream" id=38]
+[ext_resource path="res://assets/audio/sfx_computador.wav" type="AudioStream" id=38]
 [ext_resource path="res://Fonts/courier_small.tres" type="DynamicFont" id=39]
 [ext_resource path="res://assets/autoral/Objetos/pc.png" type="Texture" id=40]
 [ext_resource path="res://assets/autoral/fundo.png" type="Texture" id=42]
@@ -298,9 +298,10 @@ func _on_RetornaMenu_button_down():
 	get_tree().change_scene(\"res://scenes/Menu.tscn\")
 
 #---------------------------------------------------------------------------#
+# BLOQUINHO
 
 func _on_TextEdit_gui_input(event: InputEvent) -> void:
-	if event is InputEventKey  and event.pressed:
+	if event is InputEventKey and event.pressed:
 		get_node('Sons/teclar').play()
 
 #---------------------------------------------------------------------------#
@@ -423,16 +424,23 @@ var turnoMorte
 var texto: String
 
 var population
+var populationDificil
+var populationMuitoDificil
+
+var dificuldade
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	dificuldade = get_node(\"/root/Configuracoes\").dificuldade
 	population = get_parent().get_parent().get_node(\"Population\")
+	populationDificil = get_parent().get_parent().get_node(\"PopulationDificil\")
+	populationMuitoDificil = get_parent().get_parent().get_node(\"PopulationMuitoDificil\")
 	get_parent().get_parent().get_node('Fichas/FichaFechada').show()
 	get_parent().get_parent().get_node('Isolar').hide()
 	get_parent().get_parent().get_node('Fichas/painelFicha').hide()
 	get_node('Sprite').hide()
-	pass
+	
 
 func formatarInteracoes():
 	texto += \"Adoeceu dia \"+ str(turnoAdoecimento)+ \"\\n\\n Imunidade: \" + str(imunidade)
@@ -442,6 +450,13 @@ func _on_Button_button_down():
 	for p in population.get_children().size():
 		population.get_child(p).get_child(1).hide()
 
+	if dificuldade >= 1:
+		for p in populationDificil.get_children().size():
+			populationDificil.get_child(p).get_child(1).hide()
+
+	if dificuldade == 2:
+		for p in populationMuitoDificil.get_children().size():
+			populationMuitoDificil.get_child(p).get_child(1).hide()
 
 	get_parent().get_parent().get_node(\"Sons/clicar_arquivo\").play()
 	get_parent().get_parent().get_node('Fichas/FichaFechada').hide()
@@ -654,10 +669,10 @@ __meta__ = {
 }
 
 [node name="frase" type="Label" parent="display-canvas-bg"]
-margin_left = 703.537
-margin_top = 171.784
-margin_right = 980.537
-margin_bottom = 200.784
+margin_left = 687.0
+margin_top = 172.0
+margin_right = 992.0
+margin_bottom = 201.0
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
@@ -1336,7 +1351,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 28 )
+texture = ExtResource( 27 )
 
 [node name="Hugo" type="Node" parent="PopulationMuitoDificil"]
 script = SubResource( 9 )
@@ -1384,7 +1399,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 28 )
+texture = ExtResource( 26 )
 
 [node name="Luka" type="Node" parent="PopulationMuitoDificil"]
 script = SubResource( 9 )
@@ -1408,7 +1423,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 28 )
+texture = ExtResource( 5 )
 
 [node name="Mila" type="Node" parent="PopulationMuitoDificil"]
 script = SubResource( 9 )
@@ -1432,7 +1447,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 28 )
+texture = ExtResource( 27 )
 
 [node name="NextTurn" type="Button" parent="."]
 margin_left = 56.3422
