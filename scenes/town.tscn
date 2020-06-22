@@ -1,4 +1,4 @@
-[gd_scene load_steps=89 format=2]
+[gd_scene load_steps=92 format=2]
 
 [ext_resource path="res://assets/town/town2.png" type="Texture" id=1]
 [ext_resource path="res://assets/autoral/Botoes/opcaoMenu.png" type="Texture" id=2]
@@ -7,13 +7,14 @@
 [ext_resource path="res://assets/autoral/avatares/1PardoRuivo.png" type="Texture" id=5]
 [ext_resource path="res://Fonts/COUR.TTF" type="DynamicFontData" id=6]
 [ext_resource path="res://assets/autoral/Jornal/j_doentesb.png" type="Texture" id=7]
-[ext_resource path="res://scenes/InfoTurno.gd" type="Script" id=8]
+[ext_resource path="res://scripts/InfoTurno.gd" type="Script" id=8]
 [ext_resource path="res://assets/audio/ALERT_Error.wav" type="AudioStream" id=9]
 [ext_resource path="res://assets/audio/arquive-click.wav" type="AudioStream" id=10]
 [ext_resource path="res://assets/audio/TurningPage1.wav" type="AudioStream" id=11]
 [ext_resource path="res://assets/audio/MESSAGE-B_Accept.wav" type="AudioStream" id=12]
 [ext_resource path="res://assets/autoral/Jornal/j_mortes2.png" type="Texture" id=13]
 [ext_resource path="res://assets/autoral/Jornal/j_venceu.png" type="Texture" id=14]
+[ext_resource path="res://assets/autoral/avatares/C42.png" type="Texture" id=15]
 [ext_resource path="res://scripts/jornal.gd" type="Script" id=16]
 [ext_resource path="res://assets/autoral/Fichas/ficha.png" type="Texture" id=17]
 [ext_resource path="res://scripts/place.gd" type="Script" id=18]
@@ -23,7 +24,10 @@
 [ext_resource path="res://assets/autoral/Fichas/ficha_aberta.png" type="Texture" id=22]
 [ext_resource path="res://assets/autoral/Fichas/arquivo2.png" type="Texture" id=23]
 [ext_resource path="res://Fonts/jornal.tres" type="DynamicFont" id=24]
-[ext_resource path="res://assets/autoral/painel-texto.png" type="Texture" id=30]
+[ext_resource path="res://assets/autoral/avatares/C41.png" type="Texture" id=25]
+[ext_resource path="res://assets/autoral/avatares/C51.png" type="Texture" id=26]
+[ext_resource path="res://assets/autoral/avatares/C43.png" type="Texture" id=27]
+[ext_resource path="res://assets/autoral/avatares/C44.png" type="Texture" id=28]
 [ext_resource path="res://assets/autoral/cartaz.png" type="Texture" id=31]
 [ext_resource path="res://assets/audio/eklee-KeyPressOld05.wav" type="AudioStream" id=32]
 [ext_resource path="res://assets/autoral/Botoes/botaoIsolar2.png" type="Texture" id=34]
@@ -32,7 +36,6 @@
 [ext_resource path="res://assets/audio/keyboard.wav" type="AudioStream" id=38]
 [ext_resource path="res://Fonts/courier_small.tres" type="DynamicFont" id=39]
 [ext_resource path="res://assets/autoral/Objetos/pc.png" type="Texture" id=40]
-[ext_resource path="res://assets/autoral/Objetos/cena.png" type="Texture" id=41]
 [ext_resource path="res://assets/autoral/fundo.png" type="Texture" id=42]
 [ext_resource path="res://assets/autoral/Objetos/murall.png" type="Texture" id=43]
 [ext_resource path="res://assets/autoral/Objetos/mesa com coisas.png" type="Texture" id=44]
@@ -394,11 +397,6 @@ func _on_Button_button_down():
 				get_parent().get_node(\"display-canvas-bg/pessoaIsolada\").set_text(selecionado)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-
 func _on_dificil_ready():
 	if(get_node(\"/root/Configuracoes\").dificuldade < 1):
 		get_parent().get_node(\"Fichas/Arquivo/dificil\").hide()
@@ -424,25 +422,35 @@ var turnoAdoecimento
 var turnoMorte
 var texto: String
 
+var population
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	population = get_parent().get_parent().get_node(\"Population\")
 	get_parent().get_parent().get_node('Fichas/FichaFechada').show()
 	get_parent().get_parent().get_node('Isolar').hide()
 	get_parent().get_parent().get_node('Fichas/painelFicha').hide()
+	get_node('Sprite').hide()
 	pass
 
 func formatarInteracoes():
 	texto += \"Adoeceu dia \"+ str(turnoAdoecimento)+ \"\\n\\n Imunidade: \" + str(imunidade)
 
 func _on_Button_button_down():
+
+	for p in population.get_children().size():
+		population.get_child(p).get_child(1).hide()
+
+
 	get_parent().get_parent().get_node(\"Sons/clicar_arquivo\").play()
 	get_parent().get_parent().get_node('Fichas/FichaFechada').hide()
 	get_parent().get_parent().get_node('Isolar').show()
 	get_parent().get_parent().get_node('Fichas/painelFicha').show()
 
 	texto = \"Nome: \"+str(name)+\"\\n\"
-	get_parent().get_parent().get_node(\"Population\").selecionado = name
+	population.selecionado = name
+	get_node('Sprite').show()
 
 	if(morta):
 		texto += \"Morreu dia \"+ str(turnoMorte)+ \"\\n\"
@@ -452,8 +460,6 @@ func _on_Button_button_down():
 		texto += \"Essa pessoa ainda não foi ao hospital!\"
 	get_parent().get_parent().get_node('Fichas/painelFicha').set_text(texto)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
 "
 
 [sub_resource type="StyleBoxFlat" id=10]
@@ -468,19 +474,19 @@ draw_center = false
 
 [sub_resource type="StyleBoxEmpty" id=14]
 
-[sub_resource type="DynamicFont" id=20]
+[sub_resource type="DynamicFont" id=15]
 size = 61
 use_filter = true
 extra_spacing_top = 6
 font_data = ExtResource( 45 )
 
-[sub_resource type="DynamicFont" id=21]
+[sub_resource type="DynamicFont" id=16]
 size = 100
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 45 )
 
-[sub_resource type="DynamicFont" id=24]
+[sub_resource type="DynamicFont" id=17]
 size = 47
 outline_size = 1
 outline_color = Color( 0.388235, 0.329412, 0.301961, 1 )
@@ -489,27 +495,27 @@ extra_spacing_top = 5
 extra_spacing_bottom = 5
 font_data = ExtResource( 6 )
 
-[sub_resource type="DynamicFontData" id=22]
+[sub_resource type="DynamicFontData" id=18]
 font_path = "res://Fonts/COURBD.TTF"
 
-[sub_resource type="DynamicFont" id=25]
+[sub_resource type="DynamicFont" id=19]
 size = 79
 use_filter = true
-font_data = SubResource( 22 )
+font_data = SubResource( 18 )
 
-[sub_resource type="DynamicFont" id=26]
+[sub_resource type="DynamicFont" id=20]
 size = 41
 outline_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 use_filter = true
 extra_spacing_top = 4
 extra_spacing_bottom = 4
-font_data = SubResource( 22 )
+font_data = SubResource( 18 )
 
-[sub_resource type="StyleBoxEmpty" id=17]
+[sub_resource type="StyleBoxEmpty" id=21]
 
-[sub_resource type="StyleBoxEmpty" id=18]
+[sub_resource type="StyleBoxEmpty" id=22]
 
-[sub_resource type="DynamicFont" id=19]
+[sub_resource type="DynamicFont" id=23]
 size = 32
 font_data = ExtResource( 75 )
 
@@ -525,15 +531,6 @@ region_rect = Rect2( 1280, 0, 0, 0 )
 __meta__ = {
 "_edit_lock_": true
 }
-
-[node name="referenciaCena" type="Sprite" parent="."]
-visible = false
-self_modulate = Color( 1, 1, 1, 0.611765 )
-position = Vector2( 640.897, 362.148 )
-scale = Vector2( 0.938978, 0.894059 )
-z_index = 10
-texture = ExtResource( 41 )
-region_rect = Rect2( 1280, 0, 0, 0 )
 
 [node name="Cartaz" type="Node2D" parent="."]
 
@@ -669,13 +666,6 @@ autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="quadro" type="Sprite" parent="display-canvas-bg"]
-visible = false
-position = Vector2( 842.621, 143.526 )
-scale = Vector2( 0.489, 0.475 )
-z_index = 5
-texture = ExtResource( 30 )
 
 [node name="painelPC" type="TextEdit" parent="."]
 margin_left = 945.0
@@ -1005,6 +995,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sprite" type="Sprite" parent="Population/Catia"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 5 )
+
 [node name="Ivo" type="Node" parent="Population"]
 script = SubResource( 9 )
 
@@ -1021,6 +1017,12 @@ flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Sprite" type="Sprite" parent="Population/Ivo"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 25 )
 
 [node name="Leo" type="Node" parent="Population"]
 script = SubResource( 9 )
@@ -1039,6 +1041,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sprite" type="Sprite" parent="Population/Leo"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 15 )
+
 [node name="Cal" type="Node" parent="Population"]
 script = SubResource( 9 )
 
@@ -1055,6 +1063,12 @@ flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Sprite" type="Sprite" parent="Population/Cal"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 27 )
 
 [node name="Mark" type="Node" parent="Population"]
 script = SubResource( 9 )
@@ -1073,6 +1087,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sprite" type="Sprite" parent="Population/Mark"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 25 )
+
 [node name="Sinty" type="Node" parent="Population"]
 script = SubResource( 9 )
 
@@ -1089,6 +1109,12 @@ flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Sprite" type="Sprite" parent="Population/Sinty"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 15 )
 
 [node name="Eron" type="Node" parent="Population"]
 script = SubResource( 9 )
@@ -1107,6 +1133,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sprite" type="Sprite" parent="Population/Eron"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 26 )
+
 [node name="Judite" type="Node" parent="Population"]
 script = SubResource( 9 )
 
@@ -1124,6 +1156,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sprite" type="Sprite" parent="Population/Judite"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 5 )
+
 [node name="Neil" type="Node" parent="Population"]
 script = SubResource( 9 )
 
@@ -1140,6 +1178,12 @@ flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Sprite" type="Sprite" parent="Population/Neil"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 25 )
 
 [node name="Mary" type="Node" parent="Population"]
 script = SubResource( 9 )
@@ -1159,7 +1203,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sprite" type="Sprite" parent="Population/Mary"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 28 )
+
 [node name="PopulationDificil" type="Node2D" parent="."]
+visible = false
 position = Vector2( 85.1284, 283.145 )
 z_index = -7
 
@@ -1181,6 +1232,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sprite" type="Sprite" parent="PopulationDificil/Neide"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 25 )
+
 [node name="Tom" type="Node" parent="PopulationDificil"]
 script = SubResource( 9 )
 
@@ -1198,6 +1255,12 @@ flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Sprite" type="Sprite" parent="PopulationDificil/Tom"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 25 )
 
 [node name="Lola" type="Node" parent="PopulationDificil"]
 script = SubResource( 9 )
@@ -1217,6 +1280,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sprite" type="Sprite" parent="PopulationDificil/Lola"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 25 )
+
 [node name="Kiko" type="Node" parent="PopulationDificil"]
 script = SubResource( 9 )
 
@@ -1234,6 +1303,12 @@ flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Sprite" type="Sprite" parent="PopulationDificil/Kiko"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 25 )
 
 [node name="PopulationMuitoDificil" type="Node2D" parent="."]
 position = Vector2( 85.1284, 283.145 )
@@ -1257,6 +1332,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sprite" type="Sprite" parent="PopulationMuitoDificil/Biel"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 28 )
+
 [node name="Hugo" type="Node" parent="PopulationMuitoDificil"]
 script = SubResource( 9 )
 
@@ -1274,6 +1355,12 @@ flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Sprite" type="Sprite" parent="PopulationMuitoDificil/Hugo"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 28 )
 
 [node name="Enzo" type="Node" parent="PopulationMuitoDificil"]
 script = SubResource( 9 )
@@ -1293,6 +1380,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sprite" type="Sprite" parent="PopulationMuitoDificil/Enzo"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 28 )
+
 [node name="Luka" type="Node" parent="PopulationMuitoDificil"]
 script = SubResource( 9 )
 
@@ -1311,6 +1404,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sprite" type="Sprite" parent="PopulationMuitoDificil/Luka"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 28 )
+
 [node name="Mila" type="Node" parent="PopulationMuitoDificil"]
 script = SubResource( 9 )
 
@@ -1328,6 +1427,12 @@ flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Sprite" type="Sprite" parent="PopulationMuitoDificil/Mila"]
+visible = false
+position = Vector2( 72.148, 140.789 )
+scale = Vector2( 0.468875, 0.468875 )
+texture = ExtResource( 28 )
 
 [node name="NextTurn" type="Button" parent="."]
 margin_left = 56.3422
@@ -1402,6 +1507,7 @@ __meta__ = {
 }
 
 [node name="jornal" type="Node2D" parent="canvas_jornal"]
+visible = false
 position = Vector2( 654.412, 375.177 )
 z_index = 143
 script = ExtResource( 16 )
@@ -1421,7 +1527,7 @@ margin_left = 156.087
 margin_top = -602.875
 margin_right = 395.087
 margin_bottom = -521.875
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 15 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -25
 text = "Dia 1º"
@@ -1445,7 +1551,7 @@ margin_left = 170.754
 margin_top = -604.833
 margin_right = 409.754
 margin_bottom = -523.833
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 15 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -25
 text = "Dia"
@@ -1460,7 +1566,7 @@ margin_left = -467.075
 margin_top = 198.0
 margin_right = 445.925
 margin_bottom = 408.0
-custom_fonts/font = SubResource( 21 )
+custom_fonts/font = SubResource( 16 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -20
 text = "Cidade tem x infectados"
@@ -1490,7 +1596,7 @@ margin_left = -482.0
 margin_top = 456.764
 margin_right = 438.0
 margin_bottom = 681.764
-custom_fonts/font = SubResource( 24 )
+custom_fonts/font = SubResource( 17 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -25
 text = "Cientistas estudam como criar uma vacina para combater esta pandemia global."
@@ -1514,7 +1620,7 @@ margin_left = -294.0
 margin_top = 245.0
 margin_right = 251.0
 margin_bottom = 436.0
-custom_fonts/font = SubResource( 25 )
+custom_fonts/font = SubResource( 19 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -25
 text = "Vírus matou
@@ -1530,7 +1636,7 @@ margin_left = 206.0
 margin_top = 55.0
 margin_right = 459.0
 margin_bottom = 202.0
-custom_fonts/font = SubResource( 26 )
+custom_fonts/font = SubResource( 20 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -20
 text = "Cidade tem x infectados"
@@ -1545,7 +1651,7 @@ margin_left = 170.754
 margin_top = -604.833
 margin_right = 409.754
 margin_bottom = -523.833
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 15 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -25
 text = "Dia"
@@ -1568,7 +1674,7 @@ margin_left = 170.754
 margin_top = -604.833
 margin_right = 409.754
 margin_bottom = -523.833
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 15 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -25
 text = "Dia"
@@ -1588,7 +1694,7 @@ margin_left = -101.0
 margin_top = -43.0
 margin_right = 100.0
 margin_bottom = 9.0
-custom_styles/hover = SubResource( 17 )
+custom_styles/hover = SubResource( 21 )
 icon = ExtResource( 2 )
 flat = true
 __meta__ = {
@@ -1600,7 +1706,7 @@ margin_left = -101.399
 margin_top = 13.2964
 margin_right = 99.601
 margin_bottom = 64.2964
-custom_styles/hover = SubResource( 17 )
+custom_styles/hover = SubResource( 21 )
 icon = ExtResource( 3 )
 flat = true
 __meta__ = {
@@ -1612,8 +1718,8 @@ margin_left = 87.0
 margin_top = -90.0
 margin_right = 106.0
 margin_bottom = -49.0
-custom_styles/normal = SubResource( 18 )
-custom_fonts/font = SubResource( 19 )
+custom_styles/normal = SubResource( 22 )
+custom_fonts/font = SubResource( 23 )
 text = "x"
 flat = true
 __meta__ = {
@@ -1647,8 +1753,8 @@ __meta__ = {
 [connection signal="button_down" from="PopulationMuitoDificil/Enzo/Button" to="PopulationMuitoDificil/Enzo" method="_on_Button_button_down"]
 [connection signal="button_down" from="PopulationMuitoDificil/Luka/Button" to="PopulationMuitoDificil/Luka" method="_on_Button_button_down"]
 [connection signal="button_down" from="PopulationMuitoDificil/Mila/Button" to="PopulationMuitoDificil/Mila" method="_on_Button_button_down"]
-[connection signal="button_down" from="NextTurn" to="canvas_jornal/jornal" method="_on_NextTurn_button_down"]
 [connection signal="button_down" from="NextTurn" to="." method="_on_NextTurn_button_down"]
+[connection signal="button_down" from="NextTurn" to="canvas_jornal/jornal" method="_on_NextTurn_button_down"]
 [connection signal="button_down" from="RetornaMenu" to="." method="_on_RetornaMenu_button_down"]
 [connection signal="pressed" from="MenuSanduiche" to="." method="_on_Menu_pressed"]
 [connection signal="button_down" from="Isolar" to="Population" method="_on_Button_button_down"]
