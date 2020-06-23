@@ -1,26 +1,24 @@
 extends Node2D
 
-var silence: bool
-
+var silence:bool
 
 
 func _ready() -> void:
+	get_node("CheckButton").connect("pressed", self, "_on_CheckButton_toggled")
 	atualizaValorDificuldade()
-#	silence = get_node("/root/Configuracoes").temsom
-	print(silence)
-#	get_node('CheckButton').toggle_mode(silence)
-#	get_node('CheckButton').pressed = silence
-
+	atualizaToggleSom()
+	print(get_node("/root/Configuracoes").temsom)
 
 #	AUDIO
 
-func _on_CheckButton_pressed():
+func _on_CheckButton_toggled():
 	get_node("/root/Configuracoes").ajustarSom()
-	AudioServer.set_bus_mute(0, get_node("/root/Configuracoes").temsom)
-	silence = get_node('CheckButton').pressed
-	print(silence)
+	atualizaToggleSom()
+#	print(silence)
 
-
+func atualizaToggleSom():
+	silence = get_node("/root/Configuracoes").temsom
+	$CheckButton.pressed = silence
 
 
 #	DIFICULDADE
@@ -49,11 +47,8 @@ func _on_diminuiDificuldade_pressed():
 	atualizaValorDificuldade()
 
 
-
-
 # SAIR
 
-func _on_Button_pressed():
+func _on_b_back_pressed():
 	get_node('svoltar').play()
-# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://scenes/Menu.tscn")

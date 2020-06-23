@@ -308,16 +308,16 @@ func _on_TextEdit_gui_input(event: InputEvent) -> void:
 
 #  MENU POP UP
 
-func _on_Menu_pressed() -> void:
+func _on_Menu_pressed():
 	get_node('MenuPopup').show()
 
-func _on_menu_pressed() -> void:
+func _on_menu_pressed():
 	get_tree().change_scene(\"res://scenes/Menu.tscn\")
 
-func _on_sair_pressed() -> void:
+func _on_sair_pressed():
 	get_tree().quit()
 
-func _on_cancela_pressed() -> void:
+func _on_cancela_pressed():
 	get_node('MenuPopup').hide()
 "
 

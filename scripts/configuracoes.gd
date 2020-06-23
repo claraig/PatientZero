@@ -2,10 +2,15 @@ extends Node
 
 var dificuldade:int = 0
 var temsom:bool
+#var toggle:bool
 
 
 func _ready():
 	dificuldade = 0
+	temsom = true
+#	toggle = get_node("res://scenes/Menu/ReturnToTitle.gd").silence
+#	print (toggle)
+	AudioServer.set_bus_mute(0,!temsom)
 
 func adicionarDificuldade():
 	dificuldade+=1
@@ -19,5 +24,5 @@ func diminuirDificuldade():
 
 func ajustarSom():
 	temsom = !temsom
-#	if temsom:
-#		print("mudou som")
+	AudioServer.set_bus_mute(0,!temsom)
+	print(temsom)

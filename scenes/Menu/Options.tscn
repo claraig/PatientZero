@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/autoral/menu/options/menu_opcoes.png" type="Texture" id=1]
 [ext_resource path="res://assets/audio/tecla.wav" type="AudioStream" id=2]
@@ -8,6 +8,8 @@
 [ext_resource path="res://assets/autoral/Botoes/seta.png" type="Texture" id=6]
 [ext_resource path="res://Fonts/COURBD.TTF" type="DynamicFontData" id=7]
 [ext_resource path="res://assets/audio/sfx_b_click.wav" type="AudioStream" id=8]
+[ext_resource path="res://assets/autoral/Botoes/toggle_on.png" type="Texture" id=9]
+[ext_resource path="res://assets/autoral/Botoes/toggle_off.png" type="Texture" id=10]
 
 [sub_resource type="DynamicFont" id=1]
 size = 30
@@ -26,6 +28,20 @@ script = ExtResource( 4 )
 [node name="fundo" type="Sprite" parent="."]
 position = Vector2( 639.68, 360.759 )
 texture = ExtResource( 5 )
+
+[node name="CheckButton" type="CheckButton" parent="."]
+margin_left = 921.0
+margin_top = 397.0
+margin_right = 1127.0
+margin_bottom = 483.0
+rect_rotation = -6.8742
+rect_scale = Vector2( 0.37402, 0.37402 )
+custom_icons/off = ExtResource( 10 )
+custom_icons/on = ExtResource( 9 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="fundo2" type="Sprite" parent="."]
 visible = false
@@ -134,6 +150,7 @@ __meta__ = {
 }
 
 [node name="Efeitos sonoros2" type="Label" parent="."]
+visible = false
 margin_left = 724.622
 margin_top = 468.451
 margin_right = 994.622
@@ -145,18 +162,8 @@ text = "Silenciar"
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="CheckButton" type="CheckButton" parent="."]
-margin_left = 921.449
-margin_top = 396.753
-margin_right = 997.449
-margin_bottom = 436.753
-rect_rotation = -6.8742
-pressed = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-[connection signal="pressed" from="b_back" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="CheckButton" to="." method="_on_CheckButton_pressed"]
+[connection signal="toggled" from="CheckButton" to="." method="_on_CheckButton_toggled"]
+[connection signal="pressed" from="b_back" to="." method="_on_b_back_pressed"]
 [connection signal="pressed" from="aumentaDificuldade" to="." method="_on_aumentaDificuldade_pressed"]
 [connection signal="pressed" from="diminuiDificuldade" to="." method="_on_diminuiDificuldade_pressed"]
-[connection signal="pressed" from="CheckButton" to="." method="_on_CheckButton_pressed"]

@@ -39,9 +39,6 @@ func _on_instrucoes_pressed() -> void:
 
 func _on_opcoes_pressed() -> void:
 	get_node('click').play()
-
-#	get_node('res://scenes/Menu/Options.tscn').get_node('CheckButton1')
-
 	scene_path = \"res://scenes/Menu/Options.tscn\"
 	$FadeIn.show()
 	$FadeIn.fade_in()
