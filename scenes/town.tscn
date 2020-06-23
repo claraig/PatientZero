@@ -98,7 +98,6 @@ func _ready():
 
 	get_node('Sons/turno').play()
 	pessoas = get_node(\"Population\").listaPessoas
-	print(pessoas)
 	lugares = get_node(\"Places\").get_children()
 	_encontraPacienteZero()
 	_passarTurno()
@@ -177,7 +176,6 @@ func _passandoDoenca():
 			for l in lugares:
 				if(l.visitantes[turnoAtual-1].pessoas.has(p.name) && l.visitantes[turnoAtual-1].pessoas.size() > 1):
 					contaminadas.push_back(_retornaContaminada(p.name, l.visitantes[turnoAtual-1].pessoas))
-	print(contaminadas)
 	for p in pessoas:
 		if(contaminadas.has(p.name) && (!p.doente && !p.pacienteZero)):
 			p.doente = true
@@ -217,9 +215,8 @@ func _diminuindoImunidade():
 
 func _desabilitarMortosPraNaoVirarZumbi():
 	for p in pessoas:
-		print(p.get_children())
 		if(p.morta):
-			p.get_node(\"Button\").add_color_override(\"font_color\",  Color( 1, 0.5, 0.31, 0.7 ))
+			p.get_node(\"Button\").add_color_override(\"font_color\",  Color( 1, 0.2, 0.31, 0.7 ))
 
 
 #---------------------------------------------------------------------------#
@@ -275,6 +272,7 @@ func _tirarIsolamento():
 			p.get_node(\"Button\").disabled = false
 	get_node(\"Population\").isolado = \"\"
 	get_node(\"Population\").selecionado = \"\"
+	get_node(\"display-canvas-bg/pessoaIsolada\").set_text(\"\")
 
 func _inserirTurnoLugares():
 	for l in lugares:
@@ -355,16 +353,13 @@ func _ready():
 	dificuldade = get_node(\"/root/Configuracoes\").dificuldade
 	_inicializaPessoas()
 	_inicializarPacienteZero()
-	_printPessoas()
 
 
 func _inicializaPessoas():
 	listaPessoas = get_children()
 	if(dificuldade >= 1):
-		print(\"add 1\")
 		listaPessoas+=get_parent().get_node(\"PopulationDificil\").get_children()
 	if (dificuldade == 2):
-		print(\"add 2\")
 		listaPessoas+=get_parent().get_node(\"PopulationMuitoDificil\").get_children()
 	for n in listaPessoas :
 		randomize()
@@ -373,27 +368,18 @@ func _inicializaPessoas():
 
 func _inicializarPacienteZero():
 	randomize()
-	print(listaPessoas.size())
 	var sorteado = rand_range(0, listaPessoas.size())
 	listaPessoas[sorteado].pacienteZero = true
 
 
-func _printPessoas():
-	for n in listaPessoas :
-		print(n.name)
-		print(\"Imunidade\")
-		print(n.imunidade)
-		print(\"é paciente zero ?\")
-		print(n.pacienteZero)
+
 
 
 # Isolar pessoa
 
 func _on_Button_button_down():
 		for p in listaPessoas:
-			p.get_node(\"Button\").disabled = false
 			if(p.name == selecionado && !p.morta):
-				p.get_node(\"Button\").disabled = true
 				isolado = selecionado
 				get_parent().get_node(\"display-canvas-bg/pessoaIsolada\").set_text(selecionado)
 
