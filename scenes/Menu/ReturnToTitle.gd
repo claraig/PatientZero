@@ -8,8 +8,6 @@ func _ready() -> void:
 	atualizaValorDificuldade()
 	atualizaToggleSom()
 	atualizaToggleMusica()
-	print(get_node("/root/Configuracoes").temsom)
-	print(get_node("/root/Configuracoes").musicaAtiva)
 
 #	AUDIO
 
