@@ -112,8 +112,7 @@ func _ready():
 	$canvas_jornal/bJornal.show() #background escuro
 
 	get_node('Sons/turno').play()
-	if(get_node(\"/root/Configuracoes\").musicaAtiva):
-		get_node(\"Sons/fundo\").play()
+	get_node(\"Sons/fundo\").play()
 	pessoas = get_node(\"Population\").listaPessoas
 	lugares = get_node(\"Places\").get_children()
 	_encontraPacienteZero()
@@ -755,7 +754,7 @@ stream = ExtResource( 32 )
 
 [node name="fundo" type="AudioStreamPlayer" parent="Sons"]
 stream = ExtResource( 83 )
-volume_db = -40.388
+volume_db = -40.0
 bus = "FundoJogo"
 
 [node name="Fichas" type="Node2D" parent="."]
