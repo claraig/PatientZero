@@ -107,7 +107,6 @@ func _atualizarInfos():
 
 	get_node('Fichas/FichaFechada').show()
 
-	var texto = \"Dia Atual: \" + str(turnoAtual) + \"  Doentes: \" + str(quantidadeDoentes) + \"  Mortos: \" + str(quantidadeMortos)
 	get_node(\"display-canvas-bg/dia\").set_text(str(turnoAtual))
 	get_node(\"display-canvas-bg/doentes\").set_text(str(quantidadeDoentes))
 	get_node(\"display-canvas-bg/mortos\").set_text(str(quantidadeMortos))
@@ -186,6 +185,7 @@ func _passandoDoenca():
 
 func adoecerPacienteZero():
 	#caso reste 40% das pessoas não doentes o paciente zero aparece como doente.
+# warning-ignore:integer_division
 	if ((((pessoas.size() - quantidadeDoentes)/quantidadeDoentes)*100) <= 40 && !pacienteZero.doente):
 		quantidadeDoentes+=1
 		pacienteZero.doente = true
@@ -293,6 +293,7 @@ func _venceu():
 
 
 func _on_RetornaMenu_button_down():
+# warning-ignore:return_value_discarded
 	get_tree().change_scene(\"res://scenes/Menu.tscn\")
 
 #---------------------------------------------------------------------------#
@@ -310,6 +311,7 @@ func _on_Menu_pressed():
 	get_node('MenuPopup').show()
 
 func _on_menu_pressed():
+# warning-ignore:return_value_discarded
 	get_tree().change_scene(\"res://scenes/Menu.tscn\")
 
 func _on_sair_pressed():
