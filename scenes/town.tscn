@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/autoral/Botoes/opcaoMenu.png" type="Texture" id=2]
 [ext_resource path="res://assets/autoral/Botoes/opcaoSair.png" type="Texture" id=3]
 [ext_resource path="res://assets/autoral/Fichas/fichaPersonalizada.png" type="Texture" id=4]
-[ext_resource path="res://assets/autoral/avatares/1PardoRuivo.png" type="Texture" id=5]
+[ext_resource path="res://assets/autoral/avatares/c11.png" type="Texture" id=5]
 [ext_resource path="res://Fonts/COUR.TTF" type="DynamicFontData" id=6]
 [ext_resource path="res://assets/autoral/Jornal/j_doentesb.png" type="Texture" id=7]
 [ext_resource path="res://scripts/InfoTurno.gd" type="Script" id=8]
@@ -1314,6 +1314,7 @@ scale = Vector2( 0.468875, 0.468875 )
 texture = ExtResource( 25 )
 
 [node name="PopulationMuitoDificil" type="Node2D" parent="."]
+visible = false
 position = Vector2( 85.1284, 283.145 )
 z_index = -7
 
@@ -1756,8 +1757,8 @@ __meta__ = {
 [connection signal="button_down" from="PopulationMuitoDificil/Enzo/Button" to="PopulationMuitoDificil/Enzo" method="_on_Button_button_down"]
 [connection signal="button_down" from="PopulationMuitoDificil/Luka/Button" to="PopulationMuitoDificil/Luka" method="_on_Button_button_down"]
 [connection signal="button_down" from="PopulationMuitoDificil/Mila/Button" to="PopulationMuitoDificil/Mila" method="_on_Button_button_down"]
-[connection signal="button_down" from="NextTurn" to="." method="_on_NextTurn_button_down"]
 [connection signal="button_down" from="NextTurn" to="canvas_jornal/jornal" method="_on_NextTurn_button_down"]
+[connection signal="button_down" from="NextTurn" to="." method="_on_NextTurn_button_down"]
 [connection signal="button_down" from="RetornaMenu" to="." method="_on_RetornaMenu_button_down"]
 [connection signal="pressed" from="MenuSanduiche" to="." method="_on_Menu_pressed"]
 [connection signal="button_down" from="Isolar" to="Population" method="_on_Button_button_down"]
