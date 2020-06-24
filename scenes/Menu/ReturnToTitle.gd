@@ -7,7 +7,9 @@ func _ready() -> void:
 	get_node("CheckButton").connect("pressed", self, "_on_CheckButton_toggled")
 	atualizaValorDificuldade()
 	atualizaToggleSom()
+	atualizaToggleMusica()
 	print(get_node("/root/Configuracoes").temsom)
+	print(get_node("/root/Configuracoes").musicaAtiva)
 
 #	AUDIO
 
@@ -19,6 +21,10 @@ func _on_CheckButton_toggled():
 func atualizaToggleSom():
 	silence = get_node("/root/Configuracoes").temsom
 	$CheckButton.pressed = silence
+
+func atualizaToggleMusica():
+	silence = get_node("/root/Configuracoes").musicaAtiva
+	$CheckButtonMusica.pressed = silence
 
 
 #	DIFICULDADE
@@ -52,3 +58,13 @@ func _on_diminuiDificuldade_pressed():
 func _on_b_back_pressed():
 	get_node('svoltar').play()
 	get_tree().change_scene("res://scenes/Menu.tscn")
+
+
+func _on_CheckButtonMusica_toggled():
+	get_node("/root/Configuracoes").ajustarMusica()
+	atualizaToggleMusica()
+
+
+func _on_CheckButtonMusica_pressed():
+	get_node("/root/Configuracoes").ajustarMusica()
+	atualizaToggleMusica()
