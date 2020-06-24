@@ -1,10 +1,10 @@
-[gd_scene load_steps=92 format=2]
+[gd_scene load_steps=106 format=2]
 
 [ext_resource path="res://assets/town/town2.png" type="Texture" id=1]
 [ext_resource path="res://assets/autoral/Botoes/opcaoMenu.png" type="Texture" id=2]
 [ext_resource path="res://assets/autoral/Botoes/opcaoSair.png" type="Texture" id=3]
 [ext_resource path="res://assets/autoral/Fichas/fichaPersonalizada.png" type="Texture" id=4]
-[ext_resource path="res://assets/autoral/avatares/c11.png" type="Texture" id=5]
+[ext_resource path="res://assets/autoral/avatares/1PardoRuivo.png" type="Texture" id=5]
 [ext_resource path="res://Fonts/COUR.TTF" type="DynamicFontData" id=6]
 [ext_resource path="res://assets/autoral/Jornal/j_doentesb.png" type="Texture" id=7]
 [ext_resource path="res://scripts/InfoTurno.gd" type="Script" id=8]
@@ -28,14 +28,19 @@
 [ext_resource path="res://assets/autoral/avatares/C51.png" type="Texture" id=26]
 [ext_resource path="res://assets/autoral/avatares/C43.png" type="Texture" id=27]
 [ext_resource path="res://assets/autoral/avatares/C44.png" type="Texture" id=28]
+[ext_resource path="res://assets/autoral/avatares/c11.png" type="Texture" id=29]
+[ext_resource path="res://assets/autoral/avatares/c63.png" type="Texture" id=30]
 [ext_resource path="res://assets/autoral/cartaz.png" type="Texture" id=31]
 [ext_resource path="res://assets/audio/sfx_bloquinho.wav" type="AudioStream" id=32]
+[ext_resource path="res://assets/autoral/avatares/COR6.png" type="Texture" id=33]
 [ext_resource path="res://assets/autoral/Botoes/botaoIsolar2.png" type="Texture" id=34]
+[ext_resource path="res://assets/autoral/avatares/c72.png" type="Texture" id=35]
 [ext_resource path="res://assets/autoral/Botoes/botaoDia.png" type="Texture" id=36]
 [ext_resource path="res://assets/autoral/Botoes/botaoMenu.png" type="Texture" id=37]
 [ext_resource path="res://assets/audio/sfx_computador.wav" type="AudioStream" id=38]
 [ext_resource path="res://Fonts/courier_small.tres" type="DynamicFont" id=39]
 [ext_resource path="res://assets/autoral/Objetos/pc.png" type="Texture" id=40]
+[ext_resource path="res://assets/autoral/avatares/c21.png" type="Texture" id=41]
 [ext_resource path="res://assets/autoral/fundo.png" type="Texture" id=42]
 [ext_resource path="res://assets/autoral/Objetos/murall.png" type="Texture" id=43]
 [ext_resource path="res://assets/autoral/Objetos/mesa com coisas.png" type="Texture" id=44]
@@ -65,9 +70,18 @@
 [ext_resource path="res://assets/autoral/Fichas/arquivo-fundo.png" type="Texture" id=68]
 [ext_resource path="res://assets/autoral/Fichas/arquivo-muito-dificil.png" type="Texture" id=69]
 [ext_resource path="res://assets/autoral/Fichas/arquivo-dificil.png" type="Texture" id=70]
+[ext_resource path="res://assets/autoral/avatares/c12.png" type="Texture" id=71]
 [ext_resource path="res://assets/autoral/Botoes/menuSanduiche.png" type="Texture" id=72]
+[ext_resource path="res://assets/autoral/avatares/c23.png" type="Texture" id=73]
 [ext_resource path="res://assets/autoral/Botoes/pause.png" type="Texture" id=74]
 [ext_resource path="res://Fonts/POWDRFT_.ttf" type="DynamicFontData" id=75]
+[ext_resource path="res://assets/autoral/avatares/cor 5.png" type="Texture" id=76]
+[ext_resource path="res://assets/autoral/avatares/c62.png" type="Texture" id=77]
+[ext_resource path="res://assets/autoral/avatares/cor 3.png" type="Texture" id=78]
+[ext_resource path="res://assets/autoral/avatares/C74.png" type="Texture" id=79]
+[ext_resource path="res://assets/autoral/avatares/c81.png" type="Texture" id=80]
+[ext_resource path="res://assets/autoral/avatares/c13.png" type="Texture" id=81]
+[ext_resource path="res://assets/autoral/avatares/C52.png" type="Texture" id=82]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -1002,7 +1016,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 5 )
+texture = ExtResource( 41 )
 
 [node name="Ivo" type="Node" parent="Population"]
 script = SubResource( 9 )
@@ -1025,7 +1039,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 25 )
+texture = ExtResource( 29 )
 
 [node name="Leo" type="Node" parent="Population"]
 script = SubResource( 9 )
@@ -1048,7 +1062,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 15 )
+texture = ExtResource( 71 )
 
 [node name="Cal" type="Node" parent="Population"]
 script = SubResource( 9 )
@@ -1071,7 +1085,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 27 )
+texture = ExtResource( 30 )
 
 [node name="Mark" type="Node" parent="Population"]
 script = SubResource( 9 )
@@ -1163,7 +1177,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 5 )
+texture = ExtResource( 33 )
 
 [node name="Neil" type="Node" parent="Population"]
 script = SubResource( 9 )
@@ -1186,7 +1200,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 25 )
+texture = ExtResource( 81 )
 
 [node name="Mary" type="Node" parent="Population"]
 script = SubResource( 9 )
@@ -1210,7 +1224,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 28 )
+texture = ExtResource( 82 )
 
 [node name="PopulationDificil" type="Node2D" parent="."]
 visible = false
@@ -1239,7 +1253,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 25 )
+texture = ExtResource( 35 )
 
 [node name="Tom" type="Node" parent="PopulationDificil"]
 script = SubResource( 9 )
@@ -1263,7 +1277,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 25 )
+texture = ExtResource( 28 )
 
 [node name="Lola" type="Node" parent="PopulationDificil"]
 script = SubResource( 9 )
@@ -1287,7 +1301,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 25 )
+texture = ExtResource( 76 )
 
 [node name="Kiko" type="Node" parent="PopulationDificil"]
 script = SubResource( 9 )
@@ -1311,10 +1325,9 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 25 )
+texture = ExtResource( 27 )
 
 [node name="PopulationMuitoDificil" type="Node2D" parent="."]
-visible = false
 position = Vector2( 85.1284, 283.145 )
 z_index = -7
 
@@ -1340,7 +1353,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 27 )
+texture = ExtResource( 77 )
 
 [node name="Hugo" type="Node" parent="PopulationMuitoDificil"]
 script = SubResource( 9 )
@@ -1364,7 +1377,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 28 )
+texture = ExtResource( 78 )
 
 [node name="Enzo" type="Node" parent="PopulationMuitoDificil"]
 script = SubResource( 9 )
@@ -1388,7 +1401,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 26 )
+texture = ExtResource( 79 )
 
 [node name="Luka" type="Node" parent="PopulationMuitoDificil"]
 script = SubResource( 9 )
@@ -1412,7 +1425,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 5 )
+texture = ExtResource( 73 )
 
 [node name="Mila" type="Node" parent="PopulationMuitoDificil"]
 script = SubResource( 9 )
@@ -1436,7 +1449,7 @@ __meta__ = {
 visible = false
 position = Vector2( 72.148, 140.789 )
 scale = Vector2( 0.468875, 0.468875 )
-texture = ExtResource( 27 )
+texture = ExtResource( 80 )
 
 [node name="NextTurn" type="Button" parent="."]
 margin_left = 56.3422
@@ -1757,8 +1770,8 @@ __meta__ = {
 [connection signal="button_down" from="PopulationMuitoDificil/Enzo/Button" to="PopulationMuitoDificil/Enzo" method="_on_Button_button_down"]
 [connection signal="button_down" from="PopulationMuitoDificil/Luka/Button" to="PopulationMuitoDificil/Luka" method="_on_Button_button_down"]
 [connection signal="button_down" from="PopulationMuitoDificil/Mila/Button" to="PopulationMuitoDificil/Mila" method="_on_Button_button_down"]
-[connection signal="button_down" from="NextTurn" to="canvas_jornal/jornal" method="_on_NextTurn_button_down"]
 [connection signal="button_down" from="NextTurn" to="." method="_on_NextTurn_button_down"]
+[connection signal="button_down" from="NextTurn" to="canvas_jornal/jornal" method="_on_NextTurn_button_down"]
 [connection signal="button_down" from="RetornaMenu" to="." method="_on_RetornaMenu_button_down"]
 [connection signal="pressed" from="MenuSanduiche" to="." method="_on_Menu_pressed"]
 [connection signal="button_down" from="Isolar" to="Population" method="_on_Button_button_down"]
