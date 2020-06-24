@@ -17,6 +17,7 @@ _global_script_class_icons={
 
 config/name="p_zero_menu"
 run/main_scene="res://scenes/Menu.tscn"
+config/icon="res://assets/autoral/icon.png"
 
 [autoload]
 

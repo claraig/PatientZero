@@ -31,4 +31,4 @@ func ajustarMusica():
 	musicaAtiva = !musicaAtiva
 	print(musicaAtiva)
 	AudioServer.set_bus_mute(1,!musicaAtiva)
-	
+
