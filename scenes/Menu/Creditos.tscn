@@ -4,7 +4,8 @@
 [ext_resource path="res://assets/audio/tecla.wav" type="AudioStream" id=2]
 [ext_resource path="res://Fonts/POWDRFT_.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://Fonts/b_voltar.tres" type="DynamicFont" id=4]
-[ext_resource path="res://scenes/Menu/Creditos.gd" type="Script" id=5]
+[ext_resource path="res://scripts/Creditos.gd" type="Script" id=5]
+
 
 [sub_resource type="DynamicFont" id=1]
 size = 30

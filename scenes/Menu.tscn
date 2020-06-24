@@ -45,8 +45,11 @@ func _on_opcoes_pressed() -> void:
 	$FadeIn.fade_in()
 
 
-#func _on_creditos_pressed() -> void:
-#	pass # Replace with function body.
+func _on_creditos_pressed() -> void:
+	get_node('click').play()
+	scene_path = \"res://scenes/Menu/Creditos.tscn\"
+	$FadeIn.show()
+	$FadeIn.fade_in()
 
 
 func _on_sair_pressed() -> void:
@@ -111,7 +114,6 @@ margin_left = 525.265
 margin_top = 396.843
 margin_right = 691.268
 margin_bottom = 494.843
-disabled = true
 texture_normal = ExtResource( 15 )
 texture_hover = ExtResource( 19 )
 __meta__ = {
