@@ -10,7 +10,7 @@
 [ext_resource path="res://assets/audio/ALERT_Error.wav" type="AudioStream" id=9]
 [ext_resource path="res://assets/audio/arquive-click.wav" type="AudioStream" id=10]
 [ext_resource path="res://assets/audio/sfx_jornal.wav" type="AudioStream" id=11]
-[ext_resource path="res://assets/audio/MESSAGE-B_Accept.wav" type="AudioStream" id=12]
+[ext_resource path="res://assets/audio/sfx_vitoria.wav" type="AudioStream" id=12]
 [ext_resource path="res://assets/autoral/Jornal/j_mortes2.png" type="Texture" id=13]
 [ext_resource path="res://assets/autoral/Jornal/j_venceu.png" type="Texture" id=14]
 [ext_resource path="res://assets/autoral/avatares/C42.png" type="Texture" id=15]
@@ -83,6 +83,7 @@
 [ext_resource path="res://assets/autoral/avatares/C52.png" type="Texture" id=82]
 [ext_resource path="res://assets/audio/fundo-gameplay.wav" type="AudioStream" id=83]
 
+
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
 
@@ -111,7 +112,8 @@ func _ready():
 	$canvas_jornal/bJornal.show() #background escuro
 
 	get_node('Sons/turno').play()
-	get_node(\"Sons/fundo\").play()
+	if(get_node(\"/root/Configuracoes\").musicaAtiva):
+		get_node(\"Sons/fundo\").play()
 	pessoas = get_node(\"Population\").listaPessoas
 	lugares = get_node(\"Places\").get_children()
 	_encontraPacienteZero()
@@ -753,7 +755,7 @@ stream = ExtResource( 32 )
 
 [node name="fundo" type="AudioStreamPlayer" parent="Sons"]
 stream = ExtResource( 83 )
-volume_db = -40.0
+volume_db = -40.388
 bus = "FundoJogo"
 
 [node name="Fichas" type="Node2D" parent="."]
