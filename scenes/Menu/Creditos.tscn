@@ -1,0 +1,84 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/autoral/menu/creditos/menu_creditos.png" type="Texture" id=1]
+[ext_resource path="res://assets/audio/tecla.wav" type="AudioStream" id=2]
+[ext_resource path="res://Fonts/POWDRFT_.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Fonts/b_voltar.tres" type="DynamicFont" id=4]
+[ext_resource path="res://scenes/Menu/Creditos.gd" type="Script" id=5]
+
+[sub_resource type="DynamicFont" id=1]
+size = 30
+outline_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
+use_filter = true
+font_data = ExtResource( 3 )
+
+[node name="Creditos" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="imagem_fundo" type="Sprite" parent="."]
+position = Vector2( 476.728, 575.054 )
+texture = ExtResource( 1 )
+offset = Vector2( 164.211, -214.737 )
+
+[node name="bVoltar" type="Button" parent="."]
+margin_left = 192.769
+margin_top = 587.49
+margin_right = 383.769
+margin_bottom = 647.49
+custom_fonts/font = ExtResource( 4 )
+custom_colors/font_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
+custom_colors/font_color_hover = Color( 0.521569, 0.47451, 0.419608, 1 )
+custom_colors/font_color_pressed = Color( 0.521569, 0.47451, 0.419608, 1 )
+text = "voltar"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="equipe" type="Label" parent="."]
+margin_left = 277.701
+margin_top = 161.028
+margin_right = 701.701
+margin_bottom = 527.028
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.215686, 0.2, 0.47451, 1 )
+text = "Desenvolvimento:
+- Gabriel Adamski
+- Clara Leite
+
+Arte:
+- Clara Leite
+
+Agradecimento especial:
+- Artur Nista"
+align = 3
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text2" type="Label" parent="."]
+margin_left = 775.209
+margin_top = 166.568
+margin_right = 1078.21
+margin_bottom = 532.568
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.215686, 0.2, 0.47451, 1 )
+text = "Audio:
+- eklee
+- morganpurkis
+- Nicole Marie T
+- ViRiX
+
+
+Musica:
+- Rafael Krux"
+align = 3
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="audio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+[connection signal="pressed" from="bVoltar" to="." method="_on_bVoltar_pressed"]
