@@ -31,3 +31,14 @@ func _on_TESTE_button_down() -> void:
 	podemexer = true
 	print ('lalalaallaalallaalla')
 	pass # Replace with function body.
+
+
+
+func _on_Button_toggled(button_pressed: bool):
+#	$caneta.play()
+	if button_pressed:
+		$caneta.play(0.1)
+		$bic/bic2/AnimationPlayer.play('mov')
+	else:
+		$caneta.play()
+		$bic/bic2/AnimationPlayer.play('mov (copy)')
