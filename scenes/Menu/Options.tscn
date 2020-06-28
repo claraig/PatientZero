@@ -1,7 +1,7 @@
 [gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/autoral/menu/options/menu_opcoes.png" type="Texture" id=1]
-[ext_resource path="res://assets/audio/tecla.wav" type="AudioStream" id=2]
+[ext_resource path="res://assets/audio/sfx_tecla.wav" type="AudioStream" id=2]
 [ext_resource path="res://Fonts/b_voltar.tres" type="DynamicFont" id=3]
 [ext_resource path="res://scenes/Menu/ReturnToTitle.gd" type="Script" id=4]
 [ext_resource path="res://assets/autoral/menu/options/opcoes.png" type="Texture" id=5]
@@ -10,6 +10,7 @@
 [ext_resource path="res://assets/audio/sfx_b_click.wav" type="AudioStream" id=8]
 [ext_resource path="res://assets/autoral/Botoes/toggle_on.png" type="Texture" id=9]
 [ext_resource path="res://assets/autoral/Botoes/toggle_off.png" type="Texture" id=10]
+
 
 [sub_resource type="DynamicFont" id=1]
 size = 30

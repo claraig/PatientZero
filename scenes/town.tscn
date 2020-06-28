@@ -1,14 +1,15 @@
-[gd_scene load_steps=106 format=2]
+[gd_scene load_steps=125 format=2]
 
-[ext_resource path="res://assets/town/town2.png" type="Texture" id=1]
+[ext_resource path="res://assets/autoral/Objetos/vaso_de_planta.png" type="Texture" id=1]
 [ext_resource path="res://assets/autoral/Botoes/opcaoMenu.png" type="Texture" id=2]
 [ext_resource path="res://assets/autoral/Botoes/opcaoSair.png" type="Texture" id=3]
 [ext_resource path="res://assets/autoral/Fichas/fichaPersonalizada.png" type="Texture" id=4]
+[ext_resource path="res://assets/autoral/Objetos/caneca.png" type="Texture" id=5]
 [ext_resource path="res://Fonts/COUR.TTF" type="DynamicFontData" id=6]
 [ext_resource path="res://assets/autoral/Jornal/j_doentesb.png" type="Texture" id=7]
 [ext_resource path="res://scripts/InfoTurno.gd" type="Script" id=8]
 [ext_resource path="res://assets/audio/ALERT_Error.wav" type="AudioStream" id=9]
-[ext_resource path="res://assets/audio/arquive-click.wav" type="AudioStream" id=10]
+[ext_resource path="res://assets/audio/sfx_arquivo.wav" type="AudioStream" id=10]
 [ext_resource path="res://assets/audio/sfx_jornal.wav" type="AudioStream" id=11]
 [ext_resource path="res://assets/audio/sfx_vitoria.wav" type="AudioStream" id=12]
 [ext_resource path="res://assets/autoral/Jornal/j_mortes2.png" type="Texture" id=13]
@@ -42,7 +43,7 @@
 [ext_resource path="res://assets/autoral/avatares/c21.png" type="Texture" id=41]
 [ext_resource path="res://assets/autoral/fundo.png" type="Texture" id=42]
 [ext_resource path="res://assets/autoral/Objetos/murall.png" type="Texture" id=43]
-[ext_resource path="res://assets/autoral/Objetos/mesa com coisas.png" type="Texture" id=44]
+[ext_resource path="res://assets/audio/sfx_caneta.wav" type="AudioStream" id=44]
 [ext_resource path="res://Fonts/COURBD.TTF" type="DynamicFontData" id=45]
 [ext_resource path="res://assets/autoral/Objetos/luminaria_roxa.png" type="Texture" id=46]
 [ext_resource path="res://assets/autoral/Objetos/luminaria_verde.png" type="Texture" id=47]
@@ -82,6 +83,19 @@
 [ext_resource path="res://assets/autoral/avatares/c13.png" type="Texture" id=81]
 [ext_resource path="res://assets/autoral/avatares/C52.png" type="Texture" id=82]
 [ext_resource path="res://assets/audio/fundo-gameplay.wav" type="AudioStream" id=83]
+[ext_resource path="res://assets/audio/sfx_caneca.wav" type="AudioStream" id=84]
+[ext_resource path="res://assets/audio/sfx_lanterna.wav" type="AudioStream" id=85]
+[ext_resource path="res://assets/autoral/Objetos/lanterna_luz.png" type="Texture" id=86]
+[ext_resource path="res://assets/autoral/Objetos/caneta.png" type="Texture" id=87]
+[ext_resource path="res://assets/autoral/Objetos/mesa vazia.png" type="Texture" id=88]
+[ext_resource path="res://scenes/SpritesObjetos.gd" type="Script" id=89]
+[ext_resource path="res://assets/audio/sfx_plantinha.ogg" type="AudioStream" id=90]
+[ext_resource path="res://assets/autoral/Objetos/l2.png" type="Texture" id=91]
+[ext_resource path="res://assets/autoral/Objetos/livros.png" type="Texture" id=92]
+[ext_resource path="res://assets/autoral/Objetos/l1.png" type="Texture" id=93]
+[ext_resource path="res://assets/audio/BookFlip3.wav" type="AudioStream" id=94]
+[ext_resource path="res://assets/autoral/Objetos/mural_menu.png" type="Texture" id=95]
+[ext_resource path="res://assets/autoral/Objetos/pastinha.png" type="Texture" id=96]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -234,7 +248,6 @@ func _desabilitarMortosPraNaoVirarZumbi():
 
 
 #---------------------------------------------------------------------------#
-
 # Passar de Turno
 
 func _passarTurno():
@@ -259,7 +272,7 @@ func _on_NextTurn_button_down():
 	turnoAtual+=1
 	_diminuindoImunidade()
 	if(quantidadeMortos < pessoas.size()-1):
-		get_node('Sons/turno').play()
+		get_node('Sons/jornal').play()
 		_passarTurno()
 		$canvas_jornal/jornal.show()
 		if(quantidadeMortos == 0):
@@ -293,8 +306,6 @@ func _inserirTurnoLugares():
 		l.visitantes.push_back({\"turno\":turnoAtual,\"pessoas\":[]})
 
 #---------------------------------------------------------------------------#
-
-
 # Venceu
 func _venceu():
 	for p in pessoas:
@@ -318,20 +329,22 @@ func _on_TextEdit_gui_input(event: InputEvent) -> void:
 		get_node('Sons/teclar').play()
 
 #---------------------------------------------------------------------------#
-
 #  MENU POP UP
 
 func _on_Menu_pressed():
+	$Sons/teclar.play()
 	get_node('MenuPopup').show()
 
 func _on_menu_pressed():
-# warning-ignore:return_value_discarded
+	$Sons/teclar.play()
 	get_tree().change_scene(\"res://scenes/Menu.tscn\")
 
 func _on_sair_pressed():
+	$Sons/teclar.play()
 	get_tree().quit()
 
 func _on_cancela_pressed():
+	$Sons/teclar.play()
 	get_node('MenuPopup').hide()
 "
 
@@ -356,7 +369,194 @@ font_data = ExtResource( 45 )
 size = 17
 font_data = ExtResource( 45 )
 
-[sub_resource type="GDScript" id=8]
+[sub_resource type="Animation" id=8]
+resource_name = "mov"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 264.084, 96.2841 ), Vector2( 273.032, 68.2708 ), Vector2( 264.084, 96.2841 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -8.11072, 0.0 ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "mov"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("l2:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -15.3544, 0.309937 ), Vector2( -15.3544, 0.309937 ), Vector2( -15.3544, -7.65027 ), Vector2( -15.3544, -17.7995 ), Vector2( -15.3544, 0.309937 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("l2:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("l1:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -32.4158, 1.60382 ), Vector2( -32.4158, -4.36633 ), Vector2( -32.4158, -15.3116 ), Vector2( -32.4158, -4.16736 ), Vector2( -32.4158, 1.60382 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("l1:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 0.0, 0.0, 0.0 ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "mov"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("../sombra:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 24.5482, 34.7267 ), Vector2( 19.7583, 32.9306 ), Vector2( 30.5356, 33.2299 ), Vector2( 24.5482, 34.7267 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 19.1597, -22.752 ), Vector2( 17.9622, -21.5546 ), Vector2( 19.7584, -21.9306 ), Vector2( 17.3635, -22.1533 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("../sombra:rotation_degrees")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 0.0, 0.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.2, 0.5, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -3.34033, 3.88307, 0.0 ]
+}
+
+[sub_resource type="Animation" id=11]
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 890.025, 653.492 ), Vector2( 890.025, 653.492 ), Vector2( 890.025, 653.492 ), Vector2( 890.025, 653.492 ), Vector2( 890.025, 653.492 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -4.83033, 0.0, 9.02772, 0.0 ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "mov"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1.4339, 8.60376 ), Vector2( 16.4339, 2.60376 ), Vector2( 1.4339, 8.60376 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 16.6274, 0.0 ]
+}
+
+[sub_resource type="GDScript" id=13]
 script/source = "extends Node
 
 var isolado:String = \"\"
@@ -382,13 +582,11 @@ func _inicializaPessoas():
 		n.imunidade = rand_range(3,5)
 		n.get_child(0).show()
 
+
 func _inicializarPacienteZero():
 	randomize()
 	var sorteado = rand_range(0, listaPessoas.size())
 	listaPessoas[sorteado].pacienteZero = true
-
-
-
 
 
 # Isolar pessoa
@@ -403,16 +601,14 @@ func _on_Button_button_down():
 func _on_dificil_ready():
 	if(get_node(\"/root/Configuracoes\").dificuldade < 1):
 		get_parent().get_node(\"Fichas/Arquivo/dificil\").hide()
-	pass # Replace with function body.
 
 
 func _on_muitoDificil_ready():
 	if(get_node(\"/root/Configuracoes\").dificuldade < 2):
 		get_parent().get_node(\"Fichas/Arquivo/muitoDificil\").hide()
-	pass # Replace with function body.
 "
 
-[sub_resource type="GDScript" id=9]
+[sub_resource type="GDScript" id=14]
 script/source = "extends Node
 
 var imunidade:int
@@ -442,7 +638,7 @@ func _ready():
 	get_parent().get_parent().get_node('Isolar').hide()
 	get_parent().get_parent().get_node('Fichas/painelFicha').hide()
 	get_node('Sprite').hide()
-	
+
 
 func formatarInteracoes():
 	texto += \"Adoeceu dia \"+ str(turnoAdoecimento)+ \"\\n\\n Imunidade: \" + str(imunidade)
@@ -479,31 +675,31 @@ func _on_Button_button_down():
 
 "
 
-[sub_resource type="StyleBoxFlat" id=10]
+[sub_resource type="StyleBoxFlat" id=15]
 bg_color = Color( 0.596078, 0.72549, 0.721569, 1 )
 draw_center = false
 
-[sub_resource type="StyleBoxEmpty" id=11]
+[sub_resource type="StyleBoxEmpty" id=16]
 
-[sub_resource type="StyleBoxEmpty" id=12]
+[sub_resource type="StyleBoxEmpty" id=17]
 
-[sub_resource type="StyleBoxEmpty" id=13]
+[sub_resource type="StyleBoxEmpty" id=18]
 
-[sub_resource type="StyleBoxEmpty" id=14]
+[sub_resource type="StyleBoxEmpty" id=19]
 
-[sub_resource type="DynamicFont" id=15]
+[sub_resource type="DynamicFont" id=20]
 size = 61
 use_filter = true
 extra_spacing_top = 6
 font_data = ExtResource( 45 )
 
-[sub_resource type="DynamicFont" id=16]
+[sub_resource type="DynamicFont" id=21]
 size = 100
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 45 )
 
-[sub_resource type="DynamicFont" id=17]
+[sub_resource type="DynamicFont" id=22]
 size = 47
 outline_size = 1
 outline_color = Color( 0.388235, 0.329412, 0.301961, 1 )
@@ -512,27 +708,27 @@ extra_spacing_top = 5
 extra_spacing_bottom = 5
 font_data = ExtResource( 6 )
 
-[sub_resource type="DynamicFontData" id=18]
+[sub_resource type="DynamicFontData" id=23]
 font_path = "res://Fonts/COURBD.TTF"
 
-[sub_resource type="DynamicFont" id=19]
+[sub_resource type="DynamicFont" id=24]
 size = 79
 use_filter = true
-font_data = SubResource( 18 )
+font_data = SubResource( 23 )
 
-[sub_resource type="DynamicFont" id=20]
+[sub_resource type="DynamicFont" id=25]
 size = 41
 outline_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 use_filter = true
 extra_spacing_top = 4
 extra_spacing_bottom = 4
-font_data = SubResource( 18 )
+font_data = SubResource( 23 )
 
-[sub_resource type="StyleBoxEmpty" id=21]
+[sub_resource type="StyleBoxEmpty" id=26]
 
-[sub_resource type="StyleBoxEmpty" id=22]
+[sub_resource type="StyleBoxEmpty" id=27]
 
-[sub_resource type="DynamicFont" id=23]
+[sub_resource type="DynamicFont" id=28]
 size = 32
 font_data = ExtResource( 75 )
 
@@ -590,7 +786,7 @@ margin_top = 93.2521
 margin_right = 837.631
 margin_bottom = 165.252
 custom_fonts/font = SubResource( 3 )
-custom_colors/font_color = Color( 0.235294, 0.211765, 0.180392, 1 )
+custom_colors/font_color = Color( 0.317647, 0.290196, 0.254902, 1 )
 text = "Doentes
 Mortos"
 align = 2
@@ -604,7 +800,7 @@ margin_top = 118.737
 margin_right = 837.631
 margin_bottom = 190.737
 custom_fonts/font = SubResource( 3 )
-custom_colors/font_color = Color( 0.235294, 0.211765, 0.180392, 1 )
+custom_colors/font_color = Color( 0.317647, 0.290196, 0.254902, 1 )
 text = "
 Pessoa Isolada"
 align = 2
@@ -615,10 +811,10 @@ __meta__ = {
 [node name="display-canvas-bg" type="CanvasLayer" parent="."]
 
 [node name="dia" type="Label" parent="display-canvas-bg"]
-margin_left = 848.537
-margin_top = 60.7839
-margin_right = 876.537
-margin_bottom = 80.7839
+margin_left = 840.537
+margin_top = 63.7839
+margin_right = 868.537
+margin_bottom = 83.7839
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
@@ -630,9 +826,9 @@ __meta__ = {
 
 [node name="doentes" type="Label" parent="display-canvas-bg"]
 margin_left = 850.537
-margin_top = 89.7839
+margin_top = 91.7839
 margin_right = 982.537
-margin_bottom = 109.784
+margin_bottom = 111.784
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
@@ -644,9 +840,9 @@ __meta__ = {
 
 [node name="mortos" type="Label" parent="display-canvas-bg"]
 margin_left = 850.537
-margin_top = 116.784
+margin_top = 117.784
 margin_right = 981.537
-margin_bottom = 136.784
+margin_bottom = 137.784
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0, 0, 0, 1 )
 align = 1
@@ -744,7 +940,7 @@ mix_target = 1
 [node name="clicar_arquivo" type="AudioStreamPlayer2D" parent="Sons"]
 stream = ExtResource( 10 )
 
-[node name="turno" type="AudioStreamPlayer2D" parent="Sons"]
+[node name="jornal" type="AudioStreamPlayer2D" parent="Sons"]
 stream = ExtResource( 11 )
 
 [node name="teclar" type="AudioStreamPlayer2D" parent="Sons"]
@@ -754,6 +950,29 @@ stream = ExtResource( 32 )
 stream = ExtResource( 83 )
 volume_db = -40.0
 bus = "FundoJogo"
+
+[node name="livros" type="AudioStreamPlayer" parent="Sons"]
+stream = ExtResource( 94 )
+volume_db = -9.455
+bus = "FundoJogo"
+
+[node name="caneca" type="AudioStreamPlayer" parent="Sons"]
+stream = ExtResource( 84 )
+volume_db = -17.859
+
+[node name="caneta" type="AudioStreamPlayer" parent="Sons"]
+stream = ExtResource( 44 )
+volume_db = 0.021
+
+[node name="lanterna" type="AudioStreamPlayer2D" parent="Sons"]
+stream = ExtResource( 85 )
+
+[node name="papel" type="AudioStreamPlayer" parent="Sons"]
+stream = ExtResource( 94 )
+volume_db = -10.505
+
+[node name="planta" type="AudioStreamPlayer" parent="Sons"]
+stream = ExtResource( 90 )
 
 [node name="Fichas" type="Node2D" parent="."]
 position = Vector2( 161.705, 127.693 )
@@ -818,14 +1037,7 @@ __meta__ = {
 }
 
 [node name="SpritesObjetos" type="Node2D" parent="."]
-
-[node name="spr_town2" type="Sprite" parent="SpritesObjetos"]
-visible = false
-show_behind_parent = true
-position = Vector2( 660.489, 366.923 )
-scale = Vector2( 0.348639, 0.431027 )
-z_index = -2
-texture = ExtResource( 1 )
+script = ExtResource( 89 )
 
 [node name="Computador" type="Sprite" parent="SpritesObjetos"]
 position = Vector2( 1050.92, 502.191 )
@@ -834,19 +1046,72 @@ z_index = -7
 texture = ExtResource( 40 )
 
 [node name="Mural" type="Sprite" parent="SpritesObjetos"]
-position = Vector2( 661.167, 296.742 )
-scale = Vector2( 0.628135, 0.65574 )
+position = Vector2( 661.167, 276.463 )
+scale = Vector2( 0.628135, 0.608304 )
 z_index = -9
 texture = ExtResource( 43 )
 __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="Mural2" type="Sprite" parent="SpritesObjetos"]
+visible = false
+position = Vector2( 656.577, 278.309 )
+scale = Vector2( 0.642039, 0.767269 )
+z_index = -9
+texture = ExtResource( 95 )
+
 [node name="Mesa" type="Sprite" parent="SpritesObjetos"]
-position = Vector2( 993.835, 599.592 )
+position = Vector2( 990.841, 594.802 )
 scale = Vector2( 1.005, 1.005 )
 z_index = -9
-texture = ExtResource( 44 )
+texture = ExtResource( 88 )
+
+[node name="caneta" type="Sprite" parent="SpritesObjetos/Mesa"]
+position = Vector2( 264.084, 96.2841 )
+texture = ExtResource( 87 )
+offset = Vector2( 4.86511, -17.2021 )
+
+[node name="bcaneta" type="Button" parent="SpritesObjetos/Mesa/caneta"]
+margin_left = 4.12134
+margin_top = -45.062
+margin_right = 23.1213
+margin_bottom = 8.93799
+rect_rotation = 13.6635
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="caneta" type="AnimationPlayer" parent="SpritesObjetos/Mesa/caneta"]
+anims/mov = SubResource( 8 )
+
+[node name="livros" type="Sprite" parent="SpritesObjetos/Mesa"]
+position = Vector2( 242.291, -40.9128 )
+texture = ExtResource( 92 )
+
+[node name="l1" type="Sprite" parent="SpritesObjetos/Mesa/livros"]
+position = Vector2( -32.4158, 1.60382 )
+scale = Vector2( 0.97275, 0.97275 )
+texture = ExtResource( 93 )
+
+[node name="l2" type="Sprite" parent="SpritesObjetos/Mesa/livros"]
+position = Vector2( -15.3544, 0.309937 )
+scale = Vector2( 0.97275, 0.97275 )
+texture = ExtResource( 91 )
+
+[node name="livros" type="Button" parent="SpritesObjetos/Mesa/livros"]
+margin_left = -43.0
+margin_top = -50.0
+margin_right = 45.0
+margin_bottom = 43.0
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SpritesObjetos/Mesa/livros"]
+anims/mov = SubResource( 9 )
 
 [node name="Luminaria" type="Sprite" parent="SpritesObjetos"]
 position = Vector2( 1212.33, 307.237 )
@@ -854,21 +1119,120 @@ rotation = 0.169487
 scale = Vector2( 0.700417, 0.700417 )
 texture = ExtResource( 46 )
 
-[node name="Luminaria2" type="Sprite" parent="SpritesObjetos"]
-position = Vector2( 1212.39, 306.903 )
-rotation = 0.169487
-scale = Vector2( 0.700453, 0.700453 )
+[node name="Luminaria2" type="Sprite" parent="SpritesObjetos/Luminaria"]
+position = Vector2( 0.00415039, -0.484467 )
+rotation = 1.49004e-08
+scale = Vector2( 1.00005, 1.00005 )
 texture = ExtResource( 47 )
 
+[node name="lanterna" type="Button" parent="SpritesObjetos/Luminaria"]
+margin_left = -91.1046
+margin_top = -33.9377
+margin_right = -15.1046
+margin_bottom = 37.0623
+toggle_mode = true
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="lanterna_luz" type="Sprite" parent="SpritesObjetos/Luminaria/lanterna"]
+visible = false
+position = Vector2( 23.585, 49.8773 )
+rotation = -0.176216
+z_index = 15
+texture = ExtResource( 86 )
+offset = Vector2( -362.981, 296.276 )
+
 [node name="simbolo" type="Sprite" parent="SpritesObjetos"]
-position = Vector2( 458.246, 472.808 )
+position = Vector2( 485.623, 430.222 )
+rotation = 0.0680634
 texture = ExtResource( 67 )
 
 [node name="ficha" type="Sprite" parent="SpritesObjetos"]
-position = Vector2( 925.778, 346.608 )
+position = Vector2( 917.667, 350.664 )
 scale = Vector2( 0.888919, 0.856764 )
 z_index = -9
 texture = ExtResource( 66 )
+
+[node name="vaso" type="Sprite" parent="SpritesObjetos"]
+position = Vector2( 839.088, 573.489 )
+texture = ExtResource( 1 )
+hframes = 3
+
+[node name="sombra" type="Sprite" parent="SpritesObjetos/vaso"]
+position = Vector2( 24.5482, 34.7267 )
+scale = Vector2( 0.832421, 1.00885 )
+z_index = -1
+texture = ExtResource( 1 )
+hframes = 3
+frame = 1
+
+[node name="planta" type="Sprite" parent="SpritesObjetos/vaso"]
+position = Vector2( 17.3635, -22.1533 )
+scale = Vector2( 0.832421, 1.00885 )
+texture = ExtResource( 1 )
+offset = Vector2( 4.31567, -22.5525 )
+hframes = 3
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SpritesObjetos/vaso/planta"]
+anims/mov = SubResource( 10 )
+
+[node name="vaso" type="Button" parent="SpritesObjetos/vaso"]
+margin_left = -10.395
+margin_top = -33.1975
+margin_right = 45.605
+margin_bottom = 30.8025
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="caneca" type="Sprite" parent="SpritesObjetos"]
+position = Vector2( 890.025, 653.492 )
+texture = ExtResource( 5 )
+offset = Vector2( -3.02563, -19.8042 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SpritesObjetos/caneca"]
+anims/moving = SubResource( 11 )
+
+[node name="caneca" type="Button" parent="SpritesObjetos/caneca"]
+margin_left = -16.0
+margin_top = -43.0
+margin_right = 17.0
+margin_bottom = 5.0
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="pastinha" type="Sprite" parent="SpritesObjetos"]
+position = Vector2( 832.05, 673.731 )
+texture = ExtResource( 96 )
+hframes = 2
+
+[node name="papeis" type="Sprite" parent="SpritesObjetos/pastinha"]
+position = Vector2( 6.4339, 6.60376 )
+rotation = 0.0967343
+scale = Vector2( 1.20815, 1.20815 )
+texture = ExtResource( 96 )
+hframes = 2
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SpritesObjetos/pastinha/papeis"]
+anims/mov = SubResource( 12 )
+
+[node name="pastinha" type="Button" parent="SpritesObjetos/pastinha"]
+margin_left = -33.0
+margin_top = 35.0
+margin_right = 41.0
+margin_bottom = 115.0
+rect_rotation = -68.0466
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Places" type="Node2D" parent="."]
 position = Vector2( -12, 42.6477 )
@@ -883,11 +1247,11 @@ z_index = 10
 script = ExtResource( 18 )
 
 [node name="botao" type="TextureButton" parent="Places/Lojas"]
-margin_left = 343.658
-margin_top = -12.5291
-margin_right = 643.658
-margin_bottom = 343.471
-rect_rotation = -5.18058
+margin_left = 361.909
+margin_top = -49.0314
+margin_right = 661.909
+margin_bottom = 306.969
+rect_rotation = 9.41758
 rect_scale = Vector2( 0.417337, 0.417337 )
 keep_pressed_outside = true
 texture_normal = ExtResource( 49 )
@@ -903,11 +1267,11 @@ z_index = 10
 script = ExtResource( 18 )
 
 [node name="botao" type="TextureButton" parent="Places/Escola"]
-margin_left = 748.078
-margin_top = 171.716
-margin_right = 900.078
-margin_bottom = 355.716
-rect_rotation = 3.04285
+margin_left = 643.6
+margin_top = 306.939
+margin_right = 791.6
+margin_bottom = 488.939
+rect_rotation = -1.41274
 rect_scale = Vector2( 0.819423, 0.819423 )
 keep_pressed_outside = true
 texture_normal = ExtResource( 52 )
@@ -923,10 +1287,10 @@ z_index = 10
 script = ExtResource( 18 )
 
 [node name="botao" type="TextureButton" parent="Places/Mercado"]
-margin_left = 691.183
-margin_top = 326.103
-margin_right = 991.183
-margin_bottom = 682.103
+margin_left = 739.853
+margin_top = 165.898
+margin_right = 1039.85
+margin_bottom = 521.898
 rect_rotation = 6.66231
 rect_scale = Vector2( 0.417337, 0.417337 )
 keep_pressed_outside = true
@@ -943,10 +1307,10 @@ z_index = 10
 script = ExtResource( 18 )
 
 [node name="botao" type="TextureButton" parent="Places/Restaurante"]
-margin_left = 369.036
-margin_top = 188.473
-margin_right = 669.036
-margin_bottom = 544.473
+margin_left = 529.241
+margin_top = 174.278
+margin_right = 829.241
+margin_bottom = 530.278
 rect_scale = Vector2( 0.417337, 0.417337 )
 keep_pressed_outside = true
 texture_normal = ExtResource( 60 )
@@ -962,11 +1326,11 @@ z_index = 10
 script = ExtResource( 18 )
 
 [node name="botao" type="TextureButton" parent="Places/Escritório"]
-margin_left = 536.408
-margin_top = 218.974
-margin_right = 836.408
-margin_bottom = 574.974
-rect_rotation = -6.48091
+margin_left = 350.854
+margin_top = 179.43
+margin_right = 650.854
+margin_bottom = 535.43
+rect_rotation = -5.5753
 rect_scale = Vector2( 0.417337, 0.417337 )
 keep_pressed_outside = true
 texture_normal = ExtResource( 57 )
@@ -982,10 +1346,11 @@ z_index = 10
 script = ExtResource( 18 )
 
 [node name="botao" type="TextureButton" parent="Places/Rodoviária"]
-margin_left = 535.824
-margin_top = 27.5168
-margin_right = 835.824
-margin_bottom = 383.517
+margin_left = 547.991
+margin_top = 21.4331
+margin_right = 847.991
+margin_bottom = 377.433
+rect_rotation = -3.96928
 rect_scale = Vector2( 0.417337, 0.417337 )
 keep_pressed_outside = true
 texture_normal = ExtResource( 63 )
@@ -998,10 +1363,10 @@ __meta__ = {
 [node name="Population" type="Node2D" parent="."]
 position = Vector2( 85.1284, 283.145 )
 z_index = -7
-script = SubResource( 8 )
+script = SubResource( 13 )
 
 [node name="Catia" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="Population/Catia"]
 margin_left = 90.4596
@@ -1024,7 +1389,7 @@ scale = Vector2( 0.468875, 0.468875 )
 texture = ExtResource( 41 )
 
 [node name="Ivo" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="Population/Ivo"]
 margin_left = 152.137
@@ -1047,7 +1412,7 @@ scale = Vector2( 0.468875, 0.468875 )
 texture = ExtResource( 29 )
 
 [node name="Leo" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="Population/Leo"]
 margin_left = 218.758
@@ -1070,7 +1435,7 @@ scale = Vector2( 0.468875, 0.468875 )
 texture = ExtResource( 71 )
 
 [node name="Cal" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="Population/Cal"]
 margin_left = 64.2175
@@ -1093,7 +1458,7 @@ scale = Vector2( 0.468875, 0.468875 )
 texture = ExtResource( 30 )
 
 [node name="Mark" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="Population/Mark"]
 margin_left = 123.919
@@ -1116,7 +1481,7 @@ scale = Vector2( 0.468875, 0.468875 )
 texture = ExtResource( 25 )
 
 [node name="Sinty" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="Population/Sinty"]
 margin_left = 186.0
@@ -1139,7 +1504,7 @@ scale = Vector2( 0.468875, 0.468875 )
 texture = ExtResource( 15 )
 
 [node name="Eron" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="Population/Eron"]
 margin_left = 251.137
@@ -1162,7 +1527,7 @@ scale = Vector2( 0.468875, 0.468875 )
 texture = ExtResource( 26 )
 
 [node name="Judite" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="Population/Judite"]
 margin_left = 98.9193
@@ -1185,7 +1550,7 @@ scale = Vector2( 0.468875, 0.468875 )
 texture = ExtResource( 33 )
 
 [node name="Neil" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="Population/Neil"]
 margin_left = 164.379
@@ -1208,14 +1573,14 @@ scale = Vector2( 0.468875, 0.468875 )
 texture = ExtResource( 81 )
 
 [node name="Mary" type="Node" parent="Population"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="Population/Mary"]
 margin_left = 230.217
 margin_top = 531.446
 margin_right = 284.217
 margin_bottom = 555.446
-custom_styles/disabled = SubResource( 10 )
+custom_styles/disabled = SubResource( 15 )
 custom_fonts/font = ExtResource( 20 )
 custom_colors/font_color = Color( 0.360784, 0.298039, 0.266667, 1 )
 custom_colors/font_color_hover = Color( 0, 0, 0, 1 )
@@ -1237,7 +1602,7 @@ position = Vector2( 85.1284, 283.145 )
 z_index = -7
 
 [node name="Neide" type="Node" parent="PopulationDificil"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="PopulationDificil/Neide"]
 visible = false
@@ -1261,7 +1626,7 @@ scale = Vector2( 0.468875, 0.468875 )
 texture = ExtResource( 35 )
 
 [node name="Tom" type="Node" parent="PopulationDificil"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="PopulationDificil/Tom"]
 visible = false
@@ -1285,7 +1650,7 @@ scale = Vector2( 0.468875, 0.468875 )
 texture = ExtResource( 28 )
 
 [node name="Lola" type="Node" parent="PopulationDificil"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="PopulationDificil/Lola"]
 visible = false
@@ -1309,7 +1674,7 @@ scale = Vector2( 0.468875, 0.468875 )
 texture = ExtResource( 76 )
 
 [node name="Kiko" type="Node" parent="PopulationDificil"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="PopulationDificil/Kiko"]
 visible = false
@@ -1337,7 +1702,7 @@ position = Vector2( 85.1284, 283.145 )
 z_index = -7
 
 [node name="Biel" type="Node" parent="PopulationMuitoDificil"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="PopulationMuitoDificil/Biel"]
 visible = false
@@ -1361,7 +1726,7 @@ scale = Vector2( 0.468875, 0.468875 )
 texture = ExtResource( 77 )
 
 [node name="Hugo" type="Node" parent="PopulationMuitoDificil"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="PopulationMuitoDificil/Hugo"]
 visible = false
@@ -1385,7 +1750,7 @@ scale = Vector2( 0.468875, 0.468875 )
 texture = ExtResource( 78 )
 
 [node name="Enzo" type="Node" parent="PopulationMuitoDificil"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="PopulationMuitoDificil/Enzo"]
 visible = false
@@ -1409,7 +1774,7 @@ scale = Vector2( 0.468875, 0.468875 )
 texture = ExtResource( 79 )
 
 [node name="Luka" type="Node" parent="PopulationMuitoDificil"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="PopulationMuitoDificil/Luka"]
 visible = false
@@ -1433,7 +1798,7 @@ scale = Vector2( 0.468875, 0.468875 )
 texture = ExtResource( 73 )
 
 [node name="Mila" type="Node" parent="PopulationMuitoDificil"]
-script = SubResource( 9 )
+script = SubResource( 14 )
 
 [node name="Button" type="Button" parent="PopulationMuitoDificil/Mila"]
 visible = false
@@ -1461,7 +1826,7 @@ margin_left = 56.3422
 margin_top = 287.834
 margin_right = 248.342
 margin_bottom = 339.834
-custom_styles/hover = SubResource( 11 )
+custom_styles/hover = SubResource( 16 )
 icon = ExtResource( 36 )
 flat = true
 __meta__ = {
@@ -1474,7 +1839,7 @@ margin_left = 50.4124
 margin_top = 283.6
 margin_right = 254.413
 margin_bottom = 341.6
-custom_styles/hover = SubResource( 12 )
+custom_styles/hover = SubResource( 17 )
 disabled = true
 icon = ExtResource( 37 )
 flat = true
@@ -1488,7 +1853,7 @@ margin_top = -2.43214
 margin_right = 77.0156
 margin_bottom = 55.5679
 rect_scale = Vector2( 0.859638, 0.859638 )
-custom_styles/hover = SubResource( 13 )
+custom_styles/hover = SubResource( 18 )
 icon = ExtResource( 72 )
 flat = true
 __meta__ = {
@@ -1501,7 +1866,7 @@ margin_left = 94.992
 margin_top = 198.664
 margin_right = 199.992
 margin_bottom = 248.664
-custom_styles/hover = SubResource( 14 )
+custom_styles/hover = SubResource( 19 )
 icon = ExtResource( 34 )
 flat = true
 __meta__ = {
@@ -1549,7 +1914,7 @@ margin_left = 156.087
 margin_top = -602.875
 margin_right = 395.087
 margin_bottom = -521.875
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 20 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -25
 text = "Dia 1º"
@@ -1573,7 +1938,7 @@ margin_left = 170.754
 margin_top = -604.833
 margin_right = 409.754
 margin_bottom = -523.833
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 20 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -25
 text = "Dia"
@@ -1588,7 +1953,7 @@ margin_left = -467.075
 margin_top = 198.0
 margin_right = 445.925
 margin_bottom = 408.0
-custom_fonts/font = SubResource( 16 )
+custom_fonts/font = SubResource( 21 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -20
 text = "Cidade tem x infectados"
@@ -1618,7 +1983,7 @@ margin_left = -482.0
 margin_top = 456.764
 margin_right = 438.0
 margin_bottom = 681.764
-custom_fonts/font = SubResource( 17 )
+custom_fonts/font = SubResource( 22 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -25
 text = "Cientistas estudam como criar uma vacina para combater esta pandemia global."
@@ -1642,7 +2007,7 @@ margin_left = -294.0
 margin_top = 245.0
 margin_right = 251.0
 margin_bottom = 436.0
-custom_fonts/font = SubResource( 19 )
+custom_fonts/font = SubResource( 24 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -25
 text = "Vírus matou
@@ -1658,7 +2023,7 @@ margin_left = 206.0
 margin_top = 55.0
 margin_right = 459.0
 margin_bottom = 202.0
-custom_fonts/font = SubResource( 20 )
+custom_fonts/font = SubResource( 25 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -20
 text = "Cidade tem x infectados"
@@ -1673,7 +2038,7 @@ margin_left = 170.754
 margin_top = -604.833
 margin_right = 409.754
 margin_bottom = -523.833
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 20 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -25
 text = "Dia"
@@ -1696,7 +2061,7 @@ margin_left = 170.754
 margin_top = -604.833
 margin_right = 409.754
 margin_bottom = -523.833
-custom_fonts/font = SubResource( 15 )
+custom_fonts/font = SubResource( 20 )
 custom_colors/font_color = Color( 0.388235, 0.329412, 0.301961, 1 )
 custom_constants/line_spacing = -25
 text = "Dia"
@@ -1716,7 +2081,7 @@ margin_left = -101.0
 margin_top = -43.0
 margin_right = 100.0
 margin_bottom = 9.0
-custom_styles/hover = SubResource( 21 )
+custom_styles/hover = SubResource( 26 )
 icon = ExtResource( 2 )
 flat = true
 __meta__ = {
@@ -1728,7 +2093,7 @@ margin_left = -101.399
 margin_top = 13.2964
 margin_right = 99.601
 margin_bottom = 64.2964
-custom_styles/hover = SubResource( 21 )
+custom_styles/hover = SubResource( 26 )
 icon = ExtResource( 3 )
 flat = true
 __meta__ = {
@@ -1740,8 +2105,8 @@ margin_left = 87.0
 margin_top = -90.0
 margin_right = 106.0
 margin_bottom = -49.0
-custom_styles/normal = SubResource( 22 )
-custom_fonts/font = SubResource( 23 )
+custom_styles/normal = SubResource( 27 )
+custom_fonts/font = SubResource( 28 )
 text = "x"
 flat = true
 __meta__ = {
@@ -1750,6 +2115,12 @@ __meta__ = {
 [connection signal="gui_input" from="bloco de notas/TextEdit" to="." method="_on_TextEdit_gui_input"]
 [connection signal="ready" from="Fichas/Arquivo/dificil" to="Population" method="_on_dificil_ready"]
 [connection signal="ready" from="Fichas/Arquivo/muitoDificil" to="Population" method="_on_muitoDificil_ready"]
+[connection signal="pressed" from="SpritesObjetos/Mesa/caneta/bcaneta" to="SpritesObjetos" method="_on_bcaneta_pressed"]
+[connection signal="pressed" from="SpritesObjetos/Mesa/livros/livros" to="SpritesObjetos" method="_on_livros_pressed"]
+[connection signal="toggled" from="SpritesObjetos/Luminaria/lanterna" to="SpritesObjetos" method="_on_lanterna_toggled"]
+[connection signal="pressed" from="SpritesObjetos/vaso/vaso" to="SpritesObjetos" method="_on_vaso_pressed"]
+[connection signal="pressed" from="SpritesObjetos/caneca/caneca" to="SpritesObjetos" method="_on_caneca_pressed"]
+[connection signal="pressed" from="SpritesObjetos/pastinha/pastinha" to="SpritesObjetos" method="_on_pastinha_pressed"]
 [connection signal="pressed" from="Places/Lojas/botao" to="Places/Lojas" method="_on_botao_pressed"]
 [connection signal="pressed" from="Places/Escola/botao" to="Places/Escola" method="_on_botao_pressed"]
 [connection signal="pressed" from="Places/Mercado/botao" to="Places/Mercado" method="_on_botao_pressed"]

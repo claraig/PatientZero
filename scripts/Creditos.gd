@@ -1,21 +1,33 @@
 extends Node2D
 
+var podemexer:bool
 
-# Declare member variables here. Examples:
-# var a: int = 2
-# var b: String = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-#	pass
+	podemexer = false
 
 
 func _on_bVoltar_pressed() -> void:
 	get_node('audio').play()
 	get_tree().change_scene("res://scenes/Menu.tscn")
+
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if podemexer == true:
+		if $TESTE.get_rotation() < 360*5:
+#		if rotation_degrees < 360:
+				# girando o jornal
+#				rotation += 45 * delta
+				$TESTE.set_rotation(45*delta)
+		_reset()
+
+func _reset():
+	podemexer = false
+	rotation_degrees = 0
+
+
+func _on_TESTE_button_down() -> void:
+	podemexer = true
+	print ('lalalaallaalallaalla')
+	pass # Replace with function body.
