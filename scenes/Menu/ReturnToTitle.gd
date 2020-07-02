@@ -8,7 +8,8 @@ func _ready() -> void:
 	atualizaToggleSom()
 	atualizaToggleMusica()
 
-#	AUDIO
+
+#____________________ AUDIO ____________________
 
 func atualizaToggleSom():
 	silence = get_node("/root/Configuracoes").temsom
@@ -33,7 +34,7 @@ func _on_CheckButtonMusica_pressed():
 
 
 
-#	DIFICULDADE
+#____________________ DIFICULDADE ____________________
 
 func atualizaValorDificuldade():
 	var dificuldade = get_node("/root/Configuracoes").dificuldade
@@ -59,7 +60,8 @@ func _on_diminuiDificuldade_pressed():
 	atualizaValorDificuldade()
 
 
-# SAIR
+
+#____________________ SAIR ____________________
 
 func _on_b_back_pressed():
 	get_node('svoltar').play()

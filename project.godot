@@ -15,6 +15,7 @@ _global_script_class_icons={
 
 [application]
 
+config/name="PatientZer0"
 run/main_scene="res://scenes/Menu.tscn"
 config/icon="res://assets/autoral/icon.png"
 config/windows_native_icon="res://assets/autoral/icon.ico"
