@@ -65,4 +65,13 @@ func _on_diminuiDificuldade_pressed():
 
 func _on_b_back_pressed():
 	get_node('audio').play()
+	$FadeIn.show()
+	$FadeIn.fade_in()
+
+
+func _on_FadeIn_fade_finished():
 	get_tree().change_scene("res://scenes/Menu.tscn")
+
+
+func _on_bVoltar_pressed() -> void:
+	get_node('audio').play()

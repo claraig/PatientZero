@@ -465,7 +465,6 @@ stream = ExtResource( 31 )
 stream = ExtResource( 32 )
 
 [node name="FadeIn" parent="." instance=ExtResource( 4 )]
-visible = false
 [connection signal="pressed" from="mural/novojogo" to="." method="_on_novojogo_pressed"]
 [connection signal="pressed" from="mural/instrucoes" to="." method="_on_instrucoes_pressed"]
 [connection signal="pressed" from="mural/opcoes" to="." method="_on_opcoes_pressed"]

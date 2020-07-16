@@ -1,4 +1,4 @@
-[gd_scene load_steps=124 format=2]
+[gd_scene load_steps=132 format=2]
 
 [ext_resource path="res://assets/autoral/Objetos/vaso_de_planta.png" type="Texture" id=1]
 [ext_resource path="res://assets/autoral/Botoes/opcaoMenu.png" type="Texture" id=2]
@@ -21,6 +21,7 @@
 [ext_resource path="res://assets/autoral/Jornal/jdia0.png" type="Texture" id=19]
 [ext_resource path="res://Fonts/courier_bold.tres" type="DynamicFont" id=20]
 [ext_resource path="res://assets/autoral/notepad.png" type="Texture" id=21]
+[ext_resource path="res://assets/autoral/GameOver/vaso_de_planta_morta.png" type="Texture" id=22]
 [ext_resource path="res://assets/autoral/Fichas/arquivo_normal.png" type="Texture" id=23]
 [ext_resource path="res://Fonts/jornal.tres" type="DynamicFont" id=24]
 [ext_resource path="res://assets/autoral/avatares/C41.png" type="Texture" id=25]
@@ -68,6 +69,7 @@
 [ext_resource path="res://assets/autoral/menu/inicial/simbolo.png" type="Texture" id=67]
 [ext_resource path="res://assets/autoral/Fichas/arquivo_dificil.png" type="Texture" id=68]
 [ext_resource path="res://assets/autoral/Fichas/arquivo_muitodificil2.png" type="Texture" id=69]
+[ext_resource path="res://assets/autoral/GameOver/canecaQuebrada3.png" type="Texture" id=70]
 [ext_resource path="res://assets/autoral/avatares/c12.png" type="Texture" id=71]
 [ext_resource path="res://assets/autoral/Botoes/menuSanduiche.png" type="Texture" id=72]
 [ext_resource path="res://assets/autoral/avatares/c23.png" type="Texture" id=73]
@@ -94,6 +96,11 @@
 [ext_resource path="res://assets/audio/BookFlip3.wav" type="AudioStream" id=94]
 [ext_resource path="res://assets/autoral/Objetos/mural_menu.png" type="Texture" id=95]
 [ext_resource path="res://assets/autoral/Objetos/pastinha.png" type="Texture" id=96]
+[ext_resource path="res://assets/autoral/GameOver/canecaQuebrada2.png" type="Texture" id=97]
+[ext_resource path="res://assets/autoral/GameOver/gameover.png" type="Texture" id=98]
+[ext_resource path="res://assets/autoral/GameOver/canecaQuebrada1.png" type="Texture" id=99]
+[ext_resource path="res://scripts/FadeGameOver.gd" type="Script" id=100]
+[ext_resource path="res://Fonts/b_voltar.tres" type="DynamicFont" id=101]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends Node2D
@@ -112,6 +119,7 @@ func _ready():
 	venceu = false
 
 	$MenuPopup.hide()
+	$GameOver.hide()
 
 	$canvas_jornal/jornal.show()
 	$canvas_jornal/jornal/j_dia1.show()
@@ -279,16 +287,7 @@ func _on_NextTurn_button_down():
 			$canvas_jornal/jornal/j_mortes.show()
 		$canvas_jornal/bJornal.show()
 	else:
-		_desabilitarMortosPraNaoVirarZumbi()
-		_atualizarInfos()
-		get_node(\"Canvas Cartaz/frase\").set_text(\"Todos Morreram! FIm de Jogo =(\")
-		get_node('Sons/perdeu').play()
-		get_node(\"Cartaz/InfoTurno\")._corPerdeu()
-		get_node(\"NextTurn\").visible = false
-		get_node(\"NextTurn\").disabled = true
-		get_node(\"RetornaMenu\").visible = true
-		get_node(\"RetornaMenu\").disabled = false
-
+		_derrota()
 
 func _tirarIsolamento():
 	for p in pessoas:
@@ -338,9 +337,35 @@ func _venceu():
 			get_node(\"RetornaMenu\").visible = true
 			get_node(\"RetornaMenu\").disabled = false
 
+#---------------------------------- PERDEU -----------------------------------------#
+
+func _derrota():
+	_desabilitarMortosPraNaoVirarZumbi()
+	_atualizarInfos()
+	get_node(\"Canvas Cartaz/frase\").set_text(\"Todos Morreram! FIm de Jogo =(\")
+	get_node('Sons/perdeu').play()
+#	get_node(\"Cartaz/InfoTurno\")._corPerdeu()
+	get_node(\"NextTurn\").visible = false
+	get_node(\"NextTurn\").disabled = true
+	get_node(\"RetornaMenu\").visible = true
+	get_node(\"RetornaMenu\").disabled = false
+	$SpritesObjetos/vaso.hide()
+	$SpritesObjetos/caneca.hide()
+	$SpritesObjetos/pastinha.hide()
+	$Fichas/FichaFechada.show()
+	$GameOver.show()
+	$GameOver/FadeIn.show()
+	$GameOver/FadeIn.fade_in()
+
+
+func _on_FadeIn_finished():
+	$MenuPopup.show()
+
+
+
 func _on_RetornaMenu_button_down():
-# warning-ignore:return_value_discarded
 	get_tree().change_scene(\"res://scenes/Menu.tscn\")
+
 "
 
 [sub_resource type="StyleBoxFlat" id=2]
@@ -723,6 +748,21 @@ extra_spacing_top = 4
 extra_spacing_bottom = 4
 font_data = SubResource( 24 )
 
+[sub_resource type="Animation" id=30]
+resource_name = "fadeIn"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
 [sub_resource type="StyleBoxEmpty" id=27]
 
 [sub_resource type="StyleBoxEmpty" id=28]
@@ -975,15 +1015,16 @@ stream = ExtResource( 90 )
 
 [node name="Fichas" type="Node2D" parent="."]
 position = Vector2( 161.705, 127.693 )
+z_index = -3
 
 [node name="FichaFechada" type="Sprite" parent="Fichas"]
 position = Vector2( -13, 28 )
 scale = Vector2( 0.33, 0.33 )
-z_index = 2
+z_index = 4
 texture = ExtResource( 17 )
 
 [node name="FichaAberta" type="Sprite" parent="Fichas"]
-position = Vector2( -14.6466, 26.8336 )
+position = Vector2( -12.6466, 27.8336 )
 scale = Vector2( 0.467218, 0.467218 )
 z_index = -2
 texture = ExtResource( 4 )
@@ -2049,9 +2090,61 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="GameOver" type="Node2D" parent="."]
+z_index = 6
+
+[node name="vaso" type="Sprite" parent="GameOver"]
+position = Vector2( 857.45, 577.038 )
+texture = ExtResource( 22 )
+
+[node name="caneca" type="Sprite" parent="GameOver"]
+position = Vector2( 887.198, 633.12 )
+texture = ExtResource( 99 )
+
+[node name="caneca2" type="Sprite" parent="GameOver"]
+position = Vector2( 859.659, 650.285 )
+rotation = -1.24113
+texture = ExtResource( 97 )
+offset = Vector2( 25.588, 25.2631 )
+
+[node name="caneca3" type="Sprite" parent="GameOver"]
+position = Vector2( 916.459, 617.027 )
+rotation = 1.62276
+texture = ExtResource( 70 )
+
+[node name="Sprite" type="TextureButton" parent="GameOver"]
+modulate = Color( 1, 1, 1, 0.45098 )
+texture_normal = ExtResource( 98 )
+
+[node name="FadeIn" type="Sprite" parent="GameOver"]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 640.962, 360.008 )
+scale = Vector2( 1.0047, 1.00835 )
+texture = ExtResource( 98 )
+script = ExtResource( 100 )
+
+[node name="AnimatedSprite" type="AnimationPlayer" parent="GameOver/FadeIn"]
+anims/fadeIn = SubResource( 30 )
+
+[node name="Label" type="Label" parent="GameOver"]
+margin_left = 429.592
+margin_top = 141.69
+margin_right = 915.592
+margin_bottom = 261.69
+custom_fonts/font = ExtResource( 101 )
+custom_constants/line_spacing = -12
+text = "Game Over
+
+A população inteira morreu."
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="MenuPopup" type="Sprite" parent="."]
 visible = false
 position = Vector2( 650.844, 359.566 )
+z_index = 7
 texture = ExtResource( 74 )
 
 [node name="menu" type="Button" parent="MenuPopup"]
@@ -2130,6 +2223,8 @@ __meta__ = {
 [connection signal="pressed" from="MenuSanduiche" to="." method="_on_Menu_pressed"]
 [connection signal="button_down" from="Isolar" to="Population" method="_on_Button_button_down"]
 [connection signal="button_up" from="canvas_jornal/bJornal" to="." method="_on_bJornal_button_up"]
+[connection signal="fade_finished" from="GameOver/FadeIn" to="." method="_on_FadeIn_finished"]
+[connection signal="animation_finished" from="GameOver/FadeIn/AnimatedSprite" to="GameOver/FadeIn" method="_on_AnimatedSprite_animation_finished"]
 [connection signal="pressed" from="MenuPopup/menu" to="." method="_on_menu_pressed"]
 [connection signal="pressed" from="MenuPopup/sair" to="." method="_on_sair_pressed"]
 [connection signal="pressed" from="MenuPopup/cancela" to="." method="_on_cancela_pressed"]

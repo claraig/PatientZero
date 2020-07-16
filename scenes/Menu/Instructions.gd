@@ -6,9 +6,6 @@ func _ready():
 	$pag3.hide()
 	$pag4.hide()
 
-func _on_Button_pressed():
-	get_node('audio').play()
-	get_tree().change_scene("res://scenes/Menu.tscn")
 
 func _on_pg1_pressed() -> void:
 	$pag1.show()
@@ -38,3 +35,11 @@ func _on_pg4_pressed() -> void:
 	$pag3.hide()
 	$pag4.show()
 	get_node('pag').play()
+
+func _on_FadeIn_fade_finished():
+	get_tree().change_scene("res://scenes/Menu.tscn")
+
+func _on_Button_pressed():
+	get_node('audio').play()
+	$FadeIn.show()
+	$FadeIn.fade_in()

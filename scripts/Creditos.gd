@@ -1,8 +1,13 @@
 extends Node2D
 
+func _on_FadeIn_fade_finished():
+	get_tree().change_scene("res://scenes/Menu.tscn")
+
+
 func _on_bVoltar_pressed() -> void:
 	get_node('audio').play()
-	get_tree().change_scene("res://scenes/Menu.tscn")
+	$FadeIn.show()
+	$FadeIn.fade_in()
 
 
 func _on_Button_toggled(button_pressed: bool):
