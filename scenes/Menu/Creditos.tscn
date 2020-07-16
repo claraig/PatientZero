@@ -170,5 +170,6 @@ __meta__ = {
 
 [node name="caneta" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+volume_db = 2.101
 [connection signal="pressed" from="bVoltar" to="." method="_on_bVoltar_pressed"]
 [connection signal="toggled" from="bic/Button" to="." method="_on_Button_toggled"]

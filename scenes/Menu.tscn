@@ -24,8 +24,8 @@
 [ext_resource path="res://assets/autoral/Objetos/cafeteira.png" type="Texture" id=22]
 [ext_resource path="res://assets/autoral/Objetos/cafeteira2.png" type="Texture" id=23]
 [ext_resource path="res://assets/audio/sfx_lampada.ogg" type="AudioStream" id=24]
-[ext_resource path="res://assets/autoral/menu/inicial/luminariaB.png" type="Texture" id=25]
-[ext_resource path="res://assets/autoral/menu/inicial/luminariaA.png" type="Texture" id=26]
+[ext_resource path="res://assets/autoral/menu/inicial/luminaria2.png" type="Texture" id=25]
+[ext_resource path="res://assets/autoral/menu/inicial/luminaria1.png" type="Texture" id=26]
 [ext_resource path="res://assets/autoral/menu/inicial/telefone.png" type="Texture" id=27]
 [ext_resource path="res://assets/audio/sfx_telefone.ogg" type="AudioStream" id=28]
 [ext_resource path="res://assets/autoral/menu/inicial/canetas.png" type="Texture" id=29]
@@ -345,13 +345,13 @@ visible = false
 texture = ExtResource( 23 )
 
 [node name="luminariaA" type="Sprite" parent="objetos"]
-position = Vector2( 1189.14, 473.76 )
+position = Vector2( 1182.14, 473.76 )
 rotation = 0.14411
 scale = Vector2( 0.355223, 0.355223 )
 texture = ExtResource( 26 )
 
 [node name="luminariaB" type="Sprite" parent="objetos/luminariaA"]
-position = Vector2( -81.98, -81.399 )
+position = Vector2( -81.9798, -81.399 )
 z_index = -1
 texture = ExtResource( 25 )
 offset = Vector2( 81.98, 81.399 )
@@ -452,11 +452,11 @@ stream = ExtResource( 5 )
 
 [node name="cafe" type="AudioStreamPlayer" parent="Sons"]
 stream = ExtResource( 10 )
-volume_db = -22.386
+volume_db = -17.133
 
 [node name="fone" type="AudioStreamPlayer" parent="Sons"]
 stream = ExtResource( 28 )
-volume_db = -20.048
+volume_db = -25.301
 
 [node name="canetas" type="AudioStreamPlayer" parent="Sons"]
 stream = ExtResource( 31 )

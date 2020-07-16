@@ -11,7 +11,7 @@
 [ext_resource path="res://assets/audio/sfx_b_click.wav" type="AudioStream" id=9]
 
 [sub_resource type="DynamicFont" id=1]
-size = 30
+size = 26
 outline_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
 use_filter = true
 font_data = ExtResource( 3 )
@@ -106,10 +106,10 @@ visible = false
 position = Vector2( 5.26312, 91.5789 )
 
 [node name="text3" type="Label" parent="pag2"]
-margin_left = 478.526
-margin_top = 189.368
-margin_right = 1083.53
-margin_bottom = 432.368
+margin_left = 479.0
+margin_top = 189.0
+margin_right = 1026.0
+margin_bottom = 432.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
 text = "O mural apresenta as informações diárias e os locais da cidade.
@@ -128,25 +128,52 @@ scale = Vector2( 0.62101, 0.62101 )
 texture = ExtResource( 6 )
 
 [node name="pag3" type="Node2D" parent="."]
+visible = false
 position = Vector2( -22.1052, -173.684 )
 
 [node name="text" type="Label" parent="pag3"]
-margin_left = 273.0
+margin_left = 303.0
 margin_top = 397.0
-margin_right = 783.0
-margin_bottom = 756.0
+margin_right = 826.0
+margin_bottom = 804.0
 custom_fonts/font = SubResource( 1 )
 custom_colors/font_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
-text = "A imunidade das pessoas doentes diminui diariamente.
+text = "O Paciente Zero transmite o vírus mas não aparece como infectado até que 60% das pessoas estejam doentes.
 
-É possível isolar uma pessoa por dia. Isolando o Paciente Zero você desenvolverá uma vacina e pode salvar a vida da população."
+A saúde das pessoas doentes diminui diariamente. Quando chega a zero, a pessoa morre.
+"
 align = 3
 autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="text2" type="Label" parent="pag3"]
+[node name="pastinha" type="Sprite" parent="pag3"]
+position = Vector2( 998.157, 507.637 )
+rotation = 0.1717
+scale = Vector2( 0.932763, 0.932763 )
+texture = ExtResource( 4 )
+
+[node name="pag4" type="Node2D" parent="."]
+position = Vector2( -22.1052, -173.684 )
+
+[node name="text" type="Label" parent="pag4"]
+margin_left = 266.0
+margin_top = 381.0
+margin_right = 853.0
+margin_bottom = 788.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
+text = "É possível isolar uma pessoa por dia. Isolar uma pessoa doente faz com que ela não transmita a doença neste dia (ao clicar em Próximo Dia, não andará pela cidade).
+
+Isolando o Paciente Zero você desenvolverá uma vacina e pode salvar a vida da população."
+align = 3
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text2" type="Label" parent="pag4"]
 margin_left = 273.895
 margin_top = 736.0
 margin_right = 986.895
@@ -160,8 +187,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="pastinha" type="Sprite" parent="pag3"]
-position = Vector2( 977.483, 530.9 )
+[node name="pastinha2" type="Sprite" parent="pag4"]
+position = Vector2( 1000.16, 507.637 )
 rotation = 0.1717
 scale = Vector2( 0.932763, 0.932763 )
 texture = ExtResource( 4 )
@@ -188,9 +215,9 @@ __meta__ = {
 }
 
 [node name="pg1" type="Button" parent="."]
-margin_left = 978.0
+margin_left = 938.0
 margin_top = 629.0
-margin_right = 1020.0
+margin_right = 980.0
 margin_bottom = 689.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
@@ -203,9 +230,9 @@ __meta__ = {
 }
 
 [node name="pg2" type="Button" parent="."]
-margin_left = 1018.89
+margin_left = 978.89
 margin_top = 629.0
-margin_right = 1060.89
+margin_right = 1020.89
 margin_bottom = 689.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
@@ -218,9 +245,9 @@ __meta__ = {
 }
 
 [node name="pg3" type="Button" parent="."]
-margin_left = 1061.16
+margin_left = 1021.16
 margin_top = 629.0
-margin_right = 1103.16
+margin_right = 1063.16
 margin_bottom = 689.0
 custom_fonts/font = ExtResource( 1 )
 custom_colors/font_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
@@ -231,7 +258,23 @@ flat = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="pg4" type="Button" parent="."]
+margin_left = 1059.16
+margin_top = 629.0
+margin_right = 1101.16
+margin_bottom = 689.0
+custom_fonts/font = ExtResource( 1 )
+custom_colors/font_color = Color( 0.266667, 0.192157, 0.0901961, 1 )
+custom_colors/font_color_hover = Color( 0.521569, 0.47451, 0.419608, 1 )
+custom_colors/font_color_pressed = Color( 0.521569, 0.47451, 0.419608, 1 )
+text = "4"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="pg1" to="." method="_on_pg1_pressed"]
 [connection signal="pressed" from="pg2" to="." method="_on_pg2_pressed"]
 [connection signal="pressed" from="pg3" to="." method="_on_pg3_pressed"]
+[connection signal="pressed" from="pg4" to="." method="_on_pg4_pressed"]

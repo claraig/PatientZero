@@ -64,5 +64,5 @@ func _on_diminuiDificuldade_pressed():
 #____________________ SAIR ____________________
 
 func _on_b_back_pressed():
-	get_node('svoltar').play()
+	get_node('audio').play()
 	get_tree().change_scene("res://scenes/Menu.tscn")
